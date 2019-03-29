@@ -8,6 +8,7 @@ from random import choice
 from shutil import unpack_archive
 from string import ascii_letters, digits
 import requests as req
+from http import HTTPStatus as HTTP
 
 
 def usage(pname, required_args = [], optional_args = []):
@@ -29,10 +30,15 @@ def mkrdir(path='.', prefix=''):
 def download(furl):
     log.debug(''.join(['Downloading file from ', furl]))
 
-    content = req.get(furl).content
+    response = req.get(furl)
+    if response.status_code != req.codes.ok:
+        if response.status_code == HTTP.NOT_FOUND:
+            log.critical(''.join(['File not found at: ', furl]))
+        else:
+            log.critical(''.join(['Problem getting: ', furl]))
     
     fname = pth.__file_name(furl)
-    pth.__write_file(fname, content)
+    pth.__write_file(fname, response.content)
 
     return fname
 

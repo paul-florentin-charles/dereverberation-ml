@@ -7,7 +7,12 @@ import src.parser.toml as tml
 
 def init():
     clrs.start()
-    lgn.basicConfig(format='{%(asctime)s} %(message)s', level=tml.value('logger', 'level').upper(), datefmt='%I:%M:%S')
+    _level = tml.value('logger', 'level')
+    if _level.upper() not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
+        lgn.basicConfig(format='{%(asctime)s} %(message)s', datefmt='%I:%M:%S')
+        critical(''.join(['\"', _level, '\": unrecognized logging level']))
+            
+    lgn.basicConfig(format='{%(asctime)s} %(message)s', level=_level.upper(), datefmt='%I:%M:%S')
 
 def shutdown():
     lgn.shutdown()
@@ -26,4 +31,6 @@ def error(msg):
     lgn.error(clrs._magenta_(''.join(["[ERROR] ", msg])))
 
 def critical(msg):
-    raise SystemExit(lgn.critical(clrs._red_(''.join(["[CRITICAL] ", msg]))))
+    lgn.critical(clrs._red_(''.join(["[CRITICAL] ", msg])))
+    shutdown()
+    raise SystemExit

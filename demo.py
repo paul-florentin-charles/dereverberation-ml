@@ -18,8 +18,12 @@ def demo():
 
     base_url = tml.value('demo', 'datasets_url')
 
-    note_url = ''.join([base_url, 'note_dataset_', tml.value('demo', 'size'), '.tar.gz'])
-    fx_url = ''.join([base_url, 'ir_dataset_', tml.value('demo', 'size'), '.zip'])
+    size = tml.value('demo', 'size')
+    if size not in ['tiny', 'small', 'medium', 'big']:
+        log.error(''.join(['\"', size, '\": unrecognized demo size']))
+
+    note_url = ''.join([base_url, 'note_dataset_', size, '.tar.gz'])
+    fx_url = ''.join([base_url, 'ir_dataset_', size, '.zip'])
 
     log.info('Downloading datasets of notes and impulse responses')
 
