@@ -1,7 +1,7 @@
 ## Requirements
 
-- Python 3.x
-- Pip 3.x
+- Python 3.7.x
+- Python3-pip x.x  
 - [GNU Make x.x]
 - [Curl x.x]
 

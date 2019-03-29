@@ -25,5 +25,5 @@ def run(dry_dpath, fx_dpath, output_dir):
     model = nnmodel._init()
     nnmodel._compile(model)
     nnmodel._train(model, data, labels)
-    print(nnmodel._evaluate(model, data, labels)
+    print(nnmodel._evaluate(model, data, labels))
     """

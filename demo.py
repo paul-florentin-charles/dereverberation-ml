@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from src.init import initiate
+
+initiate()
+
+
 import src.utils.logger as log
 import src.parser.toml as tml
 from src.utils.tools import download, extract

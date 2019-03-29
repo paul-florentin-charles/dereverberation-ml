@@ -11,7 +11,7 @@ clean:
 	@rm -rf `find -name "*~"`
 
 cleanall: clean
-	@rm -rf `find -name "__pycache__"`
+	@rm -rf `find -name "*.pyc" && find -name "__pycache__"`
 
 help:
 	@echo "INSTALL /w pip: make install"
