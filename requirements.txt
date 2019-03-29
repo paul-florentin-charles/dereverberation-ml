@@ -1,0 +1,9 @@
+requests==2.21.0
+fleep==1.0.1
+colorama==0.4.1
+toml==0.10.0
+pydub==0.23.1
+scipy==1.2.1
+numpy==1.16.1
+keras==2.2.4
+
