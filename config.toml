@@ -7,10 +7,13 @@ frame_size = 1024
 hop_size = 512
 conv_mod = 'same'
 
-[meta]
-json_fname = 'info.json'
+[json]
+fname = 'info.json'
 save_steps = 40
-#log_fname = 'history.log'
+
+[logger]
+level = 'debug'
+#fname = 'history.log'
 
 [neuralnet]
 optimizer = 'sgd'

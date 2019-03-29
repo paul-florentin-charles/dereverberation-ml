@@ -4,8 +4,14 @@
 Module to enhance your strings with colors and emphase
 """
 
-from colorama import Fore, Style
+from colorama import Fore, Style, init, deinit
 
+
+def start():
+    init()
+
+def close():
+    deinit()
 
 def _blue_(string):
     '''Returns colorized <string> in blue'''

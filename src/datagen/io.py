@@ -7,7 +7,8 @@ Save numpy arrays as wave files
 
 from src.datagen.utils import __list_audio_files, __is_audio_file
 from src.datagen.fx import _apply_fxs
-from src.utils.tools import mkrdir, rstr 
+from src.utils.tools import mkrdir, rstr
+import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml, src.parser.json as jsn
 
@@ -21,6 +22,8 @@ def _read(fpath):
     if __is_audio_file(fpath):
         return AudioSegment.from_file(pth.__path(fpath))
 
+    log.warning(''.join([fpath, " is not an audio file"]))
+    
     return AudioSegment.empty()
 
 def _load(dpath):
@@ -28,7 +31,10 @@ def _load(dpath):
     for fpath in pth.__list_files(dpath):
         if __is_audio_file(fpath):
             audio_segments.append(_read(fpath))
-            
+
+    if len(audio_segments) == 0:
+        log.warning(''.join([dpath, " does not contain any audio file"]))
+        
     return audio_segments
 
 def _save(npy_array, fpath, override=True):
@@ -58,7 +64,7 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir, func=None):
 
     fxs = _load(fx_dpath)
 
-    pth.__create_file(tml.value('meta', 'json_fname'))
+    jsn.init()
 
     info = dict()
         
@@ -71,9 +77,10 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir, func=None):
         _export(wet_signals, dpath)
         
         info[str(dryfpath)] = str(dpath)
-        if (idx + 1) % tml.value('meta', 'save_steps') == 0:
-            jsn._dump(tml.value('meta', 'json_fname'), info)
+        if (idx + 1) % tml.value('json', 'save_steps') == 0:
+            log.debug(''.join(["So far, ", str(idx + 1), " samples have been processed"]))
+            jsn.dump(info)
 
-    jsn._dump(tml.value('meta', 'json_fname'), info)
+    jsn.dump(info)
 
     return info

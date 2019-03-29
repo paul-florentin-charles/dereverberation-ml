@@ -3,6 +3,7 @@
 import src.parser.toml as tml, src.parser.json as jsn
 from src.datagen.utils import __mono, __convert
 from src.datagen.io import _read, _load
+import src.utils.logger as log
 
 from random import choice
 import numpy as np
@@ -10,7 +11,12 @@ import numpy as np
 
 # TODO: I could use asarray as well, idk
 def retrieve_data(preprocess=__mono, _type=None):
-    _dict = jsn._load(tml.value('meta', 'json_fname'))
+    log.debug(''.join(["Retrieving data from ", tml.value('json', 'fname')]))
+    
+    _dict = jsn.load()
+
+    if not _dict:
+        log.error(''.join(["No metadata found in ", tml.value('json', 'fname')]))
 
     data, labels = [np.zeros(tml.value('audio', 's_len'), dtype='int')] * 2
     for key in _dict:
@@ -21,7 +27,12 @@ def retrieve_data(preprocess=__mono, _type=None):
 
 '''
 def retrieve_data(preprocess=__mono, _type=None):
-    _dict = jsn._load(tml.value('meta', 'json_fname'))
+    log.debug(''.join(["Retrieving data from ", tml.value('json', 'fname')]))
+
+    _dict = jsn.load()
+
+    if not _dict:
+        log.error(''.join(["No metadata found in ", tml.value('json', 'fname')]))
 
     data, labels = [] * 2
     for key in _dict:

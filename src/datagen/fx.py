@@ -6,6 +6,7 @@ Apply fx to a dry sound
 
 import src.datagen.utils as utls
 import src.parser.toml as tml
+import src.utils.logger as log
 
 from scipy.signal import convolve
 
@@ -32,6 +33,7 @@ def _apply_fxs(dry, fxs, func=_convolve):
     wet_signals = []
     
     if dry.frame_count() == 0:
+        log.warning("Attempting to apply fx to an empty signal")
         return wet_signals
     
     for fx in fxs:

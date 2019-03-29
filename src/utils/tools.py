@@ -2,9 +2,12 @@
 
 import src.utils.colors as clrs
 import src.utils.path as pth
+import src.utils.logger as log
 
 from random import choice
+from shutil import unpack_archive
 from string import ascii_letters, digits
+import requests as req
 
 
 def usage(pname, required_args = [], optional_args = []):
@@ -22,3 +25,19 @@ def mkrdir(path='.', prefix=''):
     pth.__make_dir(dpath)
 
     return dpath
+
+def download(furl):
+    log.debug(''.join(['Downloading file from ', furl]))
+
+    content = req.get(furl).content
+    
+    fname = pth.__file_name(furl)
+    pth.__write_file(fname, content)
+
+    return fname
+
+def extract(fname, dname):
+    log.debug(''.join(['Extracting ', fname, ' into ', dname]))
+    
+    unpack_archive(fname, dname)
+    pth.__remove_file(fname)

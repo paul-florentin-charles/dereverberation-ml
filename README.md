@@ -28,7 +28,7 @@ chmod 744 main.py
 ./main.py path/to/dry/signals/dir path/to/impulse/responses/dir path/to/output/dir
 ```
 
-information will be stored in a JSON file whose name is set in **config.toml**
+Information will be stored in a JSON file whose name is set in **config.toml**.
 
 ## Demo
 
@@ -36,9 +36,9 @@ information will be stored in a JSON file whose name is set in **config.toml**
 make demo
 ```
 
-you can change the demo size by modifying the field *size* in section *demo* in **config.toml**
+You can change the demo size by modifying the field *size* in section *demo* in **config.toml**.
 
-possible values are :
+Possible values are:
 * `tiny`
 * `small`
 * `medium`
@@ -56,7 +56,7 @@ or
 make cleanall
 ```
 
-note that this will remove *_\_pycache__* directories, possibly slowing down next use
+Note that this will remove *_\_pycache__* directories, possibly slowing down next use.
 
 ## JSON Syntax
 
@@ -69,4 +69,19 @@ note that this will remove *_\_pycache__* directories, possibly slowing down nex
 }
 ```
 
-each path to a dry signal is a key to the directory path that contains all of its wet samples
+Each path to a dry signal is a key to the directory path that contains all of its wet samples.
+
+## Logging
+
+There is a field *level* in section *logger* in **config.toml**, that is set at `debug` by default.
+
+Possible values are:
+* `debug`
+* `info`
+* `warning`
+* `error`
+* `critical`
+
+Each value prevents lower values to be displayed.
+
+For instance, if set on *warning*, *debug* and *info* messages won't be displayed.

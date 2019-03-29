@@ -4,13 +4,14 @@
 Set and get audio properties
 """
 
-from src.utils.config import ID
 import src.utils.path as pth
 
 import fleep
 
 import numpy as np
 
+
+ID = lambda x : x
 
 ## Useful to avoid picking non audio files ##
 
