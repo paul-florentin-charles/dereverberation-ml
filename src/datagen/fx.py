@@ -12,8 +12,12 @@ from scipy.signal import convolve
 
 from itertools import repeat
 
-                                                    
+
 def _convolve(dry, fx):
+    _mode = tml.value('audio', 'conv_mod')
+    if _mode not in ['full', 'same', 'valid']:
+        log.critical(''.join(['\"', _mode, '\": unrecognized convolution mode']))
+    
     dry, fx = map(utls.__set_sample_rate, (dry, fx), repeat(tml.value('audio', 's_rate')))
     
     if utls.__is_mono(dry) or utls.__is_mono(fx):
@@ -23,7 +27,7 @@ def _convolve(dry, fx):
         _dry, _fx = utls.__convert(dry), utls.__convert(fx)
         _dry, _fx = utls.__normalize(_dry, sum), utls.__normalize(_fx, sum)
 
-    _conv = convolve(_dry, _fx, mode=tml.value('audio', 'conv_mod'))
+    _conv = convolve(_dry, _fx, mode=_mode)
     _conv = utls.__normalize(_conv, sum) if _conv.ndim == 2 else utls.__normalize(_conv)
     _conv = utls.__float2pcm(_conv)
     

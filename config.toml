@@ -3,9 +3,9 @@
 [audio]
 s_rate = 16000
 s_len = 64000
-frame_size = 1024
-hop_size = 512
 conv_mod = 'same'
+#frame_size = 1024
+#hop_size = 512
 
 [json]
 fname = 'info.json'

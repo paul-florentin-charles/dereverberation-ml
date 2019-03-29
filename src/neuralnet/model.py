@@ -26,4 +26,5 @@ def _predict(model, data):
     return model.predict(data, tml.value('neuralnet', 'batch_size'))
 
 def _evaluate(model, data, labels):
+    log.debug("Evaluating model")
     return model.evaluate(data, labels, tml.value('neuralnet', 'batch_size'))

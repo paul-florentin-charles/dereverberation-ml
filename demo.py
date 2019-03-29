@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import src.utils.path as pth
 import src.utils.logger as log
 import src.parser.toml as tml
 from src.utils.tools import download, extract
-from src.run import run
 
-import requests as req
-from shutil import unpack_archive
+from src.run import run
 
     
 def demo():
@@ -30,6 +27,8 @@ def demo():
     note_fname, fx_fname = download(note_url), download(fx_url)
 
     # Extracting data
+
+    log.info('Extracting datasets')
 
     dnames = tml.value('demo', 'dnames')
 

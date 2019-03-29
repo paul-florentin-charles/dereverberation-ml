@@ -1,8 +1,11 @@
+default:
+	@echo "Type \"make help\" to get started"
+
 install:
 	@sudo pip3 install -r requirements.txt
 
 demo: 
-	@./demo.py 
+	@python3 demo.py 
 
 clean:
 	@rm -rf `find -name "*~"`

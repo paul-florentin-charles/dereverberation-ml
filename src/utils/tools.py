@@ -35,7 +35,7 @@ def download(furl):
         if response.status_code == HTTP.NOT_FOUND:
             log.critical(''.join(['File not found at: ', furl]))
         else:
-            log.critical(''.join(['Problem getting: ', furl]))
+            log.critical(''.join(['Error code: ', response.status_code,', getting: ', furl]))
     
     fname = pth.__file_name(furl)
     pth.__write_file(fname, response.content)
@@ -44,6 +44,10 @@ def download(furl):
 
 def extract(fname, dname):
     log.debug(''.join(['Extracting ', fname, ' into ', dname]))
-    
-    unpack_archive(fname, dname)
+
+    try:
+        unpack_archive(fname, dname)
+    except ValueError:
+        log.critical(''.join(['\"', fname, '\" not a valid archive']))
+        
     pth.__remove_file(fname)
