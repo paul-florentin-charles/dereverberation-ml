@@ -33,6 +33,12 @@ Information will be stored in a JSON file whose name is set in **config.toml**.
 ## Demo
 
 ```bash
+python3 demo.py
+```
+
+or if you have *Make* installed
+
+```bash
 make demo
 ```
 
