@@ -61,9 +61,7 @@ def demo():
 
     # Executing main script
 
-    dnames = tml.value('demo', 'dnames')
-
-    run(*[dnames[key] for key in dnames])
+    run(dry_dpath, fx_dpath, tml.value('demo', 'dnames', 'output'))
 
     log.shutdown()
 

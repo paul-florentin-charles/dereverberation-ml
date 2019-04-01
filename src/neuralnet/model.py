@@ -4,13 +4,12 @@ import src.parser.toml as tml
 import src.utils.logger as log
 
 from keras.models import Sequential
-from keras.layers import Dense#, Conv1D
+from keras.layers import Dense
 
 def _init():
     log.debug("Building model")
     model = Sequential()
     model.add(Dense(tml.value('audio','s_len'), input_dim=tml.value('audio','s_len')))
-    #model.add(Conv1D(16, tml.value('audio', 'frame_size'), strides=tml.value('audio', 'hop_size'), input_dim=tml.value('audio','s_len')))
     return model
 
 def _compile(model):
@@ -28,3 +27,6 @@ def _predict(model, data):
 def _evaluate(model, data, labels):
     log.debug("Evaluating model")
     return model.evaluate(data, labels, tml.value('neuralnet', 'batch_size'))
+
+def _save(model):
+    model.save(tml.value('neuralnet', 'model_fname'))

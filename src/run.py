@@ -3,7 +3,7 @@
 import src.utils.logger as log
 from src.datagen.io import generate_dataset
 from src.neuralnet.utils import retrieve_data, write_data, read_data
-#import src.neuralnet.model as nnmodel
+import src.neuralnet.model as nnmodel
 
 
 def run(dry_dpath, fx_dpath, output_dir):
@@ -23,11 +23,12 @@ def run(dry_dpath, fx_dpath, output_dir):
 
     write_data(data, labels)
 
+    """
     log.info('Training the model')
 
-    """
     model = nnmodel._init()
     nnmodel._compile(model)
     nnmodel._train(model, data, labels)
-    print(nnmodel._evaluate(model, data, labels))
+    #print(nnmodel._evaluate(model, data, labels))
+    nnmodel._save(model)
     """

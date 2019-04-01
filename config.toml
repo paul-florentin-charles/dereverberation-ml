@@ -16,9 +16,10 @@ level = 'debug'
 #fname = 'history.log'
 
 [neuralnet]
+model_fname = 'model.h5'
 optimizer = 'sgd'
 loss = 'mse'
-batch_size = 32
+batch_size = 2
 epochs = 1
 [neuralnet.fnames]
 input_data = 'data.npz'
