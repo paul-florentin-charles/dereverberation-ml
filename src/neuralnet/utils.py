@@ -30,7 +30,7 @@ def retrieve_data(preprocess=__mono):
 
 # TODO: write data as npz directly when exporting data to gain time
 def write_data(data, labels):
-    log.debug(''.join(['Writing data in ', tml.value('neuralnet', 'fnames', 'data'), ' and ', tml.value('neuralnet', 'fnames', 'labels')]))
+    log.debug(''.join(['Writing data in ', tml.value('neuralnet', 'fnames', 'input_data'), ' and ', tml.value('neuralnet', 'fnames', 'input_labels')]))
     
     if data.shape[0] != labels.shape[0]:
         log.critical("There are too many labels or too many data")
@@ -38,14 +38,14 @@ def write_data(data, labels):
     if data.shape[1:] != labels.shape[1:]:
         log.error("Data and labels have different shapes")
 
-    np.savez_compressed(tml.value('neuralnet', 'fnames', 'data'), *data)
-    np.savez_compressed(tml.value('neuralnet', 'fnames', 'labels'), *labels)
+    np.savez_compressed(tml.value('neuralnet', 'fnames', 'input_data'), *data)
+    np.savez_compressed(tml.value('neuralnet', 'fnames', 'input_labels'), *labels)
     
 def read_data():
-    log.debug(''.join(['Reading data from ', tml.value('neuralnet', 'fnames', 'data'), ' and ', tml.value('neuralnet', 'fnames', 'labels')]))
+    log.debug(''.join(['Reading data from ', tml.value('neuralnet', 'fnames', 'input_data'), ' and ', tml.value('neuralnet', 'fnames', 'input_labels')]))
 
     # Dicts are supposedly sorted
-    data_dict, labels_dict = map(np.load, (tml.value('neuralnet', 'fnames', 'data') + '.npz', tml.value('neuralnet', 'fnames', 'labels') + '.npz'))
+    data_dict, labels_dict = map(np.load, (tml.value('neuralnet', 'fnames', 'input_data') + '.npz', tml.value('neuralnet', 'fnames', 'input_labels') + '.npz'))
 
     data, labels = [np.zeros(tml.value('audio', 's_len'), dtype='int')] * 2
 

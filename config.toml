@@ -21,8 +21,8 @@ loss = 'mse'
 batch_size = 32
 epochs = 1
 [neuralnet.fnames]
-data = 'data'
-labels = 'labels'
+input_data = 'data.npz'
+input_labels = 'labels.npz'
 
 [demo]
 size = 'tiny'

@@ -17,7 +17,7 @@ from src.run import run
 def demo():
     log.init()
     
-    # Downloading data from URLs
+    # Downloading data from URLs and extracting downloaded files
 
     base_url = tml.value('demo', 'datasets_url')
 
@@ -36,28 +36,22 @@ def demo():
         
         note_fname, fx_fname = download(note_url), download(fx_url)
 
-        # Extracting data
-
         log.info('Extracting datasets')
         
         extract(note_fname, dry_dpath)
         extract(fx_fname, fx_dpath)
     elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
-        log.info("Downloading datasets of notes")
+        log.info("Downloading dataset of notes")
         
         note_fname = download(note_url)
-
-        # Extracting data
 
         log.info('Extracting dataset of notes')
         
         extract(note_fname, dry_dpath)
     elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
-        log.info("Downloading datasets of impulse responses")
+        log.info("Downloading dataset of impulse responses")
         
         fx_fname = download(fx_url)
-
-        # Extracting data
 
         log.info('Extracting dataset of impulse responses')
         
@@ -65,7 +59,7 @@ def demo():
     else:
         log.info("Skipping downloading since directories are still here, remove them if you wish to download new datasets")
 
-    # Execute main script
+    # Executing main script
 
     dnames = tml.value('demo', 'dnames')
 

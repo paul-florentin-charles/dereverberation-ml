@@ -64,7 +64,13 @@ or
 make cleanall
 ```
 
-Note that this will remove *_\_pycache__* directories, possibly slowing down next execution.
+equivalent to
+
+```bash
+python3 clean.py
+```
+
+This will remove all extra files generated while running main script or demo.
 
 ## Logging
 

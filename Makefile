@@ -5,13 +5,13 @@ install:
 	@sudo pip3 install -r requirements.txt
 
 demo: 
-	@python3 demo.py 
+	@python3 demo.py
 
 clean:
-	@rm -rf `find -name "*~"`
+	@rm -rf `find -name "*~" && find -name "#*#" && find -name "*.pyc" && find -name "__pycache__"`
 
 cleanall: clean
-	@rm -rf `find -name "*.pyc" && find -name "__pycache__"`
+	@python3 clean.py
 
 help:
 	@echo "INSTALL /w pip: make install"
