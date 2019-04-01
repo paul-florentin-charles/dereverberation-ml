@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from src.init import initiate
+from src.check_version import check_version
 
-initiate()
+check_version()
 
 
 from src.utils.tools import usage

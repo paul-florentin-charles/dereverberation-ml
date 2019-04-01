@@ -1,6 +1,6 @@
 ## Requirements
 
-- Python 3.7.x
+- Python 3.x.x (Altough 3.7 is advised)
 - Python3-pip x.x  
 - [GNU Make x.x]
 - [Curl x.x]
