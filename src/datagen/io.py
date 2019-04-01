@@ -20,7 +20,8 @@ from scipy.io.wavfile import write
 
 def _read(fpath):
     if __is_audio_file(fpath):
-        return AudioSegment.from_file(pth.__path(fpath))
+        return AudioSegment.from_file(str(fpath))
+        #return AudioSegment.from_file(pth.__path(fpath))
 
     log.warning(''.join([fpath, " is not an audio file"]))
     
@@ -48,7 +49,8 @@ def _save(npy_array, fpath, override=True):
     if pth.__file_extension(fpath) != '.wav':
         fpath = pth.__with_extension(fpath, '.wav')
 
-    write(fpath, tml.value('audio', 's_rate'), npy_array)
+    write(str(fpath), tml.value('audio', 's_rate'), npy_array)
+    #write(fpath, tml.value('audio', 's_rate'), npy_array)
 
 def _export(npy_arrays, outdpath=None, override=True):
     if outdpath is None:

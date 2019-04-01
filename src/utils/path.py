@@ -69,6 +69,9 @@ def __write_file(path, data):
     if not __is_dir(path):
         __path(path).write_bytes(data)
 
+def __open_file(fpath, _mode='rb'):
+    __path(fpath).open(fpath, mode=_mode)
+
 ## miscellaneous ##
 
 def __list_files(path, recursively=True):

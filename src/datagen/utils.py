@@ -19,8 +19,13 @@ def __is_audio_file(fpath):
     '''Checks wether file at <fpath> is an audio file or not'''
     if not pth.__is_file(fpath):
         return False
-    
+    """
     with open(fpath, 'rb') as f:
+        info = fleep.get(f.read(128))
+        return info.type_matches('audio')
+    """
+
+    with pth.__open_file(fpath, _mode='rb') as f:
         info = fleep.get(f.read(128))
         return info.type_matches('audio')
 
