@@ -28,7 +28,7 @@ def mkrdir(path='.', prefix=''):
     return dpath
 
 def download(furl):
-    log.debug(''.join(['Downloading file from ', furl]))
+    log.debug(''.join(['Downloading file from \"', furl, '\"']))
 
     response = req.get(furl)
     if response.status_code != req.codes.ok:
@@ -43,7 +43,7 @@ def download(furl):
     return fname
 
 def extract(fname, dname):
-    log.debug(''.join(['Extracting ', fname, ' into ', dname]))
+    log.debug(''.join(['Extracting \"', fname, '\" into \"', dname, '\"']))
 
     try:
         unpack_archive(fname, dname)

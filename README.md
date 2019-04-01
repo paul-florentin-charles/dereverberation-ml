@@ -30,6 +30,8 @@ chmod 744 main.py
 
 Information will be stored in a JSON file whose name is set in **config.toml**.
 
+Retrieved data is also directly saved under two *.npz* files, which names can be change in *neuralnet* section of **config.toml**.
+
 ## Demo
 
 ```bash

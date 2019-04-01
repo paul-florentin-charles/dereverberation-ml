@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# TODO: wrap pathlib objects with str(), because these are only supported in python 3.7 and not in 3.5 for instance
-
 import sys, six
 
 

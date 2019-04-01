@@ -7,6 +7,7 @@ check_version()
 
 
 import src.utils.logger as log
+import src.utils.path as pth
 import src.parser.toml as tml
 from src.utils.tools import download, extract
 
@@ -27,22 +28,48 @@ def demo():
     note_url = ''.join([base_url, 'note_dataset_', size, '.tar.gz'])
     fx_url = ''.join([base_url, 'ir_dataset_', size, '.zip'])
 
-    log.info('Downloading datasets of notes and impulse responses')
+    dry_dpath = tml.value('demo', 'dnames', 'input_dry')
+    fx_dpath = tml.value('demo', 'dnames', 'input_fx')
 
-    note_fname, fx_fname = download(note_url), download(fx_url)
+    if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
+        log.info("Downloading datasets of notes and impulse responses")
+        
+        note_fname, fx_fname = download(note_url), download(fx_url)
 
-    # Extracting data
+        # Extracting data
 
-    log.info('Extracting datasets')
+        log.info('Extracting datasets')
+        
+        extract(note_fname, dry_dpath)
+        extract(fx_fname, fx_dpath)
+    elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
+        log.info("Downloading datasets of notes")
+        
+        note_fname = download(note_url)
 
-    dnames = tml.value('demo', 'dnames')
+        # Extracting data
 
-    extract(note_fname, dnames[0])
-    extract(fx_fname, dnames[1])
+        log.info('Extracting dataset of notes')
+        
+        extract(note_fname, dry_dpath)
+    elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
+        log.info("Downloading datasets of impulse responses")
+        
+        fx_fname = download(fx_url)
+
+        # Extracting data
+
+        log.info('Extracting dataset of impulse responses')
+        
+        extract(fx_fname, fx_dpath)
+    else:
+        log.info("Skipping downloading since directories are still here, remove them if you wish to download new datasets")
 
     # Execute main script
 
-    run(*dnames)
+    dnames = tml.value('demo', 'dnames')
+
+    run(*[dnames[key] for key in dnames])
 
     log.shutdown()
 

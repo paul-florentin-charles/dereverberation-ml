@@ -20,8 +20,14 @@ optimizer = 'sgd'
 loss = 'mse'
 batch_size = 32
 epochs = 1
+[neuralnet.fnames]
+data = 'data'
+labels = 'labels'
 
 [demo]
-datasets_url = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/'
-dnames = ['dry', 'fx', 'wet']
 size = 'tiny'
+datasets_url = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/'
+[demo.dnames]
+input_dry = 'dry'
+input_fx = 'fx'
+output = 'wet'
