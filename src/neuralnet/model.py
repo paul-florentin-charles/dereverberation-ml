@@ -2,24 +2,31 @@
 
 import src.parser.toml as tml
 import src.utils.logger as log
+import src.neuralnet.config as cfg
 
 from keras.models import Sequential
-from keras.layers import Conv1D, Activation
+from keras.layers import Input, Conv1D
+
+
+def _model_(input_shape, batch_size=None):
+    model = Sequential()
+    model.add(Input(batch_shape=(batch_size, *input_shape)))
+    model.add(Conv1D(4, input_shape[0] // 10, strides=4, padding='causal'))
+    return model
 
 
 class NeuralNetwork(object):
     def __init__(self):
         log.debug("Building model")
-        self.optimizer = tml.value('neuralnet', 'optimizer')
-        self.loss = tml.value('neuralnet', 'loss')
-        self.batch_size = tml.value('neuralnet', 'batch_size')
-        self.epochs = tml.value('neuralnet', 'epochs')
-        self.metrics = tml.value('neuralnet', 'metrics')
-        self.input_len = tml.value('audio', 's_len')
-        self.fname = tml.value('neuralnet', 'model_fname')
-        self.model = Sequential()
-        self.model.add(Conv1D(1, 4096, strides=1, padding='same', input_shape=(self.input_len, 1)))
-        self.model.add(Activation('relu'))
+        self.batch_size = cfg.BATCH_SIZE
+        self.epochs = cfg.EPOCHS
+        self.input_shape = cfg.INPUT_SHAPE
+        self.optimizer = cfg.OPTIMIZER
+        self.loss = cfg.LOSS
+        self.initializer = cfg.INITIALIZER
+        self.metrics = cfg.METRICS
+        self.fname = tml.value('neuralnet', 'fname')
+        self.model = _model_(self.input_shape)
         
     def compile(self):
         log.debug("Compiling model")

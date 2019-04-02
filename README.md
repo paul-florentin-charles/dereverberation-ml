@@ -18,6 +18,12 @@ make install
 ## Run
 
 ```bash
+make run dry=path/to/dry/signals/dir fx=path/to/impulse/responses/dir wet=path/to/output/dir
+```
+
+or
+
+```bash
 python3 main.py path/to/dry/signals/dir path/to/impulse/responses/dir path/to/output/dir
 ```
 

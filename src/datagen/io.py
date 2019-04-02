@@ -85,5 +85,3 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir, func=None):
             jsn.dump(info)
 
     jsn.dump(info)
-
-    return info

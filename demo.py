@@ -13,7 +13,9 @@ from src.utils.tools import download, extract
 
 from src.run import run
 
-    
+from shutil import rmtree
+
+
 def demo():
     log.init()
     
@@ -23,7 +25,8 @@ def demo():
 
     size = tml.value('demo', 'size')
     if size not in ['tiny', 'small', 'medium', 'big']:
-        log.error(''.join(['\"', size, '\": unrecognized demo size']))
+        log.error(''.join(['\"', size, '\": unrecognized demo size, set to \"tiny\" by default']))
+        size = 'tiny'
 
     note_url = ''.join([base_url, 'note_dataset_', size, '.tar.gz'])
     fx_url = ''.join([base_url, 'ir_dataset_', size, '.zip'])
@@ -31,37 +34,33 @@ def demo():
     dry_dpath = tml.value('demo', 'dnames', 'input_dry')
     fx_dpath = tml.value('demo', 'dnames', 'input_fx')
 
-    if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
-        log.info("Downloading datasets of notes and impulse responses")
-        
+    log.info("Downloading and extracting dataset(s)")
+    
+    if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):  
         note_fname, fx_fname = download(note_url), download(fx_url)
-
-        log.info('Extracting datasets')
         
         extract(note_fname, dry_dpath)
         extract(fx_fname, fx_dpath)
     elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
-        log.info("Downloading dataset of notes")
-        
         note_fname = download(note_url)
-
-        log.info('Extracting dataset of notes')
         
         extract(note_fname, dry_dpath)
     elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
-        log.info("Downloading dataset of impulse responses")
-        
         fx_fname = download(fx_url)
-
-        log.info('Extracting dataset of impulse responses')
         
         extract(fx_fname, fx_dpath)
     else:
-        log.info("Skipping downloading since directories are still here, remove them if you wish to download new datasets")
+        log.info("Skipping downloading since notes and IRs are still here")
 
     # Executing main script
+    
+    wet_dpath = tml.value('demo', 'dnames', 'output')
 
-    run(dry_dpath, fx_dpath, tml.value('demo', 'dnames', 'output'))
+    if pth.__exists(wet_dpath):
+        log.debug("Removing lastly generated samples")
+        rmtree(wet_dpath)
+
+    run(dry_dpath, fx_dpath, wet_dpath)
 
     log.shutdown()
 

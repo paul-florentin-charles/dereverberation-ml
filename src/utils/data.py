@@ -17,43 +17,29 @@ def retrieve_data(preprocess=__mono):
     if not _dict:
         log.error(''.join(['No metadata found in ', tml.value('json', 'fname')]))
 
-    data, labels = [np.zeros(tml.value('audio', 's_len'), dtype='int')] * 2
+    data = []
     for key in _dict:
-        data = np.vstack((data, __convert(choice(_load(_dict[key])), preprocess, _type=None)))
-        labels = np.vstack((labels, __convert(_read(key), preprocess, _type=None)))
+        data.append([__convert(choice(_load(_dict[key])), preprocess, _type=None), __convert(_read(key), preprocess, _type=None)])
+    data = np.asarray(data)
     
-    data, labels =  np.delete(data, 0, 0), np.delete(labels, 0, 0)
     log.debug(''.join([str(data.shape[0]), ' couples data/label have been retrieved']))
     
-    return data, labels
+    return data
 
 # TODO: write data as npz directly when exporting data to gain time
-def write_data(data, labels):
-    log.debug(''.join(['Writing data in \"', tml.value('data', 'fnames', 'input_data'), '\" and \"', tml.value('data', 'fnames', 'input_labels'), '\"']))
+def write_data(data):
+    log.debug(''.join(['Writing data in \"', tml.value('data', 'fname'), '\"']))
     
-    if data.shape[0] != labels.shape[0]:
-        log.critical("There are too many labels or too many data")
+    np.savez_compressed(tml.value('data', 'fname'), *data)
 
-    if data.shape[1:] != labels.shape[1:]:
-        log.error("Data and labels have different shapes")
-
-    np.savez_compressed(tml.value('data', 'fnames', 'input_data'), *data)
-    np.savez_compressed(tml.value('data', 'fnames', 'input_labels'), *labels)
-    
 def read_data():
-    log.debug(''.join(['Reading data from \"', tml.value('data', 'fnames', 'input_data'), '\" and \"', tml.value('data', 'fnames', 'input_labels'), '\"']))
-
-    # Dicts are supposedly sorted
-    data_dict, labels_dict = map(np.load, (tml.value('data', 'fnames', 'input_data') + '.npz', tml.value('data', 'fnames', 'input_labels') + '.npz'))
+    log.debug(''.join(['Reading data from \"', tml.value('data', 'fname'), '\"']))
 
     data, labels = [np.zeros(tml.value('audio', 's_len'), dtype='int')] * 2
 
-    for key in data_dict:
-        data = np.vstack((data, data_dict[key]))
-
-    for key in labels_dict:
-        labels = np.vstack((labels, labels_dict[key]))
+    _dict = np.load(tml.value('data', 'fname'))
+    for fname in _dict:
+        data = np.vstack((data, _dict[fname][0]))
+        labels = np.vstack((labels, _dict[fname][1]))
 
     return np.delete(data, 0, 0), np.delete(labels, 0, 0)
-
-    

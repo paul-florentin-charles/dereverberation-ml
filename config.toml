@@ -4,8 +4,6 @@
 s_rate = 16000
 s_len = 64000
 conv_mod = 'same'
-#frame_size = 1024
-#hop_size = 512
 
 [json]
 fname = 'info.json'
@@ -13,20 +11,15 @@ save_steps = 40
 
 [logger]
 level = 'debug'
-#fname = 'history.log'
 
 [neuralnet]
-model_fname = 'model.h5'
-optimizer = 'sgd'
-loss = 'mse'
-metrics = ['accuracy']
+fname = 'model.h5'
 batch_size = 2
 epochs = 1
+learning_rate = 2e-4
 
 [data]
-[data.fnames]
-input_data = 'data.npz'
-input_labels = 'labels.npz'
+fname = 'data.npz'
 
 [demo]
 size = 'tiny'
