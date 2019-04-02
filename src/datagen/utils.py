@@ -43,6 +43,9 @@ def __set_sample_rate(audio_segment, sample_rate):
 def __convert(audio_segment, preprocess=ID, _type='float64'):
     return np.array(preprocess(audio_segment).get_array_of_samples(), dtype=_type)
 
+def __normalize(npy_array, operation=ID):
+    return npy_array / max(map(operation, npy_array))
+
 def __float2pcm(npy_array, _type='int16'):    
     info = np.iinfo(_type)
     amp = 2**(info.bits - 1)
@@ -52,6 +55,11 @@ def __float2pcm(npy_array, _type='int16'):
 
     return npy_array.clip(info.min, info.max).astype(_type)
 
-def __normalize(npy_array, operation=ID):
-    return npy_array / max(map(operation, npy_array))
+def __pcm2float(npy_array, _type='float64'):    
+    info = np.iinfo(npy_array.dtype)
+    amp = 2**(info.bits - 1)
+    offset = info.min + amp
+    
+    npy_array = (npy_array - offset) / amp
 
+    return npy_array.clip(-1., 1.).astype(_type)

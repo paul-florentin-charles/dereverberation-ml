@@ -21,8 +21,8 @@ def _convolve(dry, fx):
     dry, fx = map(utls.__set_sample_rate, (dry, fx), repeat(tml.value('audio', 's_rate')))
     
     if utls.__is_mono(dry) or utls.__is_mono(fx):
-        _dry, _fx = utls.__convert(dry, utls.__mono), utls.__convert(fx, utls.__mono)
-        _dry, _fx = utls.__normalize(_dry), utls.__normalize(_fx)
+        _dry, _fx = utls.__convert(dry, utls.__mono, 'int16'), utls.__convert(fx, utls.__mono, 'int16')
+        _dry, _fx = utls.__pcm2float(_dry), utls.__pcm2float(_fx)
     else:
         _dry, _fx = utls.__convert(dry), utls.__convert(fx)
         _dry, _fx = utls.__normalize(_dry, sum), utls.__normalize(_fx, sum)

@@ -23,7 +23,7 @@ def clean():
 
     pth.__remove_file(tml.value('json', 'fname'))
 
-    fnames = tml.value('neuralnet', 'fnames')
+    fnames = tml.value('data', 'fnames')
     pth.__remove_file(fnames['input_data'])
     pth.__remove_file(fnames['input_labels'])
 

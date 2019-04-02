@@ -19,9 +19,12 @@ level = 'debug'
 model_fname = 'model.h5'
 optimizer = 'sgd'
 loss = 'mse'
+metrics = ['accuracy']
 batch_size = 2
 epochs = 1
-[neuralnet.fnames]
+
+[data]
+[data.fnames]
 input_data = 'data.npz'
 input_labels = 'labels.npz'
 
