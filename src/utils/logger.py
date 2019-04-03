@@ -10,7 +10,7 @@ def init():
     _level = tml.value('logger', 'level')
     if _level.upper() not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
         lgn.basicConfig(format='{%(asctime)s} %(message)s', datefmt='%I:%M:%S')
-        critical(''.join(['\"', _level, '\": unrecognized logging level']))
+        critical(''.join(["\"", _level, "\": unrecognized logging level"]))
             
     lgn.basicConfig(format='{%(asctime)s} %(message)s', level=_level.upper(), datefmt='%I:%M:%S')
 

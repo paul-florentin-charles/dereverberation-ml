@@ -50,7 +50,6 @@ def _save(npy_array, fpath, override=True):
         fpath = pth.__with_extension(fpath, '.wav')
 
     write(str(fpath), tml.value('audio', 's_rate'), npy_array)
-    #write(fpath, tml.value('audio', 's_rate'), npy_array)
 
 def _export(npy_arrays, outdpath=None, override=True):
     if outdpath is None:

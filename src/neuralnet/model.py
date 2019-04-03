@@ -5,14 +5,6 @@ import src.utils.logger as log
 import src.neuralnet.config as cfg
 
 from keras.models import Sequential
-from keras.layers import Input, Conv1D
-
-
-def _model_(input_shape, batch_size=None):
-    model = Sequential()
-    model.add(Input(batch_shape=(batch_size, *input_shape)))
-    model.add(Conv1D(4, input_shape[0] // 10, strides=4, padding='causal'))
-    return model
 
 
 class NeuralNetwork(object):
@@ -26,7 +18,10 @@ class NeuralNetwork(object):
         self.initializer = cfg.INITIALIZER
         self.metrics = cfg.METRICS
         self.fname = tml.value('neuralnet', 'fname')
-        self.model = _model_(self.input_shape)
+        self.__model__()
+
+    def __model__(self):
+        self.model = Sequential()
         
     def compile(self):
         log.debug("Compiling model")

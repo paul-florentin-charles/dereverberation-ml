@@ -6,12 +6,10 @@ Set and get audio properties
 
 import src.utils.path as pth
 
-import fleep
-
 import numpy as np
 
+import fleep
 
-ID = lambda x : x
 
 ## Useful to avoid picking non audio files ##
 
@@ -31,20 +29,17 @@ def __list_audio_files(path, recursively=True):
 
 ## Various functions based on audio properties ##
               
-def __is_mono(audio_segment):
-    return audio_segment.channels == 1
-
 def __mono(audio_segment):
     return audio_segment.set_channels(1)
 
-def __set_sample_rate(audio_segment, sample_rate):
+def __with_sample_rate(audio_segment, sample_rate):
     return audio_segment.set_frame_rate(sample_rate)
 
-def __convert(audio_segment, preprocess=ID, _type='float64'):
-    return np.array(preprocess(audio_segment).get_array_of_samples(), dtype=_type)
+def __convert(audio_segment, _type=None):
+    return np.array(audio_segment.get_array_of_samples(), dtype=_type)
 
-def __normalize(npy_array, operation=ID):
-    return npy_array / max(map(operation, npy_array))
+def __normalize(npy_array):
+    return npy_array / max(npy_array)
 
 def __float2pcm(npy_array, _type='int16'):    
     info = np.iinfo(_type)

@@ -3,6 +3,8 @@
 [audio]
 s_rate = 16000
 s_len = 64000
+bit_depth = 16
+mono = true
 conv_mod = 'same'
 
 [json]
@@ -22,8 +24,10 @@ learning_rate = 2e-4
 fname = 'data.npz'
 
 [demo]
+[demo.datasets]
+#TODO: use complete URLs directly instead of using 'size'
 size = 'tiny'
-datasets_url = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/'
+url = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/'
 [demo.dnames]
 input_dry = 'dry'
 input_fx = 'fx'

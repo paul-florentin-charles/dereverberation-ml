@@ -21,9 +21,9 @@ def demo():
     
     # Downloading data from URLs and extracting downloaded files
 
-    base_url = tml.value('demo', 'datasets_url')
+    base_url = tml.value('demo', 'datasets', 'url')
 
-    size = tml.value('demo', 'size')
+    size = tml.value('demo', 'datasets', 'size')
     if size not in ['tiny', 'small', 'medium', 'big']:
         log.error(''.join(['\"', size, '\": unrecognized demo size, set to \"tiny\" by default']))
         size = 'tiny'
@@ -50,7 +50,7 @@ def demo():
         
         extract(fx_fname, fx_dpath)
     else:
-        log.info("Skipping downloading since notes and IRs are still here")
+        log.info("Skipping downloading since notes and IRs are still here, remove them if you changed demo mode")
 
     # Executing main script
     

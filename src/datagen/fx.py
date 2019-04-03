@@ -18,17 +18,17 @@ def _convolve(dry, fx):
     if _mode not in ['full', 'same', 'valid']:
         log.critical(''.join(['\"', _mode, '\": unrecognized convolution mode']))
     
-    dry, fx = map(utls.__set_sample_rate, (dry, fx), repeat(tml.value('audio', 's_rate')))
+    dry, fx = map(utls.__with_sample_rate, (dry, fx), repeat(tml.value('audio', 's_rate')))
     
-    if utls.__is_mono(dry) or utls.__is_mono(fx):
-        _dry, _fx = utls.__convert(dry, utls.__mono, 'int16'), utls.__convert(fx, utls.__mono, 'int16')
-        _dry, _fx = utls.__pcm2float(_dry), utls.__pcm2float(_fx)
+    if tml.value('audio', 'mono'):
+        dry, fx = map(utls.__mono, (dry, fx))
+        _dry, _fx = map(utls.__convert, (dry, fx), repeat(''.join(['int', str(tml.value('audio', 'bit_depth'))]))) 
+        _dry, _fx = map(utls.__pcm2float, (_dry, _fx))
     else:
-        _dry, _fx = utls.__convert(dry), utls.__convert(fx)
-        _dry, _fx = utls.__normalize(_dry, sum), utls.__normalize(_fx, sum)
+        log.critical("Stereo not implemented, please set 'mono' to true in \"config.toml\"")
 
     _conv = convolve(_dry, _fx, mode=_mode)
-    _conv = utls.__normalize(_conv, sum) if _conv.ndim == 2 else utls.__normalize(_conv)
+    _conv = utls.__normalize(_conv)
     _conv = utls.__float2pcm(_conv)
     
     return _conv

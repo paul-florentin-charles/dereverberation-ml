@@ -36,7 +36,7 @@ chmod 744 main.py
 
 Information will be stored in a JSON file whose name is set in **config.toml**.
 
-Retrieved data is also directly saved under two *.npz* files, which names can be change in *neuralnet* section of **config.toml**.
+Retrieved data is also directly saved in an *.npz* file, whose name can be change in *data* section of **config.toml**.
 
 ## Demo
 
@@ -50,7 +50,7 @@ or if you have *Make* installed
 make demo
 ```
 
-You can change the demo size by modifying the field *size* in section *demo* in **config.toml**.
+You can change the demo size by modifying the field *size* in section *demo.datasets* in **config.toml**.
 
 Possible values are:
 * `tiny`
