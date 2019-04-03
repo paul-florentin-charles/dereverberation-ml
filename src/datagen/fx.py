@@ -8,32 +8,38 @@ import src.datagen.utils as utls
 import src.parser.toml as tml
 import src.utils.logger as log
 
-from scipy.signal import convolve
+import scipy.signal as sig
 
 from itertools import repeat
 
 
-def _convolve(dry, fx):
-    _mode = tml.value('audio', 'conv_mod')
-    if _mode not in ['full', 'same', 'valid']:
-        log.critical(''.join(['\"', _mode, '\": unrecognized convolution mode']))
+# TODO: Stereo not implemented, mono signals automatically converted to mono
+def convolve(dry, fx):
+    mode = tml.value('audio', 'conv_mod')
+    sr = tml.value('audio', 's_rate')
+    bits = tml.value('audio', 'bit_depth')
     
-    dry, fx = map(utls.__with_sample_rate, (dry, fx), repeat(tml.value('audio', 's_rate')))
-    
-    if tml.value('audio', 'mono'):
-        dry, fx = map(utls.__mono, (dry, fx))
-        _dry, _fx = map(utls.__convert, (dry, fx), repeat(''.join(['int', str(tml.value('audio', 'bit_depth'))]))) 
-        _dry, _fx = map(utls.__pcm2float, (_dry, _fx))
-    else:
-        log.critical("Stereo not implemented, please set 'mono' to true in \"config.toml\"")
+    dry, fx = map(utls.__with_sample_rate, (dry, fx), repeat(sr))
 
-    _conv = convolve(_dry, _fx, mode=_mode)
+    dry, fx = map(utls.__with_bit_depth, (dry, fx), repeat(bits))
+
+    dry, fx = map(utls.__mono, (dry, fx))
+        
+    sigs = tuple(map(utls.__convert, (dry, fx), repeat(''.join(['int', str(dry.sample_width * 8)]))))
+
+    return _convolve(*sigs, mode)
+
+def _convolve(npy_dry, npy_fx, _mode):
+
+    npy_dry, npy_fx = map(utls.__pcm2float, (npy_dry, npy_fx))
+
+    _conv = sig.convolve(npy_dry, npy_fx, mode=_mode)
     _conv = utls.__normalize(_conv)
     _conv = utls.__float2pcm(_conv)
     
     return _conv
 
-def _apply_fxs(dry, fxs, func=_convolve):
+def _apply_fxs(dry, fxs, func=convolve):
     wet_signals = []
     
     if dry.frame_count() == 0:

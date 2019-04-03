@@ -5,6 +5,10 @@ from src.check_version import check_version
 
 check_version()
 
+from src.check_config import check_config
+
+check_config()
+
 
 import src.utils.logger as log
 import src.utils.path as pth

@@ -15,7 +15,12 @@ def value(section, key, subkey=None):
         raise SystemExit(clrs._red_("[CRITICAL] Can\'t find config.toml at the root"))
         #log.critical('Can\'t find config.toml at the root')
         
-    return _value(CFG_FNAME, section, key, subkey)
+    content = _value(CFG_FNAME, section, key, subkey)
+    if content is None:
+        print(clrs._magenta_(''.join(["[ERROR] Unable to find ", key, " in ", section])))
+        #log.error(clrs._magenta_(''.join(["[ERROR] Unable to find ", key, " in ", section])))
+    else:
+        return content
 
 def _value(fpath, section, key, subkey=None):
     _dict = toml.load(fpath)
@@ -24,5 +29,5 @@ def _value(fpath, section, key, subkey=None):
             return _dict[section][key]
         elif subkey in _dict[section][key]:
             return _dict[section][key][subkey]
-    
+        
     return None

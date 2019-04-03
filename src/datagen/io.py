@@ -40,7 +40,6 @@ def _load(dpath):
 
 def _save(npy_array, fpath, override=True):
     if not override and pth.__exists(fpath):
-        log.debug(''.join([fpath, ' file preserved, override canceled']))
         return
     
     while pth.__file_name(fpath).endswith('.'):

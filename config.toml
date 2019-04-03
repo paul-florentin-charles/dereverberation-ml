@@ -4,7 +4,6 @@
 s_rate = 16000
 s_len = 64000
 bit_depth = 16
-mono = true
 conv_mod = 'same'
 
 [json]

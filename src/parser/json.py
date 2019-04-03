@@ -19,6 +19,8 @@ def load():
     
     if not pth.__is_file(json_fname):
         log.critical(''.join([json_fname, ' doesn\'t exist, can\'t load data from it']))
+
+    log.debug(''.join(["Loading data from \"", json_fname, "\""]))
     
     with open(json_fname, 'r') as fjson:
         return json.load(fjson)

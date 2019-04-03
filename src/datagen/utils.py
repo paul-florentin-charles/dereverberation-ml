@@ -35,6 +35,9 @@ def __mono(audio_segment):
 def __with_sample_rate(audio_segment, sample_rate):
     return audio_segment.set_frame_rate(sample_rate)
 
+def __with_bit_depth(audio_segment, bit_depth):
+    return audio_segment.set_sample_width(bit_depth // 8)
+
 def __convert(audio_segment, _type=None):
     return np.array(audio_segment.get_array_of_samples(), dtype=_type)
 

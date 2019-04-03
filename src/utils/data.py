@@ -11,28 +11,25 @@ from random import choice
 from itertools import repeat
 
 
-def retrieve_data():
-    log.debug(''.join(["Retrieving data using \"", tml.value('json', 'fname'), "\""]))
-    
+DTYPE = ''.join(['int', str(tml.value('audio', 'bit_depth'))])
+
+def write_data():
     _dict = jsn.load()
     if not _dict:
         log.error(''.join([tml.value('json', 'fname'), " is empty"]))
 
     data = []
     for key in _dict:
-        data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(''.join(['int', str(tml.value('audio', 'bit_depth'))])))))
+        data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(DTYPE))))
     
     log.debug(''.join([str(len(data)), ' couples data/label have been retrieved']))
-    
-    return np.asarray(data)
 
-def write_data(data):
-    npz.write(data)
+    npz.write(np.asarray(data))
 
 def read_data():
     _dict = npz.read()
     
-    data, labels = [np.zeros(tml.value('audio', 's_len'))] * 2
+    data, labels = [np.zeros(tml.value('audio', 's_len'), dtype=DTYPE)] * 2
     for fname in _dict:
         data = np.vstack((data, _dict[fname][0]))
         labels = np.vstack((labels, _dict[fname][1]))
