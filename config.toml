@@ -6,13 +6,6 @@ s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
 
-[json]
-fname = 'info.json'
-save_steps = 40
-
-[logger]
-level = 'debug'
-
 [neuralnet]
 fname = 'model.h5'
 batch_size = 2
@@ -20,7 +13,14 @@ epochs = 1
 learning_rate = 2e-4
 
 [data]
+save_steps = 40
+[data.json]
+fname = 'info.json'
+[data.numpy]
 fname = 'data.npz'
+
+[logger]
+level = 'debug'
 
 [demo]
 [demo.datasets]

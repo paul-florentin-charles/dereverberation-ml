@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from src.check_version import check_version
+from src.check import check
 
-check_version()
-
-from src.check_config import check_config
-
-check_config()
-
+check()
 
 import src.utils.path as pth
 import src.parser.toml as tml
@@ -25,8 +20,8 @@ def clean():
     if pth.__exists(dnames['output']):
         rmtree(dnames['output'])
 
-    pth.__remove_file(tml.value('json', 'fname'))
-    pth.__remove_file(tml.value('data', 'fname'))
+    pth.__remove_file(tml.value('data', 'json', 'fname'))
+    pth.__remove_file(tml.value('data', 'numpy', 'fname'))
 
     
 if __name__ == '__main__':

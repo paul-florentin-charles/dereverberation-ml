@@ -78,7 +78,7 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir, func=None):
         _export(wet_signals, dpath)
         
         info[str(dryfpath)] = str(dpath)
-        if (idx + 1) % tml.value('json', 'save_steps') == 0:
+        if (idx + 1) % tml.value('data', 'save_steps') == 0:
             log.debug(''.join(["So far, ", str(idx + 1), " samples have been processed"]))
             jsn.dump(info)
 

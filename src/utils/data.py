@@ -16,7 +16,7 @@ DTYPE = ''.join(['int', str(tml.value('audio', 'bit_depth'))])
 def write_data():
     _dict = jsn.load()
     if not _dict:
-        log.error(''.join([tml.value('json', 'fname'), " is empty"]))
+        log.error(''.join([tml.value('data', 'json', 'fname'), " is empty"]))
 
     data = []
     for key in _dict:

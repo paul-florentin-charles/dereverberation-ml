@@ -8,10 +8,10 @@ import numpy as np
 
 
 def write(data):
-    _write(data, tml.value('data', 'fname'))
+    _write(data, tml.value('data', 'numpy', 'fname'))
 
 def read():
-    return _read(tml.value('data', 'fname'))
+    return _read(tml.value('data', 'numpy', 'fname'))
 
 def _write(data, fname):
     log.debug(''.join(['Writing data in \"', fname, '\"']))

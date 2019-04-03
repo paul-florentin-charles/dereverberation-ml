@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from src.check_version import check_version
+from src.check import check
 
-check_version()
-
-from src.check_config import check_config
-
-check_config()
+check()
 
 
 from src.utils.tools import usage

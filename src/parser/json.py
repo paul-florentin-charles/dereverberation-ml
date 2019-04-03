@@ -8,14 +8,14 @@ import json
 
 
 def init():
-    pth.__create_file(tml.value('json', 'fname'))
+    pth.__create_file(tml.value('data', 'json', 'fname'))
 
 def dump(_dict, mode='w', n_ident=4):
-    with open(tml.value('json','fname'), mode) as fjson:
+    with open(tml.value('data', 'json','fname'), mode) as fjson:
         json.dump(_dict, fjson, indent=n_ident)
 
 def load():
-    json_fname = tml.value('json','fname')
+    json_fname = tml.value('data', 'json','fname')
     
     if not pth.__is_file(json_fname):
         log.critical(''.join([json_fname, ' doesn\'t exist, can\'t load data from it']))

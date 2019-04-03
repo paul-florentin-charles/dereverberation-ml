@@ -1,21 +1,30 @@
 # -*- coding: utf-8 -*-
 
-import src.utils.colors as clrs
-import src.parser.toml as tml
-
-from itertools import repeat
+import sys, six
 
 
-def ok(msg):
-    print(msg + clrs._green_(" [OK]"))
+def check():
+    check_version()
+    check_config()
 
-def notok(msg):
-    print(msg + clrs._red_(" [FAILED]"))
+def check_version():
+    print(''.join(['Running project with Python ', str(sys.version_info.major), '.', str(sys.version_info.minor), '.', str(sys.version_info.micro)]))
+    if not six.PY3:
+        raise SystemExit("Python 3 is required. Please update your version or run with the appropriate program")
 
-def exi(msg): 
+def exi(msg):
     raise SystemExit("\n" + msg + "\n")
     
 def check_config():
+    import src.parser.toml as tml
+    import src.utils.colors as clrs
+
+    from itertools import repeat
+    
+
+    ok = lambda msg : print(msg + clrs._green_(" [OK]"))
+    notok = lambda msg : print(msg + clrs._red_(" [FAILED]"))
+    
     print(clrs._cyan_("Checking config"))
     
     print(clrs._bright_("Audio"))
@@ -74,9 +83,9 @@ def check_config():
 
     print(clrs._bright_("Data"))
 
-    json = tml.value('json', 'fname')
-    stps = tml.value('json', 'save_steps')
-    npz = tml.value('data', 'fname')
+    json = tml.value('data', 'json', 'fname')
+    stps = tml.value('data', 'save_steps')
+    npz = tml.value('data', 'numpy', 'fname')
 
     if not isinstance(json, str) or not json.endswith('.json'):
         notok("JSON file name")
@@ -92,6 +101,15 @@ def check_config():
         notok("numpy file name")
         exi("Numpy file name must be a string with \'.npz\' suffix")
     ok("numpy file name")
+
+    print(clrs._bright_("Logger"))
+
+    lvl = tml.value('logger', 'level')
+
+    if not isinstance(lvl, str) or lvl.lower() not in ['debug', 'info', 'warning', 'error', 'critical']:
+        notok("debug level")
+        exi("Debug level mus be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
+    ok("debug level")
 
     print(clrs._bright_("Demo"))
 
