@@ -3,6 +3,7 @@
 import src.parser.toml as tml
 import src.utils.logger as log
 import src.neuralnet.config as cfg
+from src.neuralnet.utils import shape
 
 from keras.models import Sequential
 
@@ -29,15 +30,15 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, self.batch_size, self.epochs)
+        self.model.fit(*map(shape, (data, labels)), self.batch_size, self.epochs)
 
     def predict(self, data):
         log.debug("Generating predictions")
-        return self.model.predict(data, self.batch_size)
+        return self.model.predict(shape(data), self.batch_size)
 
     def evaluate(self, data, labels):
         log.debug("Evaluating model")
-        return self.model.evaluate(data, labels, self.batch_size)
+        return self.model.evaluate(*map(shape, (data, labels)), self.batch_size)
 
     def save(self):
         log.debug("Saving model")

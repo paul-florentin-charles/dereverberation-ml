@@ -1,33 +1,38 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import sys, six
 
 
-def check():
+def check(verbose=False):
     check_version()
-    check_config()
+    check_config(verbose)
 
+def exi(msg):
+    raise SystemExit(msg)
+    
 def check_version():
     print(''.join(['Running project with Python ', str(sys.version_info.major), '.', str(sys.version_info.minor), '.', str(sys.version_info.micro)]))
     if not six.PY3:
-        raise SystemExit("Python 3 is required. Please update your version or run with the appropriate program")
-
-def exi(msg):
-    raise SystemExit("\n" + msg + "\n")
+        exi("Python 3 is required, please update your version or run with the appropriate program.")
     
-def check_config():
+def check_config(verbose=False):
     import src.parser.toml as tml
     import src.utils.colors as clrs
 
     from itertools import repeat
     
-
-    ok = lambda msg : print(msg + clrs._green_(" [OK]"))
-    notok = lambda msg : print(msg + clrs._red_(" [FAILED]"))
+    print(''.join(['Checking values of ', clrs._cyan_(tml.CFG_FNAME)]))
     
-    print(clrs._cyan_("Checking config"))
+    if verbose:
+        ok = lambda msg : print_function(msg + clrs._green_(" [OK]"))
+        notok = lambda msg : print_function(msg + clrs._red_(" [FAILED]"))
+        section = lambda name : print_function(clrs._bright_("[" + name  + "]"))
+    else:
+        ok = notok = section = lambda msg : None
     
-    print(clrs._bright_("Audio"))
+    section("Audio")
     
     sr = tml.value('audio', 's_rate')
     slen = tml.value('audio', 's_len')
@@ -54,7 +59,7 @@ def check_config():
         exi("Convolution mode must be a string picked among \'full\', \'same\' and \'valid\'")
     ok("convolution mode")
 
-    print(clrs._bright_("Neural Network"))
+    section("Neural Network")
 
     fnam = tml.value('neuralnet', 'fname')
     bsiz = tml.value('neuralnet', 'batch_size')
@@ -81,7 +86,7 @@ def check_config():
         exi("Learning rate must be a strictly positive number")
     ok("learning rate")
 
-    print(clrs._bright_("Data"))
+    section("Data")
 
     json = tml.value('data', 'json', 'fname')
     stps = tml.value('data', 'save_steps')
@@ -102,7 +107,7 @@ def check_config():
         exi("Numpy file name must be a string with \'.npz\' suffix")
     ok("numpy file name")
 
-    print(clrs._bright_("Logger"))
+    section("Logger")
 
     lvl = tml.value('logger', 'level')
 
@@ -111,7 +116,7 @@ def check_config():
         exi("Debug level mus be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
     ok("debug level")
 
-    print(clrs._bright_("Demo"))
+    section("Demo")
 
     size = tml.value('demo', 'datasets', 'size')
     url = tml.value('demo', 'datasets', 'url')
