@@ -1,26 +1,29 @@
 # -*- coding: utf-8 -*-
 
-"""
-# Normalize arrays using global maximum
-def normalize(data):
-    data = data.astype('float64')
-    
-    return data / max(map(max, data))
-"""
+import src.utils.logger as log
 
-# Normalize independently each array
-def normalize(data):
+
+#TODO: Implement 2d-reprensation for data, to test a model with spectrum
+
+def normalized(data):
+    if data.ndim != 2:
+        log.warning("\'normalize\' expects a two-dimensional array : (n_samples, sample_len)")
+        return data
+    
     data = data.astype('float64')
     for i in range(data.shape[0]):
-        data[i] = data[i] / max(data[i])
+        data[i] = data[i] / max(abs(data[i]))
 
     return data
 
-def reshape(data):
-    #return data.reshape(data.shape[0], 1, -1)
+def reshaped(data):
+    if data.ndim != 2:
+        log.error("\'reshape\' expects a two-dimensional array : (n_samples, sample_len)")
+        return data
+    
     return data.reshape(*data.shape, 1)
 
 
-def shape(data):
+def shaped(data):
     return reshape(normalize(data))
     

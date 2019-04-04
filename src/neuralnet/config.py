@@ -16,12 +16,17 @@ EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
+FRAME_SIZE = 2048
+
+HOP_SIZE = 1024
 
 # Classes and functions
 
-OPTIMIZER = opt.SGD(lr=tml.value('neuralnet', 'learning_rate'))
+OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'))
 
-INITIALIZER = ini.TruncatedNormal()
+KERNEL_INITIALIZER = ini.TruncatedNormal()
+
+BIAS_INITIALIZER = ini.Zeros()
 
 LOSS = los.mean_squared_error
 

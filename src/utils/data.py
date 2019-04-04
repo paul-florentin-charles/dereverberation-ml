@@ -19,6 +19,7 @@ def write_data():
         log.error(''.join([tml.value('data', 'json', 'fname'), " is empty"]))
 
     data = []
+    # replace choice by a fix index if you wish to pick the same fx
     for key in _dict:
         data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(DTYPE))))
     
