@@ -59,8 +59,10 @@ def _export(npy_arrays, outdpath=None, override=True):
 
 ## Generating dataset ##
 
-def generate_dataset(dry_dpath, fx_dpath, output_dir, func=None):
-    if not pth.__exists(output_dir):
+def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
+    if not output_dir:
+        output_dir = mkrdir()
+    elif not pth.__exists(output_dir):
         pth.__make_dir(output_dir)
 
     fxs = _load(fx_dpath)

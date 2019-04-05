@@ -7,7 +7,7 @@ from src.utils.data import write_data, read_data
 #from src.neuralnet.model import NeuralNetwork
 
 
-def run(dry_dpath, fx_dpath, output_dir):
+def run(dry_dpath, fx_dpath, output_dir=None):
     # Dataset generation
 
     log.info('Generating dataset of wet samples')
@@ -34,13 +34,13 @@ def run(dry_dpath, fx_dpath, output_dir):
     NN = NeuralNetwork()
     NN.compile()
     data, labels = map(shape, (data, labels))
-    NN.train(data, labels)
+    NN.train(data[:-20], labels[:-20])
     NN.save()
 
     # Model predicting
 
-    log.info('Generating with model')
+    log.info('Predicting ')
 
-    res = NN.predict(data)
+    res = NN.predict(data[-20:])
     _export(unshape(res))
     """

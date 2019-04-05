@@ -16,9 +16,7 @@ EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
-FRAME_SIZE = 1024
-
-HOP_SIZE = 512
+KERNEL_SIZE = 500
 
 
 # Classes and functions
@@ -29,11 +27,15 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
 
-HIDDEN_ACTIVATION = act.tanh
+HIDDEN_ACTIVATION = act.linear
 
-FINAL_ACTIVATION = act.linear
+FINAL_ACTIVATION = act.tanh
 
 LOSS = los.mean_squared_error
 
+
+# Strings parameters
+
 METRICS = ['accuracy']
 
+CONVOLUTION_PADDING = 'same'

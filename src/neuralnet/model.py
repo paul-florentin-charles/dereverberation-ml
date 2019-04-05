@@ -13,7 +13,8 @@ class NeuralNetwork(object):
         self.b_siz = cfg.BATCH_SIZE
         self.epoc = cfg.EPOCHS
         self.in_shp = cfg.INPUT_SHAPE
-        self.f_siz = cfg.FRAME_SIZE
+        self.k_siz = cfg.KERNEL_SIZE
+        self.c_pad = cfg.CONVOLUTION_PADDING
         self.opt = cfg.OPTIMIZER
         self.loss = cfg.LOSS
         self.h_act = cfg.HIDDEN_ACTIVATION
@@ -32,25 +33,22 @@ class NeuralNetwork(object):
 
         # encoder
 
-        ENC = Conv1D(8, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(X)
+        ENC = Conv1D(2, self.f_siz, padding=self.c_pad, activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(X)
         ENC = MaxPooling1D(2, padding='same')(ENC)
-        ENC = Conv1D(4, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        ENC = Conv1D(4, self.f_siz, padding=self.c_pad, activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
         ENC = MaxPooling1D(2, padding='same')(ENC)
-        ENC = Conv1D(2, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
-        ENC = MaxPooling1D(2, padding='same')(ENC)
-
+        ENC = Conv1D(8, self.f_siz, padding=self.c_pad, activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        
         # decoder
 
-        DEC = Conv1D(2, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        DEC = Conv1D(8, self.f_siz, padding=self.c_pad, activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
         DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(4, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
-        DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(8, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
+        DEC = Conv1D(4, self.f_siz, padding=self.c_pad, activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
         DEC = UpSampling1D(2)(DEC)
 
         ## output
 
-        Y = Conv1D(1, self.f_siz, padding='causal', activation=self.f_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
+        Y = Conv1D(1, self.f_siz, padding=self.c_pad, activation=self.f_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
 
         self.model = Model(inputs=X, outputs=Y)
         

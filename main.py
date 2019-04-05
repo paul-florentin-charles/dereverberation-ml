@@ -5,7 +5,6 @@ from src.check import check
 
 check()
 
-
 from src.utils.tools import usage
 import src.utils.logger as log
 
@@ -23,7 +22,7 @@ def main():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        raise SystemExit(usage(__file__.replace('./', ''), ['path/to/dry/signals/dir', 'path/to/impulse/responses/dir', 'path/to/output/dir']))
+    if len(sys.argv) < 3:
+        raise SystemExit(usage(__file__.replace('./', ''), ['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], ['path/to/output/dir']))
     
     main()

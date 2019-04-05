@@ -18,20 +18,20 @@ make install
 ## Run
 
 ```bash
-make run dry=path/to/dry/signals/dir fx=path/to/impulse/responses/dir wet=path/to/output/dir
+make run dry=path/to/dry/signals/dir fx=path/to/impulse/responses/dir [wet=path/to/output/dir]
 ```
 
 or
 
 ```bash
-python3 main.py path/to/dry/signals/dir path/to/impulse/responses/dir path/to/output/dir
+python3 main.py path/to/dry/signals/dir path/to/impulse/responses/dir [path/to/output/dir]
 ```
 
 or as a script
 
 ```bash
 chmod 744 main.py
-./main.py path/to/dry/signals/dir path/to/impulse/responses/dir path/to/output/dir
+./main.py path/to/dry/signals/dir path/to/impulse/responses/dir [path/to/output/dir]
 ```
 
 Information will be stored in a JSON file whose name is set in **config.toml**.

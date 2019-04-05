@@ -18,6 +18,6 @@ cleanall: clean
 
 help:
 	@echo "INSTALL /w pip: make install"
-	@echo "RUN: make run dry=path/to/dry fx=path/to/fx wet=output/path"
+	@echo "RUN: make run dry=path/to/dry fx=path/to/fx [wet=output/path]"
 	@echo "DEMO: make demo"
 	@echo "CLEAN: make clean[all]"
