@@ -32,20 +32,20 @@ class NeuralNetwork(object):
 
         # encoder
 
-        ENC = Conv1D(16, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(X)
-        ENC = MaxPooling1D(2, padding='same')(ENC)
-        ENC = Conv1D(8, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        ENC = Conv1D(8, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(X)
         ENC = MaxPooling1D(2, padding='same')(ENC)
         ENC = Conv1D(4, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        ENC = MaxPooling1D(2, padding='same')(ENC)
+        ENC = Conv1D(2, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
         ENC = MaxPooling1D(2, padding='same')(ENC)
 
         # decoder
 
-        DEC = Conv1D(4, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        DEC = Conv1D(2, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        DEC = UpSampling1D(2)(DEC)
+        DEC = Conv1D(4, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
         DEC = UpSampling1D(2)(DEC)
         DEC = Conv1D(8, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
-        DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(16, self.f_siz, padding='causal', activation=self.h_act, kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
         DEC = UpSampling1D(2)(DEC)
 
         ## output
