@@ -38,4 +38,4 @@ LOSS = los.mean_squared_error
 
 METRICS = ['accuracy']
 
-CONVOLUTION_PADDING = 'same'
+CONVOLUTION_PADDING = 'causal'
