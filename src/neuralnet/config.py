@@ -35,5 +35,5 @@ FINAL_ACTIVATION = act.linear
 
 LOSS = los.mean_squared_error
 
-METRICS = ['accuracy', LOSS]
+METRICS = ['accuracy']
 
