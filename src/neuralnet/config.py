@@ -5,7 +5,7 @@ import src.parser.toml as tml
 from keras import optimizers as opt
 from keras import losses as los
 from keras import initializers as ini
-from keras import metrics as met
+from keras import activations as act
 
 
 # Numerical parameters
@@ -16,19 +16,24 @@ EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
-FRAME_SIZE = 2048
+FRAME_SIZE = 1024
 
-HOP_SIZE = 1024
+HOP_SIZE = 512
+
 
 # Classes and functions
 
-OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'))
+OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'), decay=tml.value('neuralnet', 'decay'))
 
 KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
 
+HIDDEN_ACTIVATION = act.tanh
+
+FINAL_ACTIVATION = act.linear
+
 LOSS = los.mean_squared_error
 
-METRICS = [met.categorical_accuracy, LOSS]
+METRICS = ['accuracy', LOSS]
 

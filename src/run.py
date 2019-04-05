@@ -3,6 +3,7 @@
 import src.utils.logger as log
 from src.datagen.io import generate_dataset
 from src.utils.data import write_data, read_data
+from src.neuralnet.utils import shape, unshape
 #from src.neuralnet.model import NeuralNetwork
 
 
@@ -32,6 +33,14 @@ def run(dry_dpath, fx_dpath, output_dir):
 
     NN = NeuralNetwork()
     NN.compile()
+    data, labels = map(shape, (data, labels))
     NN.train(data, labels)
     NN.save()
+
+    # Model predicting
+
+    log.info('Generating with model')
+
+    res = NN.predict(data)
+    _export(unshape(res))
     """

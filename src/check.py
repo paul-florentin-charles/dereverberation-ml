@@ -26,11 +26,13 @@ def check_config(verbose=False):
     print(''.join(['Checking values of ', clrs._cyan_(tml.CFG_FNAME)]))
     
     if verbose:
-        ok = lambda msg : print_function(msg + clrs._green_(" [OK]"))
-        notok = lambda msg : print_function(msg + clrs._red_(" [FAILED]"))
-        section = lambda name : print_function(clrs._bright_("[" + name  + "]"))
+        ok = lambda msg : print(msg + clrs._green_(" [OK]"))
+        notok = lambda msg : print(msg + clrs._red_(" [FAILED]"))
+        section = lambda name : print(clrs._bright_("[" + name  + "]"))
     else:
         ok = notok = section = lambda msg : None
+
+    check_value = lambda vname, cond, msg : ok(vname) if cond else notok(vname) or exi(msg)
     
     section("Audio")
     
@@ -38,26 +40,14 @@ def check_config(verbose=False):
     slen = tml.value('audio', 's_len')
     bits = tml.value('audio', 'bit_depth')
     mod = tml.value('audio', 'conv_mod')
-    
-    if not isinstance(sr, int) or sr <= 0:
-        notok("sample rate")
-        exi("Sample rate must be a strictly positive integer")
-    ok("sample rate")
 
-    if not isinstance(slen, int) or slen <= 0:
-        notok("sample length")
-        exi("Sample length must be a strictly positive integer")
-    ok("sample length")
+    check_value('sample rate', isinstance(sr, int) and sr > 0, "Sample rate must be a strictly positive integer")
 
-    if not isinstance(bits, int) or bits <= 0 or bits % 8 != 0:
-        notok("bit depth")
-        exi("Bit depth must be a strictly positive mutiple of 8")
-    ok("bit depth")
+    check_value('sample length', isinstance(slen, int) and slen > 0, "Sample length must be a strictly positive integer")
 
-    if not isinstance(mod, str) or mod not in ['full', 'same', 'valid']:
-        notok("convolution mode")
-        exi("Convolution mode must be a string picked among \'full\', \'same\' and \'valid\'")
-    ok("convolution mode")
+    check_value('bit depth', isinstance(bits, int) and bits > 0 and bits % 8 == 0, "Bit depth must be a strictly positive multiple of 8")
+
+    check_value('convolution mode', isinstance(mod, str) and mod in ['full', 'same', 'valid'], "Convolution mode must be a string picked among \'full\', \'same\' and \'valid\'")
 
     section("Neural Network")
 
@@ -65,56 +55,35 @@ def check_config(verbose=False):
     bsiz = tml.value('neuralnet', 'batch_size')
     epoc = tml.value('neuralnet', 'epochs')
     lr = tml.value('neuralnet', 'learning_rate')
+    dec = tml.value('neuralnet', 'decay')
 
-    if not isinstance(fnam, str) or not fnam.endswith('.h5'):
-        notok("model file name")
-        exi("Model file name must be a string with \'.h5\' suffix")
-    ok("model file name")
+    check_value('model file name', isinstance(fnam, str) and fnam.endswith('.h5'), "Model file name must be a string with \'.h5\' suffix") 
 
-    if not isinstance(bsiz, int) or bsiz <= 0:
-        notok("batch size")
-        exi("Batch size must be a strictly positive integer")
-    ok("batch size")
+    check_value('batch size', isinstance(bsiz, int) and bsiz > 0, "Batch size must be a strictly positive integer")
 
-    if not isinstance(epoc, int) or epoc <= 0:
-        notok("epochs")
-        exi("Epochs must be a strictly positive integer")
-    ok("epochs")
+    check_value('epochs', isinstance(epoc, int) and epoc > 0, "Epochs must be a strictly positive integer")
 
-    if not isinstance(lr, (int, float)) or lr <= 0:
-        notok("learning rate")
-        exi("Learning rate must be a strictly positive number")
-    ok("learning rate")
-
+    check_value('learning rate', isinstance(lr, (int, float)) and lr > 0, "Learning rate must be a strictly positive number")
+    
+    check_value('decay', isinstance(dec, (int, float)) and dec > 0, "Decay must be a strictly positive number")
+    
     section("Data")
 
     json = tml.value('data', 'json', 'fname')
     stps = tml.value('data', 'save_steps')
     npz = tml.value('data', 'numpy', 'fname')
 
-    if not isinstance(json, str) or not json.endswith('.json'):
-        notok("JSON file name")
-        exi("JSON file name must be a string with \'.json\' suffix")
-    ok("JSON file name")
+    check_value('JSON file name', isinstance(json, str) and json.endswith('.json'), "JSON file name must be a string with \'.json\' suffix")
 
-    if not isinstance(stps, int) or stps <= 0:
-        notok("save steps")
-        exi("Save steps must be a strictly positive integer")
-    ok("save steps")
+    check_value('save steps', isinstance(stps, int) and stps > 0, "Save steps must be a strictly positive integer")
 
-    if not isinstance(npz, str) or not npz.endswith('.npz'):
-        notok("numpy file name")
-        exi("Numpy file name must be a string with \'.npz\' suffix")
-    ok("numpy file name")
+    check_value('numpy file name', isinstance(npz, str) and npz.endswith('.npz'), "Numpy file name must be a string with \'.npz\' suffix")
 
     section("Logger")
 
     lvl = tml.value('logger', 'level')
 
-    if not isinstance(lvl, str) or lvl.lower() not in ['debug', 'info', 'warning', 'error', 'critical']:
-        notok("debug level")
-        exi("Debug level mus be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
-    ok("debug level")
+    check_value('debug level', isinstance(lvl, str) and lvl.lower() in ['debug', 'info', 'warning', 'error', 'critical'], "Debug level mus be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
 
     section("Demo")
 
@@ -124,17 +93,8 @@ def check_config(verbose=False):
     ipt2 = tml.value('demo', 'dnames', 'input_fx')
     out = tml.value('demo', 'dnames', 'output')
 
-    if not isinstance(size, str) or size not in ['tiny', 'small', 'medium', 'big']:
-        notok("demo size")
-        exi("Demo size must be a string picked among \'tiny\', \'small\', \'medium\' and \'big\'")
-    ok("demo size")
+    check_value('demo size', isinstance(size, str) and size in ['tiny', 'small', 'medium', 'big'], "Demo size must be a string picked among \'tiny\', \'small\', \'medium\' and \'big\'")
 
-    if not isinstance(url, str):
-        notok("demo url")
-        exi("Demo url must be a string")
-    ok("demo url")
+    check_value('demo url', isinstance(url, str), "Demo url must be a string")
 
-    if not all(map(isinstance, (ipt1, ipt2, out), repeat(str))):
-        notok("demo directory names")
-        exi("All demo directory names must be string")
-    ok("demo directory names")
+    check_value('demo directory names', all(map(isinstance, (ipt1, ipt2, out), repeat(str))), "All demo directory names must be string")

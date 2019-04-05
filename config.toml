@@ -9,8 +9,9 @@ conv_mod = 'same'
 [neuralnet]
 fname = 'model.h5'
 batch_size = 2
-epochs = 1
-learning_rate = 2e-4
+epochs = 2
+learning_rate = 2e-3
+decay = 4e-4
 
 [data]
 save_steps = 40
