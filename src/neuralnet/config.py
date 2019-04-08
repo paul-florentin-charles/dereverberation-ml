@@ -5,7 +5,6 @@ import src.parser.toml as tml
 from keras import optimizers as opt
 from keras import losses as los
 from keras import initializers as ini
-from keras import activations as act
 
 
 # Numerical parameters
@@ -15,8 +14,6 @@ BATCH_SIZE = tml.value('neuralnet', 'batch_size')
 EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
-
-KERNEL_NUMBER = 2
 
 KERNEL_SIZE = 500
 
@@ -30,10 +27,6 @@ OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'), decay=tml.value
 KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
-
-HIDDEN_ACTIVATION = act.linear
-
-FINAL_ACTIVATION = act.tanh
 
 LOSS = los.mean_squared_error
 
