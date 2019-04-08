@@ -14,7 +14,6 @@ class NeuralNetwork(object):
         self.in_shp = cfg.INPUT_SHAPE
         self.k_siz = cfg.KERNEL_SIZE
         self.v_spl = cfg.VALIDATION_SPLIT
-        self.stps = cfg.SAVE_STEPS
         self.opt = cfg.OPTIMIZER
         self.loss = cfg.LOSS
         self.k_ini = cfg.KERNEL_INITIALIZER
@@ -48,7 +47,7 @@ class NeuralNetwork(object):
 
         Y = Conv1D(1, self.k_siz, padding='same', activation='linear', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
 
-        self.model = Model(inputs=X, outputs=Y, callbacks=self.c_bac)
+        self.model = Model(inputs=X, outputs=Y)
         
     def compile(self):
         log.debug("Compiling model")
@@ -56,7 +55,7 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl)
+        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl, callbacks=self.c_bac)
 
     def predict(self, data):
         log.debug("Generating predictions")
