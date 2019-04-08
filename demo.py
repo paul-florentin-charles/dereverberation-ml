@@ -21,15 +21,8 @@ def demo():
     
     # Downloading data from URLs and extracting downloaded files
 
-    base_url = tml.value('demo', 'datasets', 'url')
-
-    size = tml.value('demo', 'datasets', 'size')
-    if size not in ['tiny', 'small', 'medium', 'big']:
-        log.error(''.join(['\"', size, '\": unrecognized demo size, set to \"tiny\" by default']))
-        size = 'tiny'
-
-    note_url = ''.join([base_url, 'note_dataset_', size, '.tar.gz'])
-    fx_url = ''.join([base_url, 'ir_dataset_', size, '.zip'])
+    dry_url = tml.value('demo', 'urls', 'dry')
+    fx_url = tml.value('demo', 'urls', 'fx')
 
     dry_dpath = tml.value('demo', 'dnames', 'input_dry')
     fx_dpath = tml.value('demo', 'dnames', 'input_fx')
@@ -37,14 +30,14 @@ def demo():
     log.info("Downloading and extracting dataset(s)")
     
     if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):  
-        note_fname, fx_fname = download(note_url), download(fx_url)
+        dry_fname, fx_fname = download(dry_url), download(fx_url)
         
-        extract(note_fname, dry_dpath)
+        extract(dry_fname, dry_dpath)
         extract(fx_fname, fx_dpath)
     elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
-        note_fname = download(note_url)
+        dry_fname = download(dry_url)
         
-        extract(note_fname, dry_dpath)
+        extract(dry_fname, dry_dpath)
     elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
         fx_fname = download(fx_url)
         

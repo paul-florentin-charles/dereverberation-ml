@@ -50,13 +50,7 @@ or if you have *Make* installed
 make demo
 ```
 
-You can change the demo size by modifying the field *size* in section *demo.datasets* in **config.toml**.
-
-Possible values are:
-* `tiny`
-* `small`
-* `medium`
-* `big`
+You can change demo urls by modifying fields in *demo.urls* section in **config.toml**.
 
 ## Clean
 

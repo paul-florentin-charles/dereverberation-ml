@@ -16,9 +16,11 @@ EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
-KERNEL_NUMBER = 4
+KERNEL_NUMBER = 2
 
 KERNEL_SIZE = 500
+
+VALIDATION_SPLIT = 0.2
 
 
 # Classes and functions

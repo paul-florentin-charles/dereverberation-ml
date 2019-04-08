@@ -21,7 +21,8 @@ def write_data():
     data = []
     # replace choice by a fix index if you wish to pick the same fx
     for key in _dict:
-        data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(DTYPE))))
+        data.append(list(map(__convert, (_load(_dict[key])[0], _read(key)), repeat(DTYPE))))
+        #data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(DTYPE))=)
     
     log.debug(''.join([str(len(data)), ' couples data/label have been retrieved']))
 

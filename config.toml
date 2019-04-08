@@ -9,9 +9,9 @@ conv_mod = 'same'
 [neuralnet]
 fname = 'model.h5'
 batch_size = 2
-epochs = 4
+epochs = 20
 learning_rate = 2e-3
-decay = 4e-4
+decay = 4e-5
 
 [data]
 save_steps = 40
@@ -24,10 +24,9 @@ fname = 'data.npz'
 level = 'debug'
 
 [demo]
-[demo.datasets]
-#TODO: use complete URLs directly instead of using 'size'
-size = 'tiny'
-url = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/'
+[demo.urls]
+dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_medium.tar.gz'
+fx = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/ir_dataset_solo.zip'
 [demo.dnames]
 input_dry = 'dry'
 input_fx = 'fx'

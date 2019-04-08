@@ -87,14 +87,12 @@ def check_config(verbose=False):
 
     section("Demo")
 
-    size = tml.value('demo', 'datasets', 'size')
-    url = tml.value('demo', 'datasets', 'url')
+    url1 = tml.value('demo', 'urls', 'dry')
+    url2 = tml.value('demo', 'urls', 'fx')
     ipt1 = tml.value('demo', 'dnames', 'input_dry')
     ipt2 = tml.value('demo', 'dnames', 'input_fx')
     out = tml.value('demo', 'dnames', 'output')
 
-    check_value('demo size', isinstance(size, str) and size in ['tiny', 'small', 'medium', 'big'], "Demo size must be a string picked among \'tiny\', \'small\', \'medium\' and \'big\'")
-
-    check_value('demo url', isinstance(url, str), "Demo url must be a string")
+    check_value('demo urls', all(map(isinstance, (url1, url2), repeat(str))), "Demo urls must be strings")
 
     check_value('demo directory names', all(map(isinstance, (ipt1, ipt2, out), repeat(str))), "All demo directory names must be string")
