@@ -5,6 +5,7 @@ import src.parser.toml as tml
 from keras import optimizers as opt
 from keras import losses as los
 from keras import initializers as ini
+from keras import callbacks as cal
 
 
 # Numerical parameters
@@ -30,7 +31,11 @@ BIAS_INITIALIZER = ini.Zeros()
 
 LOSS = los.mean_squared_error
 
+CALLBACKS = cal.ModelCheckpoint('model.{epoch:02d}-{val_loss:.2f}.hdf5', period=tml.value('neuralnet', 'save_steps'))
+
 
 # Strings parameters
+
+FILE_NAME = tml.value('neuralnet', 'fname')
 
 METRICS = ['accuracy']

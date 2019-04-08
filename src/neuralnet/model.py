@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import src.parser.toml as tml
 import src.utils.logger as log
 import src.neuralnet.config as cfg
 
@@ -15,12 +14,14 @@ class NeuralNetwork(object):
         self.in_shp = cfg.INPUT_SHAPE
         self.k_siz = cfg.KERNEL_SIZE
         self.v_spl = cfg.VALIDATION_SPLIT
+        self.stps = cfg.SAVE_STEPS
         self.opt = cfg.OPTIMIZER
         self.loss = cfg.LOSS
         self.k_ini = cfg.KERNEL_INITIALIZER
         self.b_ini = cfg.BIAS_INITIALIZER
         self.met = cfg.METRICS
-        self.fnam = tml.value('neuralnet', 'fname')
+        self.c_bac = cfg.CALLBACKS
+        self.fnam = cfg.FILE_NAME
         self.__model__()
 
     def __model__(self):
@@ -47,7 +48,7 @@ class NeuralNetwork(object):
 
         Y = Conv1D(1, self.k_siz, padding='same', activation='linear', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
 
-        self.model = Model(inputs=X, outputs=Y)
+        self.model = Model(inputs=X, outputs=Y, callbacks=self.c_bac)
         
     def compile(self):
         log.debug("Compiling model")
