@@ -44,7 +44,7 @@ class NeuralNetwork(object):
         DEC = Conv1D(4, self.k_siz, padding='same', activation='linear', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
         DEC = UpSampling1D(2)(DEC)
 
-  é      ## output
+        ## output
 
         Y = Conv1D(1, self.k_siz, padding='same', activation='tanh', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
 
@@ -56,8 +56,7 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        v_splt = (int(data.shape[0] * self.v_spl) - int(data.shape[0] * self.v_spl) % self.b_siz) / data.shape[0]
-        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=v_splt)
+        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl)
 
     def predict(self, data):
         log.debug("Generating predictions")
