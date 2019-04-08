@@ -24,8 +24,6 @@ def shape(data):
     return data.reshape(*data.shape, 1)    
 
 def unshape(data):
-    print(data.dtype)
-    
     if data.ndim != 3:
         log.error("\'unshape\' expects a two-dimensional array : (n_samples, sample_len, n_channels)")
         return data
@@ -40,26 +38,3 @@ def unshape(data):
         data[i] = __float2pcm(data[i])
 
     return data.astype(DTYPE)
-
-'''
-def normalized(data):
-    if data.ndim != 2:
-        log.warning("\'normalize\' expects a two-dimensional array : (n_samples, sample_len)")
-        return data
-    
-    data = data.astype('float64')
-    for i in range(data.shape[0]):
-        data[i] = data[i] / max(abs(data[i]))
-
-    return data
-
-def reshaped(data):
-    if data.ndim != 2:
-        log.error("\'reshape\' expects a two-dimensional array : (n_samples, sample_len)")
-        return data
-    
-    return data.reshape(*data.shape, 1)
-
-def shaped(data):
-    return reshaped(normalized(data))
-'''
