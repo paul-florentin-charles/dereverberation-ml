@@ -34,13 +34,13 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     NN = NeuralNetwork()
     NN.compile()
     data, labels = map(shape, (data, labels))
-    NN.train(data[:-20], labels[:-20])
+    NN.train(data[:-10], labels[:-10])
     NN.save()
 
     # Model predicting
 
     log.info('Predicting ')
 
-    res = NN.predict(data[-20:])
+    res = NN.predict(data[-10:])
     _export(unshape(res))
     """

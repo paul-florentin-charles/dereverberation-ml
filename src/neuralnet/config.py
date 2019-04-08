@@ -39,5 +39,3 @@ LOSS = los.mean_squared_error
 # Strings parameters
 
 METRICS = ['accuracy']
-
-CONVOLUTION_PADDING = 'causal'
