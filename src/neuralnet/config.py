@@ -16,7 +16,7 @@ EPOCHS = tml.value('neuralnet', 'epochs')
 
 INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
-KERNEL_SIZE = 500
+KERNEL_SIZE = tml.value('audio', 'f_size')
 
 VALIDATION_SPLIT = 0.1
 
@@ -25,11 +25,11 @@ VALIDATION_SPLIT = 0.1
 
 OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'), decay=tml.value('neuralnet', 'decay'))
 
+LOSS = los.mean_squared_error
+
 KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
-
-LOSS = los.mean_squared_error
 
 CALLBACKS = cal.ModelCheckpoint('model.{epoch:02d}-{val_loss:.2f}.hdf5', period=tml.value('neuralnet', 'save_steps'))
 

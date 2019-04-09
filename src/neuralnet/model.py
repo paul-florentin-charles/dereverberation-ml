@@ -55,7 +55,7 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl, callbacks=self.c_bac)
+        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl, callbacks=[self.c_bac])
 
     def predict(self, data):
         log.debug("Generating predictions")

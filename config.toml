@@ -5,12 +5,13 @@ s_rate = 16000
 s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
+f_size = 500
 
 [neuralnet]
 fname = 'model.h5'
 batch_size = 2
 epochs = 40
-save_steps = 5
+save_steps = 2
 learning_rate = 2e-3
 decay = 4e-5
 
@@ -26,7 +27,7 @@ level = 'debug'
 
 [demo]
 [demo.urls]
-dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_medium.tar.gz'
+dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_big.tar.gz'
 fx = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/ir_dataset_solo.zip'
 [demo.dnames]
 input_dry = 'dry'

@@ -9,6 +9,7 @@ from shutil import unpack_archive
 from string import ascii_letters, digits
 import requests as req
 from http import HTTPStatus as HTTP
+from inspect import signature
 
 
 def usage(pname, required_args = [], optional_args = []):
@@ -51,3 +52,10 @@ def extract(fname, dname):
         log.critical(''.join(['\"', fname, '\" not a valid archive']))
         
     pth.__remove_file(fname)
+
+def n_parameters(func):
+    if not callable(func):
+        log.warning(''.join([str(func), " is not a function"]))
+        return -1
+    
+    return len(signature(func).parameters)

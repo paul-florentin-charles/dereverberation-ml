@@ -2,26 +2,25 @@
 
 from __future__ import print_function
 
-import sys, six
+import sys
 
 
 def check(verbose=False):
     check_version()
     check_config(verbose)
-
-def exi(msg):
-    raise SystemExit(msg)
     
 def check_version():
-    print(''.join(['Running project with Python ', str(sys.version_info.major), '.', str(sys.version_info.minor), '.', str(sys.version_info.micro)]))
-    if not six.PY3:
-        exi("Python 3 is required, please update your version or run with the appropriate program.")
+    print('Running project with Python', '.'.join([str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)]))
+    
+    if sys.version_info.major != 3:
+        sys.exit("Python 3 is required, please update your version or run with the appropriate program.")
     
 def check_config(verbose=False):
     import src.parser.toml as tml
     import src.utils.colors as clrs
 
     from itertools import repeat
+    
     
     print(''.join(['Checking values of ', clrs._cyan_(tml.CFG_FNAME)]))
     
@@ -32,7 +31,7 @@ def check_config(verbose=False):
     else:
         ok = notok = section = lambda msg : None
 
-    check_value = lambda vname, cond, msg : ok(vname) if cond else notok(vname) or exi(msg)
+    check_value = lambda vname, cond, msg : ok(vname) if cond else notok(vname) or sys.exit(msg)
     
     section("Audio")
     
@@ -40,6 +39,7 @@ def check_config(verbose=False):
     slen = tml.value('audio', 's_len')
     bits = tml.value('audio', 'bit_depth')
     mod = tml.value('audio', 'conv_mod')
+    fsiz = tml.value('audio', 'f_size')
 
     check_value('sample rate', isinstance(sr, int) and sr > 0, "Sample rate must be a strictly positive integer")
 
@@ -48,6 +48,8 @@ def check_config(verbose=False):
     check_value('bit depth', isinstance(bits, int) and bits > 0 and bits % 8 == 0, "Bit depth must be a strictly positive multiple of 8")
 
     check_value('convolution mode', isinstance(mod, str) and mod in ['full', 'same', 'valid'], "Convolution mode must be a string picked among \'full\', \'same\' and \'valid\'")
+
+    check_value('frame size', isinstance(fsiz, int) and fsiz > 0, "Frame size must be a strictly positive integer")
 
     section("Neural Network")
 
