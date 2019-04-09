@@ -24,6 +24,6 @@ def main():
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        raise SystemExit(usage(__file__.replace('./', ''), ['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], ['path/to/output/dir']))
+        raise SystemExit(usage(__file__.replace('./', ''), required_args=['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], optional_args=['path/to/output/dir']))
     
     main()

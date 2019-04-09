@@ -17,7 +17,10 @@ def value(section, key, subkey=None):
         
     content = _value(CFG_FNAME, section, key, subkey)
     if content is None:
-        print(clrs._magenta_(''.join(["[ERROR] Unable to find \'", key, "\' in \'", section, "\'"])))
+        if subkey:
+            print(clrs._magenta_(''.join(["[ERROR] Unable to find \'", subkey, "\' in \'", key, "\' in \'", section, "\'"])))
+        else:
+            print(clrs._magenta_(''.join(["[ERROR] Unable to find \'", key, "\' in \'", section, "\'"])))
         #log.error(clrs._magenta_(''.join(["[ERROR] Unable to find ", key, " in ", section])))
     else:
         return content

@@ -7,14 +7,15 @@ Set and get audio properties
 import src.utils.path as pth
 
 import numpy as np
-
 import fleep
 
 
 ## Useful to avoid picking non audio files ##
 
 def __is_audio_file(fpath):
-    '''Checks wether file at <fpath> is an audio file or not'''
+    """Returns True if <fpath> is an audio file
+    Otherwise returns False
+    """
     if not pth.__is_file(fpath):
         return False
 
@@ -25,23 +26,31 @@ def __is_audio_file(fpath):
     return False
 
 def __list_audio_files(path, recursively=True):
+    """Lists audio files at <path>
+    If <recursively> is set to True, listing is recursive
+    """
     return list(filter(__is_audio_file, pth.__list_files(path, recursively)))
 
 ## Various functions based on audio properties ##
               
 def __mono(audio_segment):
+    """Returns a mono version of <audio_segment>"""
     return audio_segment.set_channels(1)
 
 def __with_sample_rate(audio_segment, sample_rate):
+    """Returns a version of <audio_segment> with updated sample rate"""
     return audio_segment.set_frame_rate(sample_rate)
 
 def __with_bit_depth(audio_segment, bit_depth):
+    """Returns a version of <audio_segment> with updated bit depth"""
     return audio_segment.set_sample_width(bit_depth // 8)
 
 def __convert(audio_segment, _type=None):
+    """Converts <audio_segment> into numpy array with dtype <_type>"""
     return np.array(audio_segment.get_array_of_samples(), dtype=_type)
 
 def __normalize(npy_array):
+    """Normalizes <npy_array> by its maximum"""
     return npy_array / max(npy_array)
 
 def __float2pcm(npy_array, _type='int16'):    

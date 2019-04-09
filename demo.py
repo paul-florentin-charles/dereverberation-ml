@@ -13,8 +13,6 @@ from src.utils.tools import download, extract
 
 from src.run import run
 
-from shutil import rmtree
-
 
 def demo():
     log.init()
@@ -30,30 +28,24 @@ def demo():
     log.info("Downloading and extracting dataset(s)")
     
     if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):  
-        dry_fname, fx_fname = download(dry_url), download(fx_url)
+        dry_fpath, fx_fpath = download(dry_url), download(fx_url)
         
-        extract(dry_fname, dry_dpath)
-        extract(fx_fname, fx_dpath)
+        extract(dry_fpath, dry_dpath)
+        extract(fx_fpath, fx_dpath)
     elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
-        dry_fname = download(dry_url)
+        dry_fpath = download(dry_url)
         
-        extract(dry_fname, dry_dpath)
+        extract(dry_fpath, dry_dpath)
     elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
-        fx_fname = download(fx_url)
+        fx_fpath = download(fx_url)
         
-        extract(fx_fname, fx_dpath)
+        extract(fx_fpath, fx_dpath)
     else:
-        log.info("Skipping downloading since notes and IRs are still here, remove them if you changed demo mode")
+        log.warning(''.join(["\"", dry_dpath, "\" and \"", fx_dpath, "\" already exist, skipping downloading"]))
 
     # Executing main script
-    
-    wet_dpath = tml.value('demo', 'dnames', 'output')
 
-    if pth.__exists(wet_dpath):
-        log.debug("Removing lastly generated samples")
-        rmtree(wet_dpath)
-
-    run(dry_dpath, fx_dpath, wet_dpath)
+    run(dry_dpath, fx_dpath, tml.value('demo', 'dnames', 'output'))
 
     log.shutdown()
 

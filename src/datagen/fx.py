@@ -41,11 +41,10 @@ def _apply_fxs(dry, fxs, func=convolve):
     wet_signals = []
     
     n_params = n_parameters(func)
-    if n_params != 2:
-        if n_params == -1:
-            log.critical("A function is needed to apply fxs")
-        else:
-            log.critical(''.join(['\'',func.__name__, "\' function doesn't take exactly two arguments, can't apply fxs"]))
+    if n_params == -1:
+        log.critical("A function is needed to apply fxs")
+    elif n_params != 2:
+        log.critical(''.join(['\'',func.__name__, "\' function doesn't take exactly two arguments, can't apply fxs"]))
     
     if dry.frame_count() == 0:
         log.warning("Attempting to apply fx to an empty signal")

@@ -27,7 +27,7 @@ level = 'debug'
 
 [demo]
 [demo.urls]
-dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_big.tar.gz'
+dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_small.tar.gz'
 fx = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/ir_dataset_solo.zip'
 [demo.dnames]
 input_dry = 'dry'

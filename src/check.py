@@ -85,7 +85,7 @@ def check_config(verbose=False):
 
     lvl = tml.value('logger', 'level')
 
-    check_value('debug level', isinstance(lvl, str) and lvl.lower() in ['debug', 'info', 'warning', 'error', 'critical'], "Debug level mus be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
+    check_value('debug level', isinstance(lvl, str) and lvl.lower() in ['debug', 'info', 'warning', 'error', 'critical'], "Debug level must be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
 
     section("Demo")
 
