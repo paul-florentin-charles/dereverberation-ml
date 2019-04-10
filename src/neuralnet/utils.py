@@ -12,12 +12,14 @@ def shape(data):
         log.error("\'shape\' expects a two-dimensional array : (n_samples, sample_len)")
         return data
 
-    if data.dtype != 'int{0}'.format(tml.value('audio', 'bit_depth')):
-        log.warning(''.join(["\'shape\' expects an ", DTYPE, " array"]))
+    _dtype = 'int{0}'.format(tml.value('audio', 'bit_depth'))
+    
+    if data.dtype != _dtype:
+        log.warning("\'shape\' expects an {0} array".format(_dtype))
         
     data = data.astype('float64')
     for i in range(data.shape[0]):
-        data[i] = __pcm2float(data[i].astype(DTYPE))
+        data[i] = __pcm2float(data[i].astype(_dtype))
 
     return data.reshape(*data.shape, 1)    
 
@@ -29,7 +31,7 @@ def unshape(data):
     data = data.reshape(*data.shape[:-1])
 
     if data.dtype != 'float64':
-        log.warning(''.join(["\'unshape\' expects a float64 array"]))
+        log.warning("\'unshape\' expects a float64 array")
         data = data.astype('float64')
 
     for i in range(data.shape[0]):

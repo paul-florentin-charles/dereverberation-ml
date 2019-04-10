@@ -47,6 +47,8 @@ class NeuralNetwork(object):
 
         Y = Conv1D(1, self.k_siz, padding='same', activation='linear', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
 
+        # model
+
         self.model = Model(inputs=X, outputs=Y)
         
     def compile(self):
