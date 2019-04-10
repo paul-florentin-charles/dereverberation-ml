@@ -22,12 +22,12 @@ def check_config(verbose=False):
     from itertools import repeat
     
     
-    print(''.join(['Checking values of ', clrs._cyan_(tml.CFG_FNAME)]))
+    print(''.join(['Checking values of ', clrs.cyan(tml.CFG_FNAME)]))
     
     if verbose:
-        ok = lambda msg : print(msg + clrs._green_(" [OK]"))
-        notok = lambda msg : print(msg + clrs._red_(" [FAILED]"))
-        section = lambda name : print(clrs._bright_("[" + name  + "]"))
+        ok = lambda msg : print(msg + clrs.green(" [OK]"))
+        notok = lambda msg : print(msg + clrs.red(" [FAILED]"))
+        section = lambda name : print(clrs.bright("[" + name  + "]"))
     else:
         ok = notok = section = lambda msg : None
 

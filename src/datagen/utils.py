@@ -5,6 +5,7 @@ Set and get audio properties
 """
 
 import src.utils.path as pth
+import src.utils.logger as log
 
 import numpy as np
 import fleep
@@ -53,7 +54,7 @@ def __normalize(npy_array):
     """Normalizes <npy_array> by its maximum"""
     return npy_array / max(npy_array)
 
-def __float2pcm(npy_array, _type='int16'):    
+def __float2pcm(npy_array, _type='int16'):
     info = np.iinfo(_type)
     amp = 2**(info.bits - 1)
     offset = info.min + amp
@@ -62,7 +63,11 @@ def __float2pcm(npy_array, _type='int16'):
 
     return npy_array.clip(info.min, info.max).astype(_type)
 
-def __pcm2float(npy_array, _type='float64'):    
+def __pcm2float(npy_array, _type='float64'):
+    if npy_array.dtype.kind != 'i':
+        log.error("\'__pcm2float\' takes an array of integers, forcing conversion to int16")
+        npy_array = npy_array.astype('int16')
+        
     info = np.iinfo(npy_array.dtype)
     amp = 2**(info.bits - 1)
     offset = info.min + amp

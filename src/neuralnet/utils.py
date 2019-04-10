@@ -34,8 +34,8 @@ def unshape(data):
 
     data = data.reshape(*data.shape[:-1])
 
-    if data.dtype != 'float64':
-        log.warning("\'unshape\' expects a float64 array")
+    if data.dtype.kind != 'f':
+        log.warning("\'unshape\' expects a float array")
         data = data.astype('float64')
 
     for i in range(data.shape[0]):

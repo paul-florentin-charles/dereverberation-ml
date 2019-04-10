@@ -15,7 +15,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     log.info("Generating dataset of wet samples")
 
     if pth.__exists(output_dir):
-        log.warning(''.join(["\"", output_dir, "\" already exists, skipping dataset generation"]))
+        log.warning("\"{0}\" already exists, skipping dataset generation".format(output_dir))
     else:
         generate_dataset(dry_dpath, fx_dpath, output_dir)
     
@@ -23,8 +23,9 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     log.info("Retrieving data and saving it into a numpy file")
 
-    if pth.__is_file(tml.value('data', 'numpy', 'fname')):
-        log.warning(''.join(["\"", tml.value('data', 'numpy', 'fname'), "\" already exists, skipping data retrieval"]))
+    npy_fname = tml.value('data', 'numpy', 'fname')
+    if pth.__is_file(npy_fname):
+        log.warning("\"{0}\" already exists, skipping data retrieval".format(npy_fname))
     else:
         write_data()
 
