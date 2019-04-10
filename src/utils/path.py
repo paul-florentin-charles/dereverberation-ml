@@ -7,32 +7,46 @@ Layer to use already very simple library *pathlib*
 from pathlib import Path
 
 
+def stringify(func):
+    def wrapper(*args, **kwargs):
+        return str(func(*args, **kwargs))
+    return wrapper
+
+## path ##
+
 def __path(fpath):
     return Path(fpath)
 
 ## path segmentation ##
 
+@stringify
 def __file_extension(fpath):
     return __path(fpath).suffix
 
 # Doesn't work if multiple dots (e.g. tar.gz files)
+@stringify
 def __no_extension(fpath):
     return __path(fpath).stem
 
+@stringify
 def __file_name(fpath):
     return __path(fpath).name
 
+@stringify
 def __parent_path(fpath):
     return __path(fpath).parent
 
 ## path modification ##
 
+@stringify
 def __join_path(lpath, rpath):
     return __path(lpath).joinpath(__path(rpath))
 
+@stringify
 def __with_name(fpath, fname):
     return __path(fpath).with_name(fname)
 
+@stringify
 def __with_extension(fpath, fextension):
     return __path(fpath).with_suffix(fextension)
 
