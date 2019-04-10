@@ -99,6 +99,6 @@ Models are stored in directory written in **config.toml** at *neuralnet* section
 
 The syntax for model's names is the following:
 
-**model.{epoch:XX}-{val_loss:0.XXX}.h5**
+**model.{epoch:XX}-{val_loss:X.XXX}.h5**
 
 *epoch* is the current epoch written using two digits, while *val_loss* is the validation loss written using three decimals.

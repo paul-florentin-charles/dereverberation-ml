@@ -8,6 +8,8 @@ from src.datagen.utils import __pcm2float, __float2pcm
 #TODO: Implement 2d-representation for data, to test a model with spectrum
     
 def shape(data):
+    log.debug("Shaping data")
+    
     if data.ndim != 2:
         log.error("\'shape\' expects a two-dimensional array : (n_samples, sample_len)")
         return data
@@ -24,6 +26,8 @@ def shape(data):
     return data.reshape(*data.shape, 1)    
 
 def unshape(data):
+    log.debug("Unshaping data")
+    
     if data.ndim != 3:
         log.error("\'unshape\' expects a two-dimensional array : (n_samples, sample_len, n_channels)")
         return data

@@ -22,7 +22,7 @@ def _read(fpath):
     if __is_audio_file(fpath):
         return AudioSegment.from_file(str(pth.__path(fpath)))
 
-    log.warning(''.join([fpath, " is not an audio file"]))
+    log.warning("{0} is not an audio file".format(fpath))
     
     return AudioSegment.empty()
 
@@ -33,7 +33,7 @@ def _load(dpath):
             audio_segments.append(_read(fpath))
 
     if len(audio_segments) == 0:
-        log.warning(''.join([dpath, " does not contain any audio file"]))
+        log.warning("{0} does not contain any audio file".format(dpath))
         
     return audio_segments
 
@@ -47,7 +47,7 @@ def _save(npy_array, fpath, override=True):
     if pth.__file_extension(fpath) != '.wav':
         fpath = pth.__with_extension(fpath, '.wav')
 
-    write(str(fpath), tml.value('audio', 's_rate'), npy_array)
+    write(fpath, tml.value('audio', 's_rate'), npy_array)
 
 def _export(npy_arrays, outdpath=None, override=True):
     if outdpath is None:
@@ -77,10 +77,10 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
             wet_signals = _apply_fxs(_read(dryfpath), fxs)
         dpath = mkrdir(output_dir, prefix=''.join([str(idx), '_']))
         _export(wet_signals, dpath)
-        
-        info[str(dryfpath)] = str(dpath)
+
+        info[dryfpath] = dpath
         if (idx + 1) % tml.value('data', 'save_steps') == 0:
-            log.debug(''.join(["So far, ", str(idx + 1), " samples have been processed"]))
+            log.debug("{0} samples processed".format(idx + 1))
             jsn.dump(info)
 
     jsn.dump(info)

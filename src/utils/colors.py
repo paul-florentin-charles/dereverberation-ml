@@ -13,38 +13,83 @@ def start():
 def close():
     deinit()
 
-def _blue_(string):
-    '''Returns colorized <string> in blue'''
-    return ''.join([Fore.BLUE, str(string), Fore.RESET])
+def __fore__(msg, color):
+    return ''.join([eval('Fore.{0}'.format(color.upper())), msg, Fore.RESET])
 
-def _cyan_(string):
-    '''Returns colorized <string> in cyan'''
-    return ''.join([Fore.CYAN, str(string), Fore.RESET])
+def __style__(msg, style):
+    return ''.join([eval('Style.{0}'.format(style.upper())), msg, Style.RESET_ALL])
 
-def _green_(string):
-    '''Returns colorized <string> in green'''
-    return ''.join([Fore.GREEN, str(string), Fore.RESET])
+def _blue_(msg):
+    '''Returns colorized <msg> in blue'''
+    return __fore__(msg, 'blue')
 
-def _black_(string):
-    '''Returns colorized <string> in black'''
-    return ''.join([Fore.BLACK, str(string), Fore.RESET])
+def _cyan_(msg):
+    '''Returns colorized <msg> in cyan'''
+    return __fore__(msg, 'cyan')
 
-def _red_(string):
-    '''Returns colorized <string> in red'''
-    return ''.join([Fore.RED, str(string), Fore.RESET])
+def _green_(msg):
+    '''Returns colorized <msg> in green'''
+    return __fore__(msg, 'green')
 
-def _yellow_(string):
-    '''Returns colorized <string> in yellow'''
-    return ''.join([Fore.YELLOW, str(string), Fore.RESET])
+def _black_(msg):
+    '''Returns colorized <msg> in black'''
+    return __fore__(msg, 'black')
 
-def _magenta_(string):
-    '''Returns colorized <string> in magenta'''
-    return ''.join([Fore.MAGENTA, str(string), Fore.RESET])
+def _red_(msg):
+    '''Returns colorized <msg> in red'''
+    return __fore__(msg, 'red')
 
-def _bright_(string):
-    '''Returns brightened <string>, typically similar to bold font'''
-    return ''.join([Style.BRIGHT, str(string), Style.RESET_ALL])
+def _yellow_(msg):
+    '''Returns colorized <msg> in yellow'''
+    return __fore__(msg, 'yellow')
 
-def _dim_(string):
-    '''Returns <string> with a sober grey-like font'''
-    return ''.join([Style.DIM, str(string), Style.RESET_ALL])
+def _magenta_(msg):
+    '''Returns colorized <msg> in magenta'''
+    return __fore__(msg, 'magenta')
+
+def _bright_(msg):
+    '''Returns brightened <msg>, typically similar to bold font'''
+    return __style__(msg, 'bright')
+
+def _dim_(msg):
+    '''Returns <msg> with a sober grey-like font'''
+    return __style__(msg, 'dim')
+
+
+"""
+def _blue_(msg):
+    '''Returns colorized <msg> in blue'''
+    return ''.join([Fore.BLUE, str(msg), Fore.RESET])
+
+def _cyan_(msg):
+    '''Returns colorized <msg> in cyan'''
+    return ''.join([Fore.CYAN, str(msg), Fore.RESET])
+
+def _green_(msg):
+    '''Returns colorized <msg> in green'''
+    return ''.join([Fore.GREEN, str(msg), Fore.RESET])
+
+def _black_(msg):
+    '''Returns colorized <msg> in black'''
+    return ''.join([Fore.BLACK, str(msg), Fore.RESET])
+
+def _red_(msg):
+    '''Returns colorized <msg> in red'''
+    return ''.join([Fore.RED, str(msg), Fore.RESET])
+
+def _yellow_(msg):
+    '''Returns colorized <msg> in yellow'''
+    return ''.join([Fore.YELLOW, str(msg), Fore.RESET])
+
+def _magenta_(msg):
+    '''Returns colorized <msg> in magenta'''
+    return ''.join([Fore.MAGENTA, str(msg), Fore.RESET])
+
+def _bright_(msg):
+    '''Returns brightened <msg>, typically similar to bold font'''
+    return ''.join([Style.BRIGHT, str(msg), Style.RESET_ALL])
+
+def _dim_(msg):
+    '''Returns <msg> with a sober grey-like font'''
+    return ''.join([Style.DIM, str(msg), Style.RESET_ALL])
+"""

@@ -14,14 +14,14 @@ def read():
     return _read(tml.value('data', 'numpy', 'fname'))
 
 def _write(data, fname):
-    log.debug(''.join(['Writing data in \"', fname, '\"']))
+    log.debug("Writing data in \"{0}\"".format(fname))
     
     np.savez_compressed(fname, *data)
 
 def _read(fname):
-    log.debug(''.join(['Reading data from \"', fname, '\"']))
-
     if not pth.__is_file(fname):
-        log.critical(''.join(["Numpy file ", fname, " not found, cannot read data"]))
+        log.critical("Numpy file \"{0}\" not found, cannot read data".format(fname))
+
+    log.debug("Reading data from \"{0}\"".format(fname))
 
     return np.load(fname)
