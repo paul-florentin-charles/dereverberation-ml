@@ -53,13 +53,13 @@ def check_config(verbose=False):
 
     section("Neural Network")
 
-    fnam = tml.value('neuralnet', 'fname')
+    dnam = tml.value('neuralnet', 'dname')
     bsiz = tml.value('neuralnet', 'batch_size')
     epoc = tml.value('neuralnet', 'epochs')
     lr = tml.value('neuralnet', 'learning_rate')
     dec = tml.value('neuralnet', 'decay')
 
-    check_value('model file name', isinstance(fnam, str) and fnam.endswith('.h5'), "Model file name must be a string with \'.h5\' suffix") 
+    check_value('model dir name', isinstance(dnam, str), "Model dir name must be a string") 
 
     check_value('batch size', isinstance(bsiz, int) and bsiz > 0, "Batch size must be a strictly positive integer")
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import src.parser.toml as tml
+import src.utils.path as pth
 
 from keras import optimizers as opt
 from keras import losses as los
@@ -31,11 +32,11 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
 
-CALLBACKS = cal.ModelCheckpoint('model.{epoch:02d}-{val_loss:.2f}.hdf5', period=tml.value('neuralnet', 'save_steps'))
+CALLBACKS = cal.ModelCheckpoint(pth.__join_path(DIR_NAME, 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))
 
 
 # Strings parameters
 
-FILE_NAME = tml.value('neuralnet', 'fname')
+DIR_NAME = tml.value('neuralnet', 'dname')
 
 METRICS = ['accuracy']

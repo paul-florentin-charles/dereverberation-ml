@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import src.utils.logger as log
+import src.utils.path as pth
 import src.neuralnet.config as cfg
 
 from keras.models import Model
@@ -20,7 +21,7 @@ class NeuralNetwork(object):
         self.b_ini = cfg.BIAS_INITIALIZER
         self.met = cfg.METRICS
         self.c_bac = cfg.CALLBACKS
-        self.fnam = cfg.FILE_NAME
+        pth.__make_dir(cfg.DIR_NAME)
         self.__model__()
 
     def __model__(self):
@@ -66,7 +67,3 @@ class NeuralNetwork(object):
     def evaluate(self, data, labels):
         log.debug("Evaluating model")
         return self.model.evaluate(data, labels, batch_size=self.b_siz, callbacks=[self.c_bac])
-
-    def save(self):
-        log.debug("Saving model")
-        self.model.save(self.fnam)

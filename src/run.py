@@ -43,12 +43,11 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     NN.compile()
     data, labels = map(shape, (data, labels))
     NN.train(data, labels)
-    NN.save()
 
     # Model predicting
 
     log.info("Predicting")
 
-    res = NN.predict(data[:20])
+    res = NN.predict(data[:min(20, len(data))])
     _export(unshape(res))
     """

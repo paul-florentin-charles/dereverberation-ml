@@ -8,7 +8,7 @@ conv_mod = 'same'
 f_size = 500
 
 [neuralnet]
-fname = 'model.h5'
+dname = 'model'
 batch_size = 2
 epochs = 40
 save_steps = 2
