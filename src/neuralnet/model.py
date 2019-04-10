@@ -53,19 +53,19 @@ class NeuralNetwork(object):
         
     def compile(self):
         log.debug("Compiling model")
-        self.model.compile(self.opt, self.loss, self.met)
+        self.model.compile(self.opt, loss=self.loss, metrics=self.met)
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, self.b_siz, self.epoc, validation_split=self.v_spl, callbacks=[self.c_bac])
+        self.model.fit(data, labels, batch_size=self.b_siz, epochs=self.epoc, callbacks=[self.c_bac], validation_split=self.v_spl)
 
     def predict(self, data):
         log.debug("Generating predictions")
-        return self.model.predict(data, self.b_siz)
+        return self.model.predict(data, batch_size=self.b_siz)
 
     def evaluate(self, data, labels):
         log.debug("Evaluating model")
-        return self.model.evaluate(data, labels, self.b_siz)
+        return self.model.evaluate(data, labels, batch_size=self.b_siz, callbacks=[self.c_bac])
 
     def save(self):
         log.debug("Saving model")
