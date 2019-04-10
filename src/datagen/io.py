@@ -20,8 +20,7 @@ from scipy.io.wavfile import write
 
 def _read(fpath):
     if __is_audio_file(fpath):
-        return AudioSegment.from_file(str(fpath))
-        #return AudioSegment.from_file(pth.__path(fpath))
+        return AudioSegment.from_file(pth.__path(fpath))
 
     log.warning(''.join([fpath, " is not an audio file"]))
     

@@ -5,8 +5,8 @@ import src.utils.path as pth
 import src.parser.toml as tml
 from src.datagen.io import generate_dataset, _export
 from src.utils.data import write_data, read_data
-#from src.neuralnet.utils import shape, unshape
-#from src.neuralnet.model import NeuralNetwork
+from src.neuralnet.utils import shape, unshape
+from src.neuralnet.model import NeuralNetwork
 
 
 def run(dry_dpath, fx_dpath, output_dir=None):
@@ -30,24 +30,26 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     # Reading data
 
-    log.info("Reading data from numpy file")
+    log.info("Reading data from numpy file and shaping it")
 
-    data, labels = read_data()
+    data, labels = map(shape, read_data())
 
-    """
     # Model training
 
     log.info("Training the model")
 
     NN = NeuralNetwork()
     NN.compile()
-    data, labels = map(shape, (data, labels))
     NN.train(data, labels)
 
     # Model predicting
 
-    log.info("Predicting")
+    log.info("Predicting using model")
 
-    res = NN.predict(data[:min(20, len(data))])
-    _export(unshape(res))
-    """
+    _labels = NN.predict(data)
+
+    # Exporting data
+
+    log.info("Exporting data")
+    
+    _export(unshape(_labels))

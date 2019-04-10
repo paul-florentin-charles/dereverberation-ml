@@ -10,13 +10,13 @@ f_size = 500
 [neuralnet]
 dname = 'model'
 batch_size = 2
-epochs = 40
+epochs = 50
 save_steps = 2
 learning_rate = 2e-3
 decay = 4e-5
 
 [data]
-save_steps = 40
+save_steps = 50
 [data.json]
 fname = 'info.json'
 [data.numpy]
@@ -27,7 +27,7 @@ level = 'debug'
 
 [demo]
 [demo.urls]
-dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_small.tar.gz'
+dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_medium.tar.gz'
 fx = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/ir_dataset_solo.zip'
 [demo.dnames]
 input_dry = 'dry'

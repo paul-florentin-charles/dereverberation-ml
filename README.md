@@ -6,13 +6,13 @@
 - [Curl x.x]
 
 ```bash
-sudo pip3 install -r requirements.txt
+make install
 ```
 
-or equivalent
+equivalent to
 
 ```bash
-make install
+sudo pip3 install -r requirements.txt
 ```
 
 ## Run
@@ -21,36 +21,29 @@ make install
 make run dry=path/to/dry/signals/dir fx=path/to/impulse/responses/dir [wet=path/to/output/dir]
 ```
 
-or
+equivalent to
 
 ```bash
 python3 main.py path/to/dry/signals/dir path/to/impulse/responses/dir [path/to/output/dir]
 ```
 
-or as a script
-
-```bash
-chmod 744 main.py
-./main.py path/to/dry/signals/dir path/to/impulse/responses/dir [path/to/output/dir]
-```
-
 Information will be stored in a JSON file whose name is set in **config.toml**.
 
-Retrieved data is also directly saved in an *.npz* file, whose name can be change in *data* section of **config.toml**.
+Retrieved data is also directly saved in an *.npz* file, whose name can be change in *data.numpy* section of **config.toml**.
 
 ## Demo
-
-```bash
-python3 demo.py
-```
-
-or if you have *Make* installed
 
 ```bash
 make demo
 ```
 
-You can change demo urls by modifying fields in *demo.urls* section in **config.toml**.
+equivalent to
+
+```bash
+python3 demo.py
+```
+
+You can change demo urls by modifying fields in *demo.urls* section in **config.toml** ; *dry* field concerns the dataset of dry samples, and *fx* designates the dataset of fxs.
 
 ## Clean
 
@@ -70,7 +63,7 @@ equivalent to
 python3 clean.py
 ```
 
-This will remove all extra files generated while running main script or demo.
+This will remove all extra files generated while running main script or demo, apart from *model* directory since it contains very time-consuming files to generate.
 
 ## Logging
 
@@ -99,3 +92,13 @@ For instance, if set on *warning*, *debug* and *info* messages won't be displaye
 ```
 
 Each path to a dry signal is a key to the directory path that contains all of its wet samples.
+
+## Model
+
+Models are stored in directory written in **config.toml** at *neuralnet* section, field *dname*.
+
+The syntax for model's names is the following:
+
+**model.{epoch:XX}-{val_loss:0.XXX}.h5**
+
+*epoch* is the current epoch written using two digits, while *val_loss* is the validation loss written using three decimals.
