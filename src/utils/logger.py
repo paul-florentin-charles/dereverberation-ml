@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""Wrapper for built-in 'logging' module of python."""
+
 import logging as lgn
 import src.utils.colors as clrs
 import src.parser.toml as tml
 
 
 def init():
-    """Inits logger and colors"""
+    """Init logger and colors."""
     clrs.start()
     _level = tml.value('logger', 'level')
     if _level.upper() not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
@@ -17,23 +19,28 @@ def init():
     lgn.basicConfig(format='{%(asctime)s} %(message)s', level=_level.upper(), datefmt='%I:%M:%S')
 
 def shutdown():
-    """Shutdowns logger and colors"""
+    """Shutdown logger and colors."""
     lgn.shutdown()
     clrs.close()
     
 def debug(msg):
+    """Display debug message."""
     lgn.debug(clrs.dim("[DEBUG] {0}".format(msg)))
 
 def info(msg):
+    """Display info message."""
     lgn.info(clrs.bright("[INFO] {0}".format(msg)))
  
 def warning(msg):
+    """Display warning message."""
     lgn.warning(clrs.yellow("[WARNING] {0}".format(msg)))
 
 def error(msg):
+    """Display error message."""
     lgn.error(clrs.magenta("[ERROR] {0}".format(msg)))
 
 def critical(msg):
+    """Display critical message and exit program."""
     lgn.critical(clrs.red("[CRITICAL] {0}".format(msg)))
     shutdown()
     raise SystemExit

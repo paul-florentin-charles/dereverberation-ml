@@ -1,29 +1,30 @@
 # -*- coding: utf-8 -*-
 
-"""
-Layer to use already very simple library *pathlib*
-"""
+"""Wrapper around built-in python library 'pathlib'."""
 
 from pathlib import Path
 
 
 def stringify(func):
+    """Decorator to convert function output to string or to a list of strings."""
     def wrapper(*args, **kwargs):
         res = func(*args, **kwargs)
         if isinstance(res, list):
             return map(str, res)
         else:
             return str(res)
+    
     return wrapper
 
 ## path ##
+
+def _path(fpath):
+    return Path(fpath)
 
 @stringify
 def __path(fpath):
     return Path(fpath)
 
-def _path(fpath):
-    return Path(fpath)
 ## path segmentation ##
 
 @stringify

@@ -11,19 +11,19 @@ import numpy as np
 from itertools import repeat
 
 
-DTYPE = ''.join(['int', str(tml.value('audio', 'bit_depth'))])
+DTYPE = 'int{0}'.format(tml.value('audio', 'bit_depth'))
 
 def write_data():
     _dict = jsn.load()
     if not _dict:
-        log.error(''.join([tml.value('data', 'json', 'fname'), " is empty"]))
+        log.error("{0} is empty".format(tml.value('data', 'json', 'fname')))
 
     data = []
     for key in _dict:
         data.append(list(map(__convert, (_load(_dict[key])[0], _read(key)), repeat(DTYPE))))
         #data.append(list(map(__convert, (choice(_load(_dict[key])), _read(key)), repeat(DTYPE))))
     
-    log.debug(''.join([str(len(data)), ' couples data/label have been retrieved']))
+    log.debug("{0} couples data/label have been retrieved".format(len(data)))
 
     npz.write(np.asarray(data))
 

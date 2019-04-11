@@ -10,7 +10,7 @@ def check(verbose=False):
     check_config(verbose)
     
 def check_version():
-    print('Running project with Python', '.'.join([str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)]))
+    print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
     
     if sys.version_info.major != 3:
         sys.exit("Python 3 is required, please update your version or run with the appropriate program.")
@@ -22,7 +22,7 @@ def check_config(verbose=False):
     from itertools import repeat
     
     
-    print(''.join(['Checking values of ', clrs.cyan(tml.CFG_FNAME)]))
+    print("Checking values of {0}".format(clrs.cyan(tml.CFG_FNAME)))
     
     if verbose:
         ok = lambda msg : print(msg + clrs.green(" [OK]"))
