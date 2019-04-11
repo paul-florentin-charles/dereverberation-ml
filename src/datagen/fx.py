@@ -24,7 +24,7 @@ def convolve(dry, fx):
     dry, fx = map(utls.__with_bit_depth, (dry, fx), repeat(bits))
     dry, fx = map(utls.__mono, (dry, fx))
         
-    sigs = tuple(map(utls.__convert, (dry, fx), repeat('int{0}'.format(bits))))
+    sigs = map(utls.__convert, (dry, fx), repeat('int{0}'.format(bits)))
 
     return _convolve(*sigs, mode)
 
@@ -37,14 +37,17 @@ def _convolve(npy_dry, npy_fx, _mode):
     
     return _conv
 
-def _apply_fxs(dry, fxs, func=convolve):
+def apply_fxs(dry, fxs, func=convolve):
+    if func is None:
+        func = convolve
+    
     wet_signals = []
     
     n_params = n_parameters(func)
     if n_params == -1:
         log.critical("A function is needed to apply fxs")
     elif n_params != 2:
-        log.critical(''.join(['\'',func.__name__, "\' function doesn't take exactly two arguments, can't apply fxs"]))
+        log.critical("\'{0}\' function doesn't take exactly two arguments, can't apply fxs".format(func.__name__))
     
     if dry.frame_count() == 0:
         log.warning("Attempting to apply fx to an empty signal")

@@ -13,11 +13,13 @@ from inspect import signature
 
 
 def usage(pname, cname='python3', required_args=[], optional_args=[]):
-    '''Generic usage function that returns a string'''
+    """Generic usage function for a program
+    Returns a printable string
+    """
     return 'Usage: {0} {1} {2} {3}'.format(clrs._magenta_(cname), clrs._cyan_(pname), ' '.join(required_args), ' '.join(map(lambda x : '[{0}]'.format(x), optional_args)))
 
 def rstr(lth=4, chrs=''.join([ascii_letters, digits])):
-    '''Generates a random string of size <lth> containing chars picked in <chrs>'''
+    """Generates a random string of size <lth> containing chars picked in <chrs>"""
     return ''.join(choice(chrs) for _ in range(lth))
 
 def mkrdir(path='.', prefix=''):
@@ -32,10 +34,10 @@ def mkrdir(path='.', prefix=''):
     return dpath
 
 def download(furl, dpath='.'):
-    """Download file at <furl> and write it at <dpath>
+    """Downloads file at <furl> and writes it at <dpath>
     Returns path to extracted file
     """
-    log.debug(''.join(["Downloading file from \"", furl, "\" into \"", dpath, "\""]))
+    log.debug("Downloading file from \"{0}\" into \"{1}\"".format(furl, dpath))
 
     response = req.get(furl)
     if response.status_code != req.codes.ok:
@@ -51,12 +53,12 @@ def download(furl, dpath='.'):
 
 def extract(fpath, dpath):
     """Extracting archive at <fpath> into <dpath>"""
-    log.debug(''.join(['Extracting \"', str(fpath), '\" into \"', str(dpath), '\"']))
+    log.debug("Extracting \"{0}\" into \"{1}\"".format(fpath, dpath))
 
     try:
         unpack_archive(fpath, dpath)
     except ValueError:
-        log.critical(''.join(['\"', fpath, '\" not a valid archive']))
+        log.critical("\"{0}\" not a valid archive".format(fpath))
         
     pth.__remove_file(fpath)
 
@@ -65,7 +67,7 @@ def n_parameters(func):
     Otherwise returns -1
     """
     if not callable(func):
-        log.warning(''.join([str(func), " is not a function"]))
+        log.warning("\'{0}\' is not a function".format(func))
         return -1
     
     return len(signature(func).parameters)

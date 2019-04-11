@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Data shaping to fit Neural Network input shape"""
+
 import src.utils.logger as log
 import src.parser.toml as tml
 from src.datagen.utils import __pcm2float, __float2pcm

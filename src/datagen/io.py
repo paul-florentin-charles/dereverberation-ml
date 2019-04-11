@@ -6,7 +6,7 @@ Save numpy arrays as wave files
 """
 
 from src.datagen.utils import __list_audio_files, __is_audio_file
-from src.datagen.fx import _apply_fxs
+from src.datagen.fx import apply_fxs
 from src.utils.tools import mkrdir, rstr
 import src.utils.logger as log
 import src.utils.path as pth
@@ -54,7 +54,7 @@ def _export(npy_arrays, outdpath=None, override=True):
         outdpath = mkrdir()
 
     for idx, npy_array in enumerate(npy_arrays):
-        _save(npy_array, pth.__join_path(outdpath, ''.join([str(idx), '_', rstr()])), override)
+        _save(npy_array, pth.__join_path(outdpath, '{0}_{1}'.format(idx, rstr())), override)
 
 ## Generating dataset ##
 
@@ -69,13 +69,10 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
     jsn.init()
 
     info = dict()
-        
+    
     for idx, dryfpath in enumerate(__list_audio_files(dry_dpath)):
-        if func:
-            wet_signals = _apply_fxs(_read(dryfpath), fxs, func)
-        else:
-            wet_signals = _apply_fxs(_read(dryfpath), fxs)
-        dpath = mkrdir(output_dir, prefix=''.join([str(idx), '_']))
+        wet_signals = apply_fxs(_read(dryfpath), fxs, func)
+        dpath = mkrdir(output_dir, prefix='{0}_'.format(idx))
         _export(wet_signals, dpath)
 
         info[dryfpath] = dpath
