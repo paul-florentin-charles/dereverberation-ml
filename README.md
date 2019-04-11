@@ -1,8 +1,10 @@
+# Instructions
+
 ## Requirements
 
 Mandatory
 - Python 3 (tested for 3.5 and 3.7)
-- Python3-pip
+- PyPI: Python Package Index
 
 Optional
 - GNU Make
