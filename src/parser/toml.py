@@ -12,9 +12,7 @@ def value(section, key, subkey=None):
     """Return specific value of config toml file.
     Config file name is defined in a global variable.
     """
-    if not pth.__is_file(CFG_FNAME):
-        raise SystemExit(clrs.red("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME)))
-        
+    
     content = _value(CFG_FNAME, section, key, subkey)
     if content is None:
         if subkey:

@@ -23,7 +23,10 @@ def check_requirements(verbose=False):
     from importlib import import_module
     
 
-    print("Checking if packages listed in {0} are installed".format(REQ_FNAME))
+    print("Checking requirements in {0}".format(REQ_FNAME))
+
+    if not pth.__is_file(REQ_FNAME):
+        raise SystemExit("Can't find \"{0}\" at the root".format(REQ_FNAME))
 
     ok = lambda msg : print("\"{0}\" [OK]".format(msg)) if verbose else None
     
@@ -40,11 +43,16 @@ def check_requirements(verbose=False):
 def check_config(verbose=False):
     import src.parser.toml as tml
     import src.utils.colors as clrs
+    import src.utils.path as pth
+    from src.config import CFG_FNAME
 
     from itertools import repeat
     
     
-    print("Checking values of {0}.".format(clrs.cyan(tml.CFG_FNAME)))
+    print("Checking values of {0}.".format(clrs.cyan(CFG_FNAME)))
+
+    if not pth.__is_file(CFG_FNAME):
+        raise SystemExit(clrs.red("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME)))
     
     if verbose:
         ok = lambda msg : print(msg, clrs.green("[OK]"))
