@@ -5,16 +5,16 @@
 
 
 def main():
-    import sys
-
-    if len(sys.argv) < 3:
-        raise SystemExit(usage(__file__.replace('./', ''), required_args=['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], optional_args=['path/to/output/dir']))
-    
     from src.utils.tools import usage
     import src.utils.logger as log
 
     from src.run import run
 
+    import sys
+    
+
+    if len(sys.argv) < 3:
+        raise SystemExit(usage(__file__.replace('./', ''), required_args=['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], optional_args=['path/to/output/dir']))
     
     log.init()
 

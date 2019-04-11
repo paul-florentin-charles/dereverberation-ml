@@ -32,7 +32,7 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
 
-CALLBACKS = cal.ModelCheckpoint(pth.__join_path(tml.value('neuralnet', 'dname'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))
+CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('neuralnet', 'dname'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))]
 
 
 # Others

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import src.utils.colors as clrs
-import src.utils.path as pth
 from src.config import CFG_FNAME
 
 import toml
@@ -12,7 +11,6 @@ def value(section, key, subkey=None):
     """Return specific value of config toml file.
     Config file name is defined in a global variable.
     """
-    
     content = _value(CFG_FNAME, section, key, subkey)
     if content is None:
         if subkey:

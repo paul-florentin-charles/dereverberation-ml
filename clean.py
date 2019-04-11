@@ -7,14 +7,15 @@ Apart from directory containing saved models.
 
 
 def clean():
-    if __file__.replace('./', '') != "clean.py":
-        raise SystemExit("Please execute script from its directory")
-    
     import src.utils.path as pth
     import src.utils.logger as log
     import src.parser.toml as tml
 
     from shutil import rmtree
+
+
+    if __file__.replace('./', '') != "clean.py":
+        raise SystemExit("Please execute script from its directory")
 
     log.init()
 

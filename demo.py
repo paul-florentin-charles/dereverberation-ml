@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-def demo():
-    if __file__.replace('./', '') != "demo.py":
-        raise SystemExit("Please execute script from its directory")
-    
+def demo():    
     import src.utils.logger as log
     import src.utils.path as pth
     import src.parser.toml as tml
@@ -13,6 +10,9 @@ def demo():
 
     from src.run import run
 
+
+    if __file__.replace('./', '') != "demo.py":
+        raise SystemExit("Please execute script from its directory")
     
     log.init()
     

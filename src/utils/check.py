@@ -8,7 +8,7 @@ import sys
 def check(verbose=False):
     check_version()
     #check_requirements(verbose)
-    check_config(verbose)
+    check_configuration(verbose)
     
 def check_version():
     print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
@@ -40,7 +40,7 @@ def check_requirements(verbose=False):
         except ImportError:
             raise SystemExit("\"{0}\" not found".format(req))
         
-def check_config(verbose=False):
+def check_configuration(verbose=False):
     import src.parser.toml as tml
     import src.utils.colors as clrs
     import src.utils.path as pth

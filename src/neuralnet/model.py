@@ -56,7 +56,7 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, batch_size=self.bsiz, epochs=self.epoc, callbacks=[self.cbac], validation_split=self.vspl)
+        self.model.fit(data, labels, batch_size=self.bsiz, epochs=self.epoc, callbacks=self.cbac, validation_split=self.vspl)
 
     def predict(self, data):
         log.debug("Generating predictions")
@@ -64,4 +64,4 @@ class NeuralNetwork(object):
 
     def evaluate(self, data, labels):
         log.debug("Evaluating model")
-        return self.model.evaluate(data, labels, batch_size=self.bsiz, callbacks=[self.cbac])
+        return self.model.evaluate(data, labels, batch_size=self.bsiz, callbacks=self.cbac)

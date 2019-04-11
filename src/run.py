@@ -13,8 +13,8 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     # Dataset generation
 
     log.info("Generating dataset of wet samples")
-
-    if pth.__exists(output_dir):
+        
+    if output_dir is not None and pth.__exists(output_dir):
         log.warning("\"{0}\" already exists, skipping dataset generation".format(output_dir))
     else:
         generate_dataset(dry_dpath, fx_dpath, output_dir)
