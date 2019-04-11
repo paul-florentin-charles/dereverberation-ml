@@ -27,7 +27,7 @@ def check_config(verbose=False):
     if verbose:
         ok = lambda msg : print(msg + clrs.green(" [OK]"))
         notok = lambda msg : print(msg + clrs.red(" [FAILED]"))
-        section = lambda name : print(clrs.bright("[" + name  + "]"))
+        section = lambda name : print(clrs.bright("[{0}]".format(name)))
     else:
         ok = notok = section = lambda msg : None
 
