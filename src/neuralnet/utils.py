@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Data shaping to fit Neural Network input shape"""
+"""Data shaping related to I/O of Neural Network."""
 
 import src.utils.logger as log
 import src.parser.toml as tml
@@ -10,6 +10,7 @@ from src.datagen.utils import __pcm2float, __float2pcm
 #TODO: Implement 2d-representation for data, to test a model with spectrum
     
 def shape(data):
+    """Shape <data> to fit input of neural network."""
     log.debug("Shaping data")
     
     if data.ndim != 2:
@@ -28,6 +29,7 @@ def shape(data):
     return data.reshape(*data.shape, 1)    
 
 def unshape(data):
+    """Unshape <data> output of neural network."""
     log.debug("Unshaping data")
     
     if data.ndim != 3:

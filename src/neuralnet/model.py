@@ -9,16 +9,16 @@ from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
 
 class NeuralNetwork(object):
     def __init__(self):
-        self.b_siz = cfg.BATCH_SIZE
+        self.bsiz = cfg.BATCH_SIZE
         self.epoc = cfg.EPOCHS
-        self.in_shp = cfg.INPUT_SHAPE
-        self.k_siz = cfg.KERNEL_SIZE
-        self.v_spl = cfg.VALIDATION_SPLIT
-        self.opt = cfg.OPTIMIZER
+        self.ishp = cfg.INPUT_SHAPE
+        self.ksiz = cfg.KERNEL_SIZE
+        self.vspl = cfg.VALIDATION_SPLIT
+        self.opti = cfg.OPTIMIZER
         self.loss = cfg.LOSS
-        self.k_ini = cfg.KERNEL_INITIALIZER
-        self.b_ini = cfg.BIAS_INITIALIZER
-        self.met = cfg.METRICS
+        self.kini = cfg.KERNEL_INITIALIZER
+        self.bini = cfg.BIAS_INITIALIZER
+        self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
         self.__model__()
 
@@ -26,25 +26,25 @@ class NeuralNetwork(object):
         log.debug("Building model")
         ## input
 
-        X = Input(batch_shape=(self.b_siz, *self.in_shp))
+        X = Input(batch_shape=(self.bsiz, *self.ishp))
 
         # encoder
 
-        ENC = Conv1D(2, self.k_siz, input_shape=self.in_shp, padding='causal', activation='tanh', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(X)
+        ENC = Conv1D(2, self.ksiz, input_shape=self.ishp, padding='causal', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
         ENC = MaxPooling1D(2, padding='same')(ENC)
-        ENC = Conv1D(4, self.k_siz, padding='same', activation='tanh', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        ENC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
         ENC = MaxPooling1D(2, padding='same')(ENC)
         
         # decoder
 
-        DEC = Conv1D(8, self.k_siz, padding='same', activation='tanh', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(ENC)
+        DEC = Conv1D(8, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
         DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(4, self.k_siz, padding='same', activation='tanh', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
+        DEC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
         DEC = UpSampling1D(2)(DEC)
 
         ## output
 
-        Y = Conv1D(1, self.k_siz, padding='same', activation='linear', kernel_initializer=self.k_ini, bias_initializer=self.b_ini)(DEC)
+        Y = Conv1D(1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
 
         # model
 
@@ -52,16 +52,16 @@ class NeuralNetwork(object):
         
     def compile(self):
         log.debug("Compiling model")
-        self.model.compile(self.opt, loss=self.loss, metrics=self.met)
+        self.model.compile(self.opti, loss=self.loss, metrics=self.metr)
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, batch_size=self.b_siz, epochs=self.epoc, callbacks=[self.cbac], validation_split=self.v_spl)
+        self.model.fit(data, labels, batch_size=self.bsiz, epochs=self.epoc, callbacks=[self.cbac], validation_split=self.vspl)
 
     def predict(self, data):
         log.debug("Generating predictions")
-        return self.model.predict(data, batch_size=self.b_siz)
+        return self.model.predict(data, batch_size=self.bsiz)
 
     def evaluate(self, data, labels):
         log.debug("Evaluating model")
-        return self.model.evaluate(data, labels, batch_size=self.b_siz, callbacks=[self.cbac])
+        return self.model.evaluate(data, labels, batch_size=self.bsiz, callbacks=[self.cbac])

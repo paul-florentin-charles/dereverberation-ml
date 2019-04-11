@@ -22,16 +22,6 @@ KERNEL_SIZE = tml.value('audio', 'f_size')
 VALIDATION_SPLIT = 0.1
 
 
-# Strings parameters
-
-DIR_NAME = tml.value('neuralnet', 'dname')
-
-# TODO: move neuralnet dir creation from config.py
-pth.__make_dir(DIR_NAME)
-
-METRICS = ['accuracy']
-
-
 # Classes and functions
 
 OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'), decay=tml.value('neuralnet', 'decay'))
@@ -42,5 +32,9 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.Zeros()
 
-CALLBACKS = cal.ModelCheckpoint(pth.__join_path(DIR_NAME, 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))
+CALLBACKS = cal.ModelCheckpoint(pth.__join_path(tml.value('neuralnet', 'dname'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))
 
+
+# Others
+
+METRICS = ['accuracy']

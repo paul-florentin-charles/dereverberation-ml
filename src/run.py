@@ -43,6 +43,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     NN = NeuralNetwork()
     NN.compile()
+    pth.__make_dir(tml.value('neuralnet', 'dname'))
     NN.train(data, labels)
 
     # Model predicting
