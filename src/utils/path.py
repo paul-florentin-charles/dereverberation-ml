@@ -91,6 +91,10 @@ def __write_file(path, data):
     if not __is_dir(path):
         _path(path).write_bytes(data)
 
+def __read_file(path):
+    if __is_file(path):
+        return _path(path).read_text()
+
 ## miscellaneous ##
 
 @stringify

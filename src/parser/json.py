@@ -26,7 +26,7 @@ def _dump(fpath, _dict, mode='w', n_indent=4):
     """
     log.debug("Dumping data into \"{0}\"".format(fpath))
     
-    with open(fpath, mode) as fjson:
+    with pth._path(fpath).open(mode) as fjson:
         json.dump(_dict, fjson, indent=n_indent)
 
 def _load(fpath):
@@ -36,5 +36,5 @@ def _load(fpath):
 
     log.debug("Loading data from \"{0}\"".format(fpath))
         
-    with open(fpath, 'r') as fjson:
+    with pth._path(fpath).open('r') as fjson:
         return json.load(fjson) 

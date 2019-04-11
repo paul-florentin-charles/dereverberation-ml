@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from src.check import check
-
-check()
-
-
-import src.utils.logger as log
-import src.utils.path as pth
-import src.parser.toml as tml
-from src.utils.tools import download, extract
-
-from src.run import run
-
 
 def demo():
+    if __file__.replace('./', '') != "demo.py":
+        raise SystemExit("Please execute script from its directory")
+    
+    import src.utils.logger as log
+    import src.utils.path as pth
+    import src.parser.toml as tml
+    from src.utils.tools import download, extract
+
+    from src.run import run
+
+    
     log.init()
     
     # Downloading data from URLs and extracting downloaded files
@@ -51,7 +50,7 @@ def demo():
 
 
 if __name__ == '__main__':
-    if __file__.replace('./', '') != "demo.py":
-        raise SystemExit("Please execute script from its directory")
-    
+    from src.utils.check import check
+
+    check()
     demo()

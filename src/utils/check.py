@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 
 from __future__ import print_function
 
@@ -7,14 +7,36 @@ import sys
 
 def check(verbose=False):
     check_version()
+    #check_requirements(verbose)
     check_config(verbose)
     
 def check_version():
     print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
     
     if sys.version_info.major != 3:
-        sys.exit("Python 3 is required, please update your version or run with the appropriate program.")
+        sys.exit("Python 3 is required, please update your version or run with the appropriate program")
+
+def check_requirements(verbose=False):
+    import src.utils.path as pth
+    from src.config import REQ_FNAME
+
+    from importlib import import_module
     
+
+    print("Checking if packages listed in {0} are installed".format(REQ_FNAME))
+
+    ok = lambda msg : print("\"{0}\" [OK]".format(msg)) if verbose else None
+    
+    reqs = pth.__read_file(REQ_FNAME).split()
+    reqs = [req[:req.find('=')] for req in reqs]
+
+    for req in reqs:
+        try:
+            import_module(req)
+            ok(req)
+        except ImportError:
+            raise SystemExit("\"{0}\" not found".format(req))
+        
 def check_config(verbose=False):
     import src.parser.toml as tml
     import src.utils.colors as clrs
@@ -22,11 +44,11 @@ def check_config(verbose=False):
     from itertools import repeat
     
     
-    print("Checking values of {0}".format(clrs.cyan(tml.CFG_FNAME)))
+    print("Checking values of {0}.".format(clrs.cyan(tml.CFG_FNAME)))
     
     if verbose:
-        ok = lambda msg : print(msg + clrs.green(" [OK]"))
-        notok = lambda msg : print(msg + clrs.red(" [FAILED]"))
+        ok = lambda msg : print(msg, clrs.green("[OK]"))
+        notok = lambda msg : print(msg, clrs.red("[FAILED]"))
         section = lambda name : print(clrs.bright("[{0}]".format(name)))
     else:
         ok = notok = section = lambda msg : None

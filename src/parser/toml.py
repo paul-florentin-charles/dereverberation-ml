@@ -2,11 +2,11 @@
 
 import src.utils.colors as clrs
 import src.utils.path as pth
+from src.config import CFG_FNAME
 
 import toml
 
 
-CFG_FNAME = 'config.toml'
 
 def value(section, key, subkey=None):
     """Return specific value of config toml file.

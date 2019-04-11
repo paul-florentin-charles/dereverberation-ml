@@ -5,18 +5,21 @@
 Apart from directory containing saved models.
 """
 
-from src.check import check
-
-check()
-
-
-import src.utils.path as pth
-import src.parser.toml as tml
-
-from shutil import rmtree
-
 
 def clean():
+    if __file__.replace('./', '') != "clean.py":
+        raise SystemExit("Please execute script from its directory")
+    
+    import src.utils.path as pth
+    import src.utils.logger as log
+    import src.parser.toml as tml
+
+    from shutil import rmtree
+
+    log.init()
+
+    log.info("Cleaning project")
+    
     dnames = tml.value('demo', 'dnames')
     if pth.__exists(dnames['input_dry']):
         rmtree(dnames['input_dry'])
@@ -28,9 +31,11 @@ def clean():
     pth.__remove_file(tml.value('data', 'json', 'fname'))
     pth.__remove_file(tml.value('data', 'numpy', 'fname'))
 
+    log.shutdown()
+
     
 if __name__ == '__main__':
-    if __file__.replace('./', '') != "clean.py":
-        raise SystemExit("Please execute script from its directory")
-    
+    from src.utils.check import check
+
+    check()
     clean()
