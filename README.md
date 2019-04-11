@@ -1,9 +1,11 @@
 ## Requirements
 
-- Python 3.x.x (Altough 3.7 is advised)
-- Python3-pip x.x  
-- [GNU Make x.x]
-- [Curl x.x]
+Mandatory
+- Python 3 (tested for 3.5 and 3.7)
+- Python3-pip
+
+Optional
+- GNU Make
 
 ```bash
 make install

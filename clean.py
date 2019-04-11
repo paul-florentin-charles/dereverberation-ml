@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""Remove files and directories created from running main script or demo script.
+Apart from directory containing saved models.
+"""
+
 from src.check import check
 
 check()
