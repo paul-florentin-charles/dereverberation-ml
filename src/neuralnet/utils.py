@@ -33,7 +33,7 @@ def unshape(data):
     log.debug("Unshaping data")
     
     if data.ndim != 3:
-        log.error("\'unshape\' expects a two-dimensional array : (n_samples, sample_len, n_channels)")
+        log.error("\'unshape\' expects a three-dimensional array : (n_samples, sample_len, n_channels)")
         return data
 
     data = data.reshape(*data.shape[:-1])

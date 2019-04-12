@@ -19,7 +19,7 @@ INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
 
 KERNEL_SIZE = tml.value('audio', 'f_size')
 
-VALIDATION_SPLIT = 0.1
+VALIDATION_SPLIT = 0.2
 
 
 # Classes and functions
@@ -30,7 +30,7 @@ LOSS = los.mean_squared_error
 
 KERNEL_INITIALIZER = ini.TruncatedNormal()
 
-BIAS_INITIALIZER = ini.Zeros()
+BIAS_INITIALIZER = ini.VarianceScaling(mode='fan_avg', distribution='uniform')
 
 CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('neuralnet', 'dname'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))]
 
