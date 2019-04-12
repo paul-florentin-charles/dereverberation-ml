@@ -36,14 +36,13 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     data, labels = map(shape, read_data())
 
     """
-
     # Model training
 
     log.info("Training the model")
 
     NN = NeuralNetwork()
     NN.compile()
-    pth.__make_dir(tml.value('neuralnet', 'dname'))
+    pth.__make_dir(tml.value('neuralnet', 'dnames', 'model'))
     NN.train(data, labels)
 
     # Model predicting
@@ -55,7 +54,8 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     # Exporting data
 
     log.info("Exporting data")
-    
-    _export(unshape(_labels))
 
+    pred_dname = tml.value('neuralnet', 'dnames', 'predictions')
+    pth.__make_dir(pred_dname)
+    _export(unshape(_labels), pred_dname)
     """

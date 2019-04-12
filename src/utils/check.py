@@ -83,13 +83,12 @@ def check_configuration(verbose=False):
 
     section("Neural Network")
 
-    dnam = tml.value('neuralnet', 'dname')
     bsiz = tml.value('neuralnet', 'batch_size')
     epoc = tml.value('neuralnet', 'epochs')
     lr = tml.value('neuralnet', 'learning_rate')
     dec = tml.value('neuralnet', 'decay')
-
-    check_value('model dir name', isinstance(dnam, str), "Model dir name must be a string") 
+    mdl = tml.value('neuralnet', 'dnames', 'model')
+    pred = tml.value('neuralnet', 'dnames', 'predictions')
 
     check_value('batch size', isinstance(bsiz, int) and bsiz > 0, "Batch size must be a strictly positive integer")
 
@@ -98,6 +97,10 @@ def check_configuration(verbose=False):
     check_value('learning rate', isinstance(lr, (int, float)) and lr > 0, "Learning rate must be a strictly positive number")
     
     check_value('decay', isinstance(dec, (int, float)) and dec > 0, "Decay must be a strictly positive number")
+
+    check_value('model dir name', isinstance(mdl, str), "Model dir name must be a string")
+
+    check_value('predictions dir name', isinstance(pred, str), "Predictions dir name must be a string") 
     
     section("Data")
 

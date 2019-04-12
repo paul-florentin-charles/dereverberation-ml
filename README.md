@@ -99,7 +99,7 @@ Each path to a dry signal is a key to the directory path that contains all of it
 
 ## Model
 
-Models are stored in directory written in **config.toml** at *neuralnet* section, field *dname*.
+Models are stored in directory written in **config.toml** at *neuralnet.dnames* section, field *model*.
 
 The syntax for model's names is the following:
 

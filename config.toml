@@ -8,12 +8,14 @@ conv_mod = 'same'
 f_size = 500
 
 [neuralnet]
-dname = 'model'
 batch_size = 1
 epochs = 50
 save_steps = 2
 learning_rate = 2e-3
 decay = 4e-5
+[neuralnet.dnames]
+model = 'model'
+predictions = 'predictions'
 
 [data]
 save_steps = 50

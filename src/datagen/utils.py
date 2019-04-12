@@ -18,7 +18,8 @@ def __is_audio_file(fpath):
     if not pth.__is_file(fpath):
         return False
 
-    with pth._path(fpath).open(mode='rb') as f:
+    #TODO: use pathlib to open file
+    with open(fpath, mode='rb') as f:
         info = fleep.get(f.read(128))
         return info.type_matches('audio')
 

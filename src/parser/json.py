@@ -25,8 +25,9 @@ def _dump(fpath, _dict, mode='w', n_indent=4):
     As well as an indentation is set for visualization purpose.
     """
     log.debug("Dumping data into \"{0}\"".format(fpath))
-    
-    with pth._path(fpath).open(mode) as fjson:
+
+    #TODO: use pathlib to open file
+    with open(fpath, mode) as fjson:
         json.dump(_dict, fjson, indent=n_indent)
 
 def _load(fpath):
@@ -35,6 +36,7 @@ def _load(fpath):
         log.critical("\"{0}\" doesn\'t exist, can\'t load data from it".format(fpath))
 
     log.debug("Loading data from \"{0}\"".format(fpath))
-        
-    with pth._path(fpath).open('r') as fjson:
+
+    #TODO: use pathlib to open file
+    with open(fpath, 'r') as fjson:
         return json.load(fjson) 

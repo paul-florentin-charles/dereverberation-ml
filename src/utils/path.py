@@ -2,108 +2,122 @@
 
 """Wrapper around built-in python library 'pathlib'."""
 
+from src.utils.decorators import stringify
+
 from pathlib import Path
 
 
-def stringify(func):
-    """Decorator to convert function output to string or to a list of strings."""
+def pathify(func):
     def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        if isinstance(res, list):
-            return map(str, res)
-        else:
-            return str(res)
-    
+        if len(args) == 0:
+            return func(*args, **kwargs)
+        return func(Path(args[0]), *args[1:], **kwargs)
+
     return wrapper
 
 ## path ##
 
-def _path(fpath):
-    return Path(fpath)
-
+@pathify
 @stringify
 def __path(fpath):
-    return Path(fpath)
+    return fpath
 
 ## path segmentation ##
 
+@pathify
 @stringify
 def __file_extension(fpath):
-    return _path(fpath).suffix
+    return fpath.suffix
 
 # Doesn't work if multiple dots (e.g. tar.gz files)
+@pathify
 @stringify
 def __no_extension(fpath):
-    return _path(fpath).stem
+    return fpath.stem
 
+@pathify
 @stringify
 def __file_name(fpath):
-    return _path(fpath).name
+    return fpath.name
 
+@pathify
 @stringify
 def __parent_path(fpath):
-    return _path(fpath).parent
+    return fpath.parent
 
 ## path modification ##
 
+@pathify
 @stringify
 def __join_path(lpath, rpath):
-    return _path(lpath).joinpath(_path(rpath))
+    return lpath.joinpath(rpath)
 
+@pathify
 @stringify
 def __with_name(fpath, fname):
-    return _path(fpath).with_name(fname)
+    return fpath.with_name(fname)
 
+@pathify
 @stringify
 def __with_extension(fpath, fextension):
-    return _path(fpath).with_suffix(fextension)
+    return fpath.with_suffix(fextension)
 
 ## path booleans ##
 
+@pathify
 def __exists(path):
-    return _path(path).exists()
+    return path.exists()
 
+@pathify
 def __is_file(path):
-    return _path(path).is_file()
+    return path.is_file()
 
+@pathify
 def __is_dir(path):
-    return _path(path).is_dir()
+    return path.is_dir()
 
 ## file/dir manipulation ##
 
+@pathify
 def __make_dir(path):
     if not __exists(path):
-        _path(path).mkdir()
+        path.mkdir()
 
+@pathify
 def __remove_dir(path):
     if __is_dir(path):
-        _path(path).rmdir()
-    
+        path.rmdir()
+
+@pathify        
 def __create_file(path, override=True):
     if not __is_dir(path):
-        _path(path).touch(exist_ok=override)
-    
+        path.touch(exist_ok=override)
+
+@pathify
 def __remove_file(path):
     if __is_file(path):
-        _path(path).unlink()
+        path.unlink()
 
+@pathify
 def __write_file(path, data):
     if not __is_dir(path):
-        _path(path).write_bytes(data)
+        path.write_bytes(data)
 
+@pathify
 def __read_file(path):
     if __is_file(path):
-        return _path(path).read_text()
+        return path.read_text()
 
 ## miscellaneous ##
 
+@pathify
 @stringify
 def __list_files(path, recursively=True):
     if __is_file(path):
         return [path]
     elif __is_dir(path):
         if recursively:
-            return list(filter(__is_file, _path(path).glob('**/*')))
+            return list(filter(__is_file, path.glob('**/*')))
         else:
-            return list(filter(__is_file, _path(path).iterdir()))
+            return list(filter(__is_file, path.iterdir()))
     return []

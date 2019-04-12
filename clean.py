@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Remove files and directories created from running main script or demo script.
+
 Apart from directory containing saved models.
 """
 
@@ -31,6 +32,10 @@ def clean():
 
     pth.__remove_file(tml.value('data', 'json', 'fname'))
     pth.__remove_file(tml.value('data', 'numpy', 'fname'))
+
+    dname = tml.value('neuralnet', 'dnames', 'predictions')
+    if pth.__exists(dname):
+        rmtree(dname)
 
     log.shutdown()
 
