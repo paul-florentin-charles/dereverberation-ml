@@ -8,7 +8,7 @@ conv_mod = 'same'
 f_size = 1000
 
 [neuralnet]
-batch_size = 1
+batch_size = 4
 epochs = 50
 save_steps = 2
 learning_rate = 2e-3
