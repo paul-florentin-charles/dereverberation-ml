@@ -18,12 +18,11 @@ def __is_audio_file(fpath):
     if not pth.__is_file(fpath):
         return False
 
-    #TODO: use pathlib to open file
-    with open(fpath, mode='rb') as f:
-        info = fleep.get(f.read(128))
-        return info.type_matches('audio')
-
-    return False
+    f = pth.__open_file(fpath, _mode='rb')
+    info = fleep.get(f.read(128))
+    pth.__close_file(f)
+    
+    return info.type_matches('audio')
 
 def __list_audio_files(path, recursively=True):
     """Return a list of audio files at <path>.

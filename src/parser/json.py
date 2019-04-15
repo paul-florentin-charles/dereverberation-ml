@@ -26,9 +26,9 @@ def _dump(fpath, _dict, mode='w', n_indent=4):
     """
     log.debug("Dumping data into \"{0}\"".format(fpath))
 
-    #TODO: use pathlib to open file
-    with open(fpath, mode) as fjson:
-        json.dump(_dict, fjson, indent=n_indent)
+    fjson = pth.__open_file(fpath, _mode=mode)
+    json.dump(_dict, fjson, indent=n_indent)
+    pth.__close_file(fjson)
 
 def _load(fpath):
     """Get content of json file at <fpath>."""
@@ -37,6 +37,8 @@ def _load(fpath):
 
     log.debug("Loading data from \"{0}\"".format(fpath))
 
-    #TODO: use pathlib to open file
-    with open(fpath, 'r') as fjson:
-        return json.load(fjson) 
+    fjson = pth.__open_file(fpath)
+    ret = json.load(fjson)
+    pth.__close_file(fjson)
+
+    return ret

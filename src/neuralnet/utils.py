@@ -59,11 +59,11 @@ def load_best_model():
 
 def _load_best_model(dpath):
     """Return best model amongst models in <dpath>."""
-    pth2bmdl = _path_to_best_model(dpath)
-    if pth2bmdl:
-        return load_model(pth2bmdl)
-    
-    log.critical("No best model fount at \"{0}\"".format(dpath))
+    mdlpath = _path_to_best_model(dpath)
+    if not mdlpath:
+        log.critical("No best model fount at \"{0}\"".format(dpath))
+        
+    return load_model(mdlpath)    
 
 def path_to_best_model():
     """Return path to best model amongst models in predefined directory."""

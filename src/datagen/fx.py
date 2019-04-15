@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-Apply fx to a dry sound
-"""
+"""Tools to apply fxs to a sound."""
 
 import src.datagen.utils as utls
 import src.parser.toml as tml
@@ -16,6 +14,9 @@ from itertools import repeat
 
 # TODO: Stereo not implemented, mono signals automatically converted to mono
 def convolve(dry, fx):
+    """Convolve two audio segments together.
+    Return a numpy array of integers.
+    """
     mode = tml.value('audio', 'conv_mod')
     sr = tml.value('audio', 's_rate')
     bits = tml.value('audio', 'bit_depth')
@@ -29,6 +30,9 @@ def convolve(dry, fx):
     return _convolve(*sigs, mode)
 
 def _convolve(npy_dry, npy_fx, _mode):
+    """Compute convolution between two arrays.
+    Arrays are supposed numpy arrays of integers.
+    """
     npy_dry, npy_fx = map(utls.__pcm2float, (npy_dry, npy_fx))
 
     _conv = sig.convolve(npy_dry, npy_fx, mode=_mode)
@@ -38,6 +42,9 @@ def _convolve(npy_dry, npy_fx, _mode):
     return _conv
 
 def apply_fxs(dry, fxs, func=convolve):
+    """Apply a list of fxs to a dry signal.
+    Return the resulting list.
+    """
     if func is None:
         func = convolve
     

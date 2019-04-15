@@ -5,6 +5,7 @@
 from src.utils.decorators import stringify
 
 from pathlib import Path
+from io import TextIOWrapper as IO
 
 
 def pathify(func):
@@ -80,7 +81,7 @@ def __is_dir(path):
 def __is_empty(path):
     if __is_dir(path):
         return len(__list_files(path)) == 0
-    return False
+    return True
 
 ## file/dir manipulation ##
 
@@ -93,7 +94,7 @@ def __make_dir(path):
 def __remove_dir(path):
     if __is_dir(path):
         path.rmdir()
-
+        
 @pathify        
 def __create_file(path, override=True):
     if not __is_dir(path):
@@ -103,6 +104,15 @@ def __create_file(path, override=True):
 def __remove_file(path):
     if __is_file(path):
         path.unlink()
+
+@pathify
+def __open_file(path, _mode='r'):
+    if not __is_dir(path):
+        return path.open(mode=_mode)
+
+def __close_file(f):
+    if isinstance(f, IO):
+        f.close()
 
 @pathify
 def __write_file(path, data):

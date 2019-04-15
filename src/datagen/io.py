@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-Load any sound file
-Save numpy arrays as wave files
-"""
+"""Load any sound file, and save numpy arrays as wave files."""
 
 from src.datagen.utils import __list_audio_files, __is_audio_file
 from src.datagen.fx import apply_fxs
@@ -19,6 +16,7 @@ from scipy.io.wavfile import write
 ## Reading and writing audio files ##
 
 def _read(fpath):
+    """Read sound at <fpath> as a pydub AudioSegment."""
     if __is_audio_file(fpath):
         return AudioSegment.from_file(pth.__path(fpath))
 
@@ -27,6 +25,7 @@ def _read(fpath):
     return AudioSegment.empty()
 
 def _load(dpath):
+    """Read all sounds at <dpath> in a list of pydub AudioSegment."""
     audio_segments = []
     for fpath in pth.__list_files(dpath):
         if __is_audio_file(fpath):
@@ -38,6 +37,7 @@ def _load(dpath):
     return audio_segments
 
 def _save(npy_array, fpath, override=True):
+    """Save a numpy array as a wave file at <fpath>."""
     if not override and pth.__exists(fpath):
         return
     
@@ -50,6 +50,9 @@ def _save(npy_array, fpath, override=True):
     write(fpath, tml.value('audio', 's_rate'), npy_array)
 
 def _export(npy_arrays, outdpath=None, override=True):
+    """Save a list of numpy arrays as wave files at <outdpath>.
+    If <outdpath> is None, creates a random directory.
+    """
     if outdpath is None:
         outdpath = mkrdir()
 
@@ -59,6 +62,7 @@ def _export(npy_arrays, outdpath=None, override=True):
 ## Generating dataset ##
 
 def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
+    """Generate dataset of wet samples."""
     if not output_dir:
         output_dir = mkrdir()
     elif not pth.__exists(output_dir):
