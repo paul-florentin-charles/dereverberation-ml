@@ -8,7 +8,7 @@ def stringify(func):
     def wrapper(*args, **kwargs):
         res = func(*args, **kwargs)
         if isinstance(res, list):
-            return map(str, res)
+            return list(map(str, res))
         return str(res)
     
     return wrapper
@@ -18,7 +18,7 @@ def boolify(func):
     def wrapper(*args, **kwargs):
         res = func(*args, **kwargs)
         if isinstance(res, list):
-            return map(bool, res)
+            return list(map(bool, res))
         return bool(res)
     
     return wrapper

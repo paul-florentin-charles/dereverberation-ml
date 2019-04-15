@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 
-"""Data shaping related to I/O of Neural Network."""
+"""Data shaping related to I/O of Neural Network.
+
+Along with a function to pick up best model.
+"""
 
 import src.utils.logger as log
+import src.utils.path as pth
 import src.parser.toml as tml
 from src.datagen.utils import __pcm2float, __float2pcm
+
+from keras.models import load_model
 
 
 #TODO: Implement 2d-representation for data, to test a model with spectrum
@@ -46,3 +52,30 @@ def unshape(data):
         data[i] = __float2pcm(data[i])
 
     return data.astype('int{0}'.format(tml.value('audio', 'bit_depth')))
+
+def load_best_model():
+    return _load_best_model(path_to_best_model())
+
+def _load_best_model(dpath):
+    pth2bmdl = _path_to_best_model(dpath)
+    if pth2bmdl:
+        return load_model(pth2bmdl)
+    
+    log.critical("No best model fount at \"{0}\"".format(dpath))
+
+def path_to_best_model():
+    """Return path to best model amongst models in predefined directory."""
+    return _path_to_best_model(tml.value('neuralnet', 'dnames', 'model'))
+
+def _path_to_best_model(dpath):
+    """Return path to best model amongst models at <dpath>."""
+    fpaths = pth.__list_files(dpath)
+    if not fpaths:
+        log.error("\"{0}\" does not contain any file or is not a directory".format(dpath))
+        return
+    
+    get_vloss = lambda fpath : float(pth.__no_extension(fpath).split('-')[-1])
+    vlosses = list(map(get_vloss, fpaths))
+    bmdl_idx = vlosses.index(min(vlosses))
+
+    return fpaths[bmdl_idx]

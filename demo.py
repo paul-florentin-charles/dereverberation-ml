@@ -40,7 +40,7 @@ def demo():
         
         extract(fx_fpath, fx_dpath)
     else:
-        log.warning(''.join(["\"", dry_dpath, "\" and \"", fx_dpath, "\" already exist, skipping downloading"]))
+        log.warning("\"{0}\" and \"{1}\" already exist, skipping downloading".format(dry_dpath, fx_dpath))
 
     # Executing main script
 

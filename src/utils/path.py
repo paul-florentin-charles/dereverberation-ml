@@ -76,6 +76,12 @@ def __is_file(path):
 def __is_dir(path):
     return path.is_dir()
 
+@pathify
+def __is_empty(path):
+    if __is_dir(path):
+        return len(__list_files(path)) == 0
+    return False
+
 ## file/dir manipulation ##
 
 @pathify
@@ -116,8 +122,5 @@ def __list_files(path, recursively=True):
     if __is_file(path):
         return [path]
     elif __is_dir(path):
-        if recursively:
-            return list(filter(__is_file, path.glob('**/*')))
-        else:
-            return list(filter(__is_file, path.iterdir()))
+        return list(filter(__is_file, path.glob('**/*') if recursively else path.iterdir()))
     return []

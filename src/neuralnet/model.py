@@ -8,7 +8,7 @@ from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
 
 
 class NeuralNetwork(object):
-    def __init__(self):
+    def __init__(self, model=None):
         self.bsiz = cfg.BATCH_SIZE
         self.epoc = cfg.EPOCHS
         self.ishp = cfg.INPUT_SHAPE
@@ -20,7 +20,10 @@ class NeuralNetwork(object):
         self.bini = cfg.BIAS_INITIALIZER
         self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
-        self.__model__()
+        if model is None:
+            self.__model__()
+        else:
+            self.model = model
 
     def __model__(self):
         log.debug("Building model")

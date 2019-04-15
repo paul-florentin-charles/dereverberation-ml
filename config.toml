@@ -5,7 +5,7 @@ s_rate = 16000
 s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
-f_size = 500
+f_size = 1000
 
 [neuralnet]
 batch_size = 1
