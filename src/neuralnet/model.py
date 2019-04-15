@@ -33,7 +33,7 @@ class NeuralNetwork(object):
 
         # encoder
 
-        ENC = Conv1D(2, self.ksiz, padding='causal', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
+        ENC = Conv1D(2, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
         ENC = MaxPooling1D(2, padding='same')(ENC)
         ENC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
         ENC = MaxPooling1D(2, padding='same')(ENC)

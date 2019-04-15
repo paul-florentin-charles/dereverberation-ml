@@ -42,7 +42,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
     mdl_dname = tml.value('neuralnet', 'dnames', 'model')
     if not pth.__is_empty(mdl_dname):
         log.warning("Model has already been trained in a previous session, picking up best model from \'{0}\'".format(mdl_dname))
-        NN = NeuralNetwork(_model=load_best_model())
+        NN = NeuralNetwork(model=load_best_model())
     else:
         pth.__make_dir(mdl_dname)
         NN = NeuralNetwork()

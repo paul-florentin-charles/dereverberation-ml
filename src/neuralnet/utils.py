@@ -54,9 +54,11 @@ def unshape(data):
     return data.astype('int{0}'.format(tml.value('audio', 'bit_depth')))
 
 def load_best_model():
+    """Return best model amongst models in predefined directory."""
     return _load_best_model(path_to_best_model())
 
 def _load_best_model(dpath):
+    """Return best model amongst models in <dpath>."""
     pth2bmdl = _path_to_best_model(dpath)
     if pth2bmdl:
         return load_model(pth2bmdl)
@@ -68,7 +70,7 @@ def path_to_best_model():
     return _path_to_best_model(tml.value('neuralnet', 'dnames', 'model'))
 
 def _path_to_best_model(dpath):
-    """Return path to best model amongst models at <dpath>."""
+    """Return path to best model amongst models in <dpath>."""
     fpaths = pth.__list_files(dpath)
     if not fpaths:
         log.error("\"{0}\" does not contain any file or is not a directory".format(dpath))
