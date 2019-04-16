@@ -3,12 +3,6 @@
 from __future__ import print_function
 
 import sys
-
-
-def check(verbose=False):
-    check_version()
-    #check_requirements(verbose)
-    check_configuration(verbose)
     
 def check_version():
     print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
@@ -28,7 +22,7 @@ def check_requirements(verbose=False):
     if not pth.__is_file(REQ_FNAME):
         raise SystemExit("Can't find \"{0}\" at the root".format(REQ_FNAME))
 
-    ok = lambda msg : print("\"{0}\" [OK]".format(msg)) if verbose else None
+    ok = lambda msg: print("\"{0}\" [OK]".format(msg)) if verbose else None
     
     reqs = pth.__read_file(REQ_FNAME).split()
     reqs = [req[:req.find('=')] for req in reqs]
@@ -42,26 +36,26 @@ def check_requirements(verbose=False):
         
 def check_configuration(verbose=False):
     import src.parser.toml as tml
-    import src.utils.colors as clrs
     import src.utils.path as pth
     from src.config import CFG_FNAME
 
     from itertools import repeat
     
     
-    print("Checking values of {0}.".format(clrs.cyan(CFG_FNAME)))
+    print("Checking values of {0}.".format(CFG_FNAME))
 
     if not pth.__is_file(CFG_FNAME):
-        raise SystemExit(clrs.red("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME)))
+        raise SystemExit("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME)))
     
     if verbose:
-        ok = lambda msg : print(msg, clrs.green("[OK]"))
-        notok = lambda msg : print(msg, clrs.red("[FAILED]"))
-        section = lambda name : print(clrs.bright("[{0}]".format(name.capitalize())))
+        ok = lambda msg: print("{0} [OK]".format(msg))
+        notok = lambda msg: print("{0} [FAILED]".format(msg))
+        section = lambda name: print("[{0}]".format(name.capitalize()))
     else:
-        ok = notok = section = lambda msg : None
+        ok = notok = section = lambda _: None
 
-    check_value = lambda vname, cond, msg : ok(vname) if cond else notok(vname) or sys.exit(msg)
+    def check_value(vname, cond, msg):
+        ok(vname) if cond else notok(vname) or sys.exit(msg)
 
     audio = 'audio'
     
@@ -141,3 +135,11 @@ def check_configuration(verbose=False):
     check_value('demo urls', all(map(isinstance, (url1, url2), repeat(str))), "Demo urls must be strings")
 
     check_value('demo directory names', all(map(isinstance, (ipt1, ipt2, out), repeat(str))), "All demo directory names must be string")
+
+def check_execution():
+    import src.utils.path as pth
+    import src.parser.toml as tml
+
+    #TODO: Find a better way to check if file is executed from its directory  
+    if pth.__file_name(pth.__working_dir()) != tml.value('repository_name'):
+        raise SystemExit("Please execute script from its directory")
