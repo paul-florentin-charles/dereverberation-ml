@@ -11,7 +11,7 @@ f_size = 1000
 
 [neuralnet]
 batch_size = 4
-epochs = 50
+epochs = 100
 save_steps = 2
 learning_rate = 2e-3
 decay = 4e-5

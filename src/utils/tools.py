@@ -21,7 +21,7 @@ def usage(pname, cname='python3', required_args=[], optional_args=[]):
     """Generic usage function for a program.
     Return a printable string.
     """
-    return 'Usage: {0} {1} {2} {3}'.format(clrs.magenta(cname), clrs.cyan(pname), ' '.join(required_args), ' '.join(map(lambda x : '[{0}]'.format(x), optional_args)))
+    return 'Usage: {0} {1} {2} {3}'.format(clrs.magenta(cname), clrs.cyan(pname), ' '.join(required_args), ' '.join(map(lambda arg: '[{0}]'.format(arg), optional_args)))
 
 def rstr(lth=4, chrs=''.join([ascii_letters, digits])):
     """Generate a random string of size <lth> containing chars picked in <chrs>."""

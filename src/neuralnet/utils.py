@@ -76,7 +76,7 @@ def _path_to_best_model(dpath):
         log.error("\"{0}\" does not contain any file or is not a directory".format(dpath))
         return
     
-    get_vloss = lambda fpath : float(pth.__no_extension(fpath).split('-')[-1])
+    get_vloss = lambda fpath: float(pth.__no_extension(fpath).split('-')[-1])
     vlosses = list(map(get_vloss, fpaths))
     bmdl_idx = vlosses.index(min(vlosses))
 
