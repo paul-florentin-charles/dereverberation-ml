@@ -1,5 +1,7 @@
 # Configuration file
 
+repository_name = 'dereverberation-ml'
+
 [audio]
 s_rate = 16000
 s_len = 64000

@@ -20,8 +20,8 @@ demo:
 	@python3 $(DEMO)
 
 clean:
-	@rm -rf `find -name "*~" ; find -name "#*#" ; find -name ".#* ; "find -name "*.pyc" ; find -name "__pycache__"`
+	@rm -rf `find -name "*~" ; find -name "#*#" ; find -name ".#*" ; find -name "*.pyc" ; find -name "__pycache__"`
 
 cleanall:
 	@python3 $(CLEAN)
-	@rm -rf `find -name "*~" ; find -name "#*#" ; find -name ".#* ; "find -name "*.pyc" ; find -name "__pycache__"`
+	@rm -rf `find -name "*~" ; find -name "#*#" ; find -name ".#*" ; find -name "*.pyc" ; find -name "__pycache__"`

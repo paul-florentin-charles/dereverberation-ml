@@ -17,9 +17,9 @@ def convolve(dry, fx):
     """Convolve two audio segments together.
     Return a numpy array of integers.
     """
-    mode = tml.value('audio', 'conv_mod')
-    sr = tml.value('audio', 's_rate')
-    bits = tml.value('audio', 'bit_depth')
+    mode = tml.value('conv_mod', section='audio')
+    sr = tml.value('s_rate', section='audio')
+    bits = tml.value('bit_depth', section='audio')
     
     dry, fx = map(utls.__with_sample_rate, (dry, fx), repeat(sr))
     dry, fx = map(utls.__with_bit_depth, (dry, fx), repeat(bits))

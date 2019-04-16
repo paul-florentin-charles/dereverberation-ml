@@ -23,7 +23,7 @@ def shape(data):
         log.error("\'shape\' expects a two-dimensional array : (n_samples, sample_len)")
         return data
 
-    _dtype = 'int{0}'.format(tml.value('audio', 'bit_depth'))
+    _dtype = 'int{0}'.format(tml.value('bit_depth', section='audio'))
     
     if data.dtype != _dtype:
         log.warning("\'shape\' expects an {0} array".format(_dtype))
@@ -51,7 +51,7 @@ def unshape(data):
     for i in range(data.shape[0]):
         data[i] = __float2pcm(data[i])
 
-    return data.astype('int{0}'.format(tml.value('audio', 'bit_depth')))
+    return data.astype('int{0}'.format(tml.value('bit_depth', section='audio')))
 
 def load_best_model():
     """Return best model amongst models in predefined directory."""
@@ -67,7 +67,7 @@ def _load_best_model(dpath):
 
 def path_to_best_model():
     """Return path to best model amongst models in predefined directory."""
-    return _path_to_best_model(tml.value('neuralnet', 'dnames', 'model'))
+    return _path_to_best_model(tml.value('dnames', section='neuralnet', subkey='model'))
 
 def _path_to_best_model(dpath):
     """Return path to best model amongst models in <dpath>."""

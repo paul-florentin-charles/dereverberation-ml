@@ -10,12 +10,12 @@ import numpy as np
 from itertools import repeat
 
 
-DTYPE = 'int{0}'.format(tml.value('audio', 'bit_depth'))
+DTYPE = 'int{0}'.format(tml.value('bit_depth', section='audio'))
 
 def write_data():
     _dict = jsn.load()
     if not _dict:
-        log.error("{0} is empty".format(tml.value('data', 'json', 'fname')))
+        log.error("{0} is empty".format(tml.value('json', section='data', subkey='fname')))
 
     data = []
     for key in _dict:
@@ -29,7 +29,7 @@ def write_data():
 def read_data():
     _dict = npz.read()
     
-    data, labels = [np.zeros(tml.value('audio', 's_len'), dtype=DTYPE)] * 2
+    data, labels = [np.zeros(tml.value('s_len', section='audio'), dtype=DTYPE)] * 2
     for fname in _dict:
         data = np.vstack((data, _dict[fname][0]))
         labels = np.vstack((labels, _dict[fname][1]))

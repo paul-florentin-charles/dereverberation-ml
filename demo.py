@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""Demo script that takes care of everything for you."""
 
+from src.utils.decorators import mainify
+
+
+@mainify
 def demo():    
     import src.utils.logger as log
     import src.utils.path as pth
     import src.parser.toml as tml
     from src.utils.tools import download, extract
-
-    from src.run import run
-
-
-    if __file__.replace('./', '') != "demo.py":
-        raise SystemExit("Please execute script from its directory")
     
-    log.init()
     
     # Downloading data from URLs and extracting downloaded files
 
-    dry_url = tml.value('demo', 'urls', 'dry')
-    fx_url = tml.value('demo', 'urls', 'fx')
+    dry_url = tml.value('urls', section='demo', subkey='dry')
+    fx_url = tml.value('urls', section='demo', subkey='fx')
 
-    dry_dpath = tml.value('demo', 'dnames', 'input_dry')
-    fx_dpath = tml.value('demo', 'dnames', 'input_fx')
+    dry_dpath = tml.value('dnames', section='demo', subkey='input_dry')
+    fx_dpath = tml.value('dnames', section='demo', subkey='input_fx')
 
     log.info("Downloading and extracting dataset(s)")
     
@@ -42,15 +40,8 @@ def demo():
     else:
         log.warning("\"{0}\" and \"{1}\" already exist, skipping downloading".format(dry_dpath, fx_dpath))
 
-    # Executing main script
-
-    run(dry_dpath, fx_dpath, tml.value('demo', 'dnames', 'output'))
-
-    log.shutdown()
+    return dry_dpath, fx_dpath, tml.value('dnames', section='demo', subkey='output')
 
 
 if __name__ == '__main__':
-    from src.utils.check import check
-
-    check()
     demo()

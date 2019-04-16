@@ -47,7 +47,7 @@ def _save(npy_array, fpath, override=True):
     if pth.__file_extension(fpath) != '.wav':
         fpath = pth.__with_extension(fpath, '.wav')
 
-    write(fpath, tml.value('audio', 's_rate'), npy_array)
+    write(fpath, tml.value('s_rate', section='audio'), npy_array)
 
 def _export(npy_arrays, outdpath=None, override=True):
     """Save a list of numpy arrays as wave files at <outdpath>.
@@ -72,7 +72,7 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
 
     jsn.init()
 
-    info = dict()
+    info, save_steps = dict(), tml.value('save_steps', section='data')
     
     for idx, dryfpath in enumerate(__list_audio_files(dry_dpath)):
         wet_signals = apply_fxs(_read(dryfpath), fxs, func)
@@ -80,7 +80,7 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
         _export(wet_signals, dpath)
 
         info[dryfpath] = dpath
-        if (idx + 1) % tml.value('data', 'save_steps') == 0:
+        if (idx + 1) % save_steps == 0:
             log.debug("{0} samples processed".format(idx + 1))
             jsn.dump(info)
 

@@ -23,6 +23,10 @@ def pathify(func):
 def __path(fpath):
     return fpath
 
+@stringify
+def __working_dir():
+    return Path.cwd()
+
 ## path segmentation ##
 
 @pathify

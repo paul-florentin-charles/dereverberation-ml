@@ -5,6 +5,5 @@
 Should not be modified.
 """
 
-
 CFG_FNAME = 'config.toml'
 REQ_FNAME = 'requirements.txt'

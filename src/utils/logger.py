@@ -10,7 +10,7 @@ import src.parser.toml as tml
 def init():
     """Init logger and colors."""
     clrs.start()
-    _level = tml.value('logger', 'level')
+    _level = tml.value('level', section='logger')
     if _level.upper() not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
         print(clrs.red("[CRITICAL] \"{0}\": {1}".format(_level, "unrecognized logging level")))
         clrs.close()

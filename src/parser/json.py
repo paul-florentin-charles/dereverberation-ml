@@ -13,11 +13,11 @@ def init():
 
 def dump(_dict, mode='w', n_indent=4):
     """Dump <_dict> into predefined json file."""
-    _dump(tml.value('data', 'json','fname'), _dict, mode, n_indent)
+    _dump(tml.value('json', section='data', subkey='fname'), _dict, mode, n_indent)
 
 def load():
     """Get content of predefined json file."""
-    return _load(tml.value('data', 'json', 'fname'))
+    return _load(tml.value('json', section='data', subkey='fname'))
 
 def _dump(fpath, _dict, mode='w', n_indent=4):
     """Dump <_dict> into json file at <fpath>.

@@ -11,20 +11,20 @@ from keras import callbacks as cal
 
 # Numerical parameters
 
-BATCH_SIZE = tml.value('neuralnet', 'batch_size')
+BATCH_SIZE = tml.value('batch_size', section='neuralnet')
 
-EPOCHS = tml.value('neuralnet', 'epochs')
+EPOCHS = tml.value('epochs', section='neuralnet')
 
-INPUT_SHAPE = (tml.value('audio', 's_len'), 1)
+INPUT_SHAPE = (tml.value('s_len', section='audio'), 1)
 
-KERNEL_SIZE = tml.value('audio', 'f_size')
+KERNEL_SIZE = tml.value('f_size', section='audio')
 
 VALIDATION_SPLIT = 0.1
 
 
 # Classes and functions
 
-OPTIMIZER = opt.Adam(lr=tml.value('neuralnet', 'learning_rate'), decay=tml.value('neuralnet', 'decay'))
+OPTIMIZER = opt.Adam(lr=tml.value('learning_rate', section='neuralnet'), decay=tml.value('decay', section='neuralnet'))
 
 LOSS = los.mean_squared_error
 
@@ -32,7 +32,7 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.VarianceScaling(mode='fan_avg', distribution='uniform')
 
-CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('neuralnet', 'dnames', 'model'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('neuralnet', 'save_steps'))]
+CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('dnames', section='neuralnet', subkey='model'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('save_steps', section='neuralnet'))]
 
 
 # Others

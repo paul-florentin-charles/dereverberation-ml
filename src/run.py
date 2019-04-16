@@ -23,7 +23,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     log.info("Retrieving data and saving it into a numpy file")
 
-    npy_fname = tml.value('data', 'numpy', 'fname')
+    npy_fname = tml.value('numpy', section='data', subkey='fname')
     if pth.__is_file(npy_fname):
         log.warning("\"{0}\" already exists, skipping data retrieval".format(npy_fname))
     else:
@@ -41,7 +41,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     log.info("Training the model")
 
-    mdl_dname = tml.value('neuralnet', 'dnames', 'model')
+    mdl_dname = tml.value('dnames', section='neuralnet', subkey='model')
     if not pth.__is_empty(mdl_dname):
         log.warning("Model has already been trained in a previous session, picking up best model from \'{0}\'".format(mdl_dname))
         NN = NeuralNetwork(model=load_best_model())
@@ -61,7 +61,7 @@ def run(dry_dpath, fx_dpath, output_dir=None):
 
     log.info("Exporting data")
 
-    pred_dname = tml.value('neuralnet', 'dnames', 'predictions')
+    pred_dname = tml.value('dnames', section='neuralnet', subkey='predictions')
     pth.__make_dir(pred_dname)
     _export(unshape(_labels), pred_dname)
     """

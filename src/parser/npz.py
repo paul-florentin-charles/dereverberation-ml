@@ -9,11 +9,11 @@ import numpy as np
 
 def write(data):
     """Write <data> into predefined numpy archive file."""
-    _write(data, tml.value('data', 'numpy', 'fname'))
+    _write(data, tml.value('numpy', section='data', subkey='fname'))
 
 def read():
     """Read content of predefined numpy archive file."""
-    return _read(tml.value('data', 'numpy', 'fname'))
+    return _read(tml.value('numpy', section='data', subkey='fname'))
 
 def _write(data, fpath):
     """Write <data> into numpy archive file at <fpath>."""
