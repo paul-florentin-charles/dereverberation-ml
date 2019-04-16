@@ -45,7 +45,7 @@ def check_configuration(verbose=False):
     print("Checking values of {0}.".format(CFG_FNAME))
 
     if not pth.__is_file(CFG_FNAME):
-        raise SystemExit("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME)))
+        raise SystemExit("[CRITICAL] Can\'t find {0} at the root".format(CFG_FNAME))
     
     if verbose:
         ok = lambda msg: print("{0} [OK]".format(msg))
