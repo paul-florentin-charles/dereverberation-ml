@@ -3,10 +3,10 @@
 
 """Demo script that takes care of everything for you."""
 
-from src.utils.decorators import mainify
+from src.utils.decorators import runify
 
 
-@mainify
+@runify
 def demo():    
     import src.utils.logger as log
     import src.utils.path as pth

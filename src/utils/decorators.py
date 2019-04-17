@@ -23,8 +23,8 @@ def boolify(func):
     
     return wrapper
 
-def mainify(func):
-    """Decorator to convert function into main function.
+def runify(func):
+    """Decorator to convert function into runnable function.
     Act as a wrapper that does several things.
     """
     def wrapper(*args, **kwargs):
@@ -39,7 +39,11 @@ def mainify(func):
         
         log.init()
 
-        run(*func(*args, **kwargs))
+        res = func(*args, **kwargs)
+        if isinstance(res, (tuple, list)) and abs(len(res) - 2.5) == 0.5:
+            run(*res)
+        else:
+            log.critical("{0} is not a valid input for run function".format(res))
         
         log.shutdown()
 

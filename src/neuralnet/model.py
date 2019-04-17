@@ -31,6 +31,7 @@ class NeuralNetwork(object):
 
         X = Input(batch_shape=(self.bsiz, *self.ishp))
 
+        '''
         # encoder
 
         ENC = Conv1D(2, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
@@ -44,10 +45,11 @@ class NeuralNetwork(object):
         DEC = UpSampling1D(2)(DEC)
         DEC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
         DEC = UpSampling1D(2)(DEC)
+        '''
 
         ## output
 
-        Y = Conv1D(1, self.ksiz, padding='causal', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
+        Y = Conv1D(1, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
 
         # model
 

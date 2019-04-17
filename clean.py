@@ -41,10 +41,8 @@ def clean():
 
     
 if __name__ == '__main__':
-    import src.utils.check as chk
+    from src.utils.check import check_all
 
-    chk.check_version()
-    #chk.check_requirements()
-    chk.check_configuration()
+    check_all()
     
     clean()
