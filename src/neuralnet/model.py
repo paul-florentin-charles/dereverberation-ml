@@ -49,7 +49,7 @@ class NeuralNetwork(object):
 
         ## output
 
-        Y = Conv1D(1, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
+        Y = Conv1D(1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
 
         # model
 

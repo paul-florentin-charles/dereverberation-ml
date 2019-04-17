@@ -6,18 +6,23 @@ import sys
 
 
 def check_all(verbose=False):
+    """Check a bunch of stuff.
+    To be called before running project.
+    """
     check_version()
     #check_requirements(verbose)
     check_configuration(verbose)
     check_execution_dir()
     
 def check_version():
+    """Check if python version used to run project is Python 3."""
     print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
     
     if sys.version_info.major != 3:
         sys.exit("Python 3 is required, please update your version or run with the appropriate program")
         
 def check_requirements(verbose=False):
+    """Check if requirements listed in requirements files are installed."""
     import src.utils.path as pth
     from src.config import REQ_FNAME
 
@@ -42,6 +47,7 @@ def check_requirements(verbose=False):
             raise SystemExit("\"{0}\" not found".format(req))
         
 def check_configuration(verbose=False):
+    """Check if values in configuration file are valid."""
     import src.parser.toml as tml
     import src.utils.path as pth
     from src.config import CFG_FNAME
@@ -93,11 +99,10 @@ def check_configuration(verbose=False):
 
     demo = 'demo'
 
-    url1 = tml.value('urls', section=demo, subkey='dry')
-    url2 = tml.value('urls', section=demo, subkey='fx')
-    ipt1 = tml.value('dnames', section=demo, subkey='input_dry')
-    ipt2 = tml.value('dnames', section=demo, subkey='input_fx')
-    out = tml.value('dnames', section=demo, subkey='output')
+    urls = tml.value('urls', section=demo)
+    urls = [urls[key] for key in urls]
+    dirs = tml.value('dnames', section=demo)
+    dirs = [dirs[key] for key in dirs]
     
     section(audio)
     
@@ -139,14 +144,15 @@ def check_configuration(verbose=False):
 
     section(demo)
 
-    check_value('demo urls', all(map(isinstance, (url1, url2), repeat(str))), "Demo urls must be strings")
+    check_value('demo urls', all(map(isinstance, urls, repeat(str))), "Demo urls must be strings")
 
-    check_value('demo directory names', all(map(isinstance, (ipt1, ipt2, out), repeat(str))), "All demo directory names must be string")
+    check_value('demo directory names', all(map(isinstance, dirs, repeat(str))), "All demo directory names must be string")
 
 def check_execution_dir():
+    """Check if script is executed from its directory."""
     import src.utils.path as pth
     import src.parser.toml as tml
 
     #TODO: Find a better way to check if file is executed from its directory  
-    if pth.__file_name(pth.__working_dir()) != tml.value('repository_name'):
+    if pth.__file_name(pth.__current_dir()) != tml.value('repository_name'):
         raise SystemExit("Please execute script from its directory")

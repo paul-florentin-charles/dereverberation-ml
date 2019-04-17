@@ -24,7 +24,7 @@ def __path(fpath):
     return fpath
 
 @stringify
-def __working_dir():
+def __current_dir():
     return Path.cwd()
 
 ## path segmentation ##
