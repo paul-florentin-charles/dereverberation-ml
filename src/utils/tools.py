@@ -14,7 +14,7 @@ from string import ascii_letters, digits
 from shutil import unpack_archive
 import requests as req
 from http import HTTPStatus as HTTP
-from inspect import signature
+from inspect import signature, currentframe
 
 
 def usage(pname, cname='python3', required_args=[], optional_args=[]):
@@ -76,3 +76,4 @@ def n_parameters(func):
         return -1
     
     return len(signature(func).parameters)
+    

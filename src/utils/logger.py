@@ -7,6 +7,8 @@ import src.utils.colors as clrs
 import src.parser.toml as tml
 
 
+level = dict(debug='DEBUG', info='INFO', warning='WARNING', error='ERROR', critical='CRITICAL')
+
 def init():
     """Init logger and colors."""
     clrs.start()
@@ -25,22 +27,22 @@ def shutdown():
     
 def debug(msg):
     """Display debug message."""
-    lgn.debug(clrs.dim("[DEBUG] {0}".format(msg)))
+    lgn.debug(clrs.dim("[{0}] {1}".format(level['debug'], msg)))
 
 def info(msg):
     """Display info message."""
-    lgn.info(clrs.bright("[INFO] {0}".format(msg)))
+    lgn.info(clrs.bright("[{0}] {1}".format(level['info'], msg)))
  
 def warning(msg):
     """Display warning message."""
-    lgn.warning(clrs.yellow("[WARNING] {0}".format(msg)))
+    lgn.warning(clrs.yellow("[{0}] {1}".format(level['warning'], msg)))
 
 def error(msg):
     """Display error message."""
-    lgn.error(clrs.magenta("[ERROR] {0}".format(msg)))
+    lgn.error(clrs.magenta("[{0}] {1}".format(level['error'], msg)))
 
 def critical(msg):
     """Display critical message and exit program."""
-    lgn.critical(clrs.red("[CRITICAL] {0}".format(msg)))
+    lgn.critical(clrs.red("[{0}] {1}".format(level['critical'], msg)))
     shutdown()
     raise SystemExit
