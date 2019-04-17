@@ -61,12 +61,12 @@ def _export(npy_arrays, outdpath=None, override=True):
 
 ## Generating dataset ##
 
-def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
+def generate_dataset(dry_dpath, fx_dpath, output_dpath=None, func=None):
     """Generate dataset of wet samples."""
-    if not output_dir:
-        output_dir = mkrdir()
-    elif not pth.__exists(output_dir):
-        pth.__make_dir(output_dir)
+    if not output_dpath:
+        output_dpath = mkrdir()
+    elif not pth.__exists(output_dpath):
+        pth.__make_dir(output_dpath)
 
     fxs = _load(fx_dpath)
 
@@ -76,7 +76,7 @@ def generate_dataset(dry_dpath, fx_dpath, output_dir=None, func=None):
     
     for idx, dryfpath in enumerate(__list_audio_files(dry_dpath)):
         wet_signals = apply_fxs(_read(dryfpath), fxs, func)
-        dpath = mkrdir(output_dir, prefix='{0}_'.format(idx))
+        dpath = mkrdir(output_dpath, prefix='{0}_'.format(idx))
         _export(wet_signals, dpath)
 
         info[dryfpath] = dpath

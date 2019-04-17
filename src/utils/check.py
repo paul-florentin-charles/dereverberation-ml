@@ -3,6 +3,13 @@
 from __future__ import print_function
 
 import sys
+
+
+def check_all(verbose=False):
+    check_version()
+    #check_requirements(verbose)
+    check_configuration(verbose)
+    check_execution_dir()
     
 def check_version():
     print('Running project with Python', '.'.join(map(str, (sys.version_info.major, sys.version_info.minor, sys.version_info.micro))))
@@ -136,7 +143,7 @@ def check_configuration(verbose=False):
 
     check_value('demo directory names', all(map(isinstance, (ipt1, ipt2, out), repeat(str))), "All demo directory names must be string")
 
-def check_execution():
+def check_execution_dir():
     import src.utils.path as pth
     import src.parser.toml as tml
 

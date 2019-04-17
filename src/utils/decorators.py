@@ -28,13 +28,10 @@ def mainify(func):
     Act as a wrapper that does several things.
     """
     def wrapper(*args, **kwargs):
-        import src.utils.check as chk
-        
-        chk.check_version()
-        #chk.check_requirements()
-        chk.check_configuration()
-        chk.check_execution()
+        from src.utils.check import check_all
 
+        check_all()
+        
         import src.utils.logger as log
         import src.utils.path as pth
         import src.parser.toml as tml
