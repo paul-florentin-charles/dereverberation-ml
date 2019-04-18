@@ -14,7 +14,7 @@ from string import ascii_letters, digits
 from shutil import unpack_archive
 import requests as req
 from http import HTTPStatus as HTTP
-from inspect import signature, currentframe
+from inspect import signature
 
 
 def usage(pname, cname='python3', required_args=[], optional_args=[]):
@@ -37,6 +37,14 @@ def mkrdir(path='.', prefix=''):
     pth.__make_dir(dpath)
 
     return dpath
+
+def rfname(path='.', prefix=''):
+    """Return path to random file name at <path> prefixed by <prefix>."""
+    fpath = pth.__join_path(path, ''.join([prefix, rstr()]))
+    while(pth.__exists(fpath)):
+        fpath = pth.__join_path(path, ''.join([prefix, rstr()]))
+        
+    return fpath
 
 def download(furl, dpath='.'):
     """Download file at <furl> and write it at <dpath>.

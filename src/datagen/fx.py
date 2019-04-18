@@ -41,6 +41,24 @@ def _convolve(npy_dry, npy_fx, _mode):
     
     return _conv
 
+def apply_fx(dry, fx, func=convolve):
+    """Apply an fx to a dry signal.
+    Return the resulting signal.
+    """
+    if func is None:
+        func = convolve
+    
+    n_params = n_parameters(func)
+    if n_params == -1:
+        log.critical("A function is needed to apply fx")
+    elif n_params != 2:
+        log.critical("\'{0}\' function doesn't take exactly two arguments, can't apply fx".format(func.__name__))
+    
+    if dry.frame_count() == 0:
+        log.warning("Applying fx to an empty signal")
+    
+    return func(dry, fx)
+
 def apply_fxs(dry, fxs, func=convolve):
     """Apply a list of fxs to a dry signal.
     Return the resulting list.
@@ -57,7 +75,7 @@ def apply_fxs(dry, fxs, func=convolve):
         log.critical("\'{0}\' function doesn't take exactly two arguments, can't apply fxs".format(func.__name__))
     
     if dry.frame_count() == 0:
-        log.warning("Attempting to apply fx to an empty signal")
+        log.warning("Attempting to apply fxs to an empty signal, returning empty list")
         return wet_signals
     
     for fx in fxs:

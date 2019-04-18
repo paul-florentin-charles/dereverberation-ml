@@ -128,6 +128,11 @@ def __read_file(path):
     if __is_file(path):
         return path.read_text()
 
+@pathify
+def __rename_file(src_path, dst_path):
+    if __is_file(src_path):
+        src_path.rename(dst_path)
+    
 ## miscellaneous ##
 
 @pathify

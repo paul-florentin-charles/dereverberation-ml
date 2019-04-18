@@ -21,22 +21,21 @@ def clean():
     log.init()
 
     log.info("Cleaning project")
-    
-    dnames = tml.value('dnames', section='demo')
-    if pth.__exists(dnames['input_dry']):
-        rmtree(dnames['input_dry'])
-    if pth.__exists(dnames['input_fx']):
-        rmtree(dnames['input_fx'])
-    if pth.__exists(dnames['output']):
-        rmtree(dnames['output'])
 
     pth.__remove_file(tml.value('json', section='data', subkey='fname'))
     pth.__remove_file(tml.value('numpy', section='data', subkey='fname'))
+    
+    dnames = tml.value('dnames', section='demo')
+    if pth.__exists(dnames['input']):
+        rmtree(dnames['input'])
+    if pth.__exists(dnames['output']):
+        rmtree(dnames['output'])
+    pth.__remove_file(tml.value('fx_name', section='demo'))
 
     dnames = tml.value('dnames', section='neuralnet')
     if pth.__exists(dnames['predictions']):
         rmtree(dnames['predictions'])
-
+        
     log.shutdown()
 
     

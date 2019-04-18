@@ -70,39 +70,14 @@ def check_configuration(verbose=False):
     def check_value(vname, cond, msg):
         ok(vname) if cond else notok(vname) or sys.exit(msg)
 
+        
     audio = 'audio'
-    
+        
     sr = tml.value('s_rate', section=audio)
     slen = tml.value('s_len', section=audio)
     bits = tml.value('bit_depth', section=audio)
     mod = tml.value('conv_mod', section=audio)
     fsiz = tml.value('f_size', section=audio)
-
-    neuralnet = 'neuralnet'
-
-    bsiz = tml.value('batch_size', section=neuralnet)
-    epoc = tml.value('epochs', section=neuralnet)
-    lr = tml.value('learning_rate', section=neuralnet)
-    dec = tml.value('decay', section=neuralnet)
-    mdl = tml.value('dnames', section=neuralnet, subkey='model')
-    pred = tml.value('dnames', section=neuralnet, subkey='predictions')
-
-    data = 'data'
-    
-    json = tml.value('json', section=data, subkey='fname')
-    stps = tml.value('save_steps', section=data)
-    npz = tml.value('numpy', section=data, subkey='fname')
-
-    logger = 'logger'
-
-    lvl = tml.value('level', section=logger)
-
-    demo = 'demo'
-
-    urls = tml.value('urls', section=demo)
-    urls = [urls[key] for key in urls]
-    dirs = tml.value('dnames', section=demo)
-    dirs = [dirs[key] for key in dirs]
     
     section(audio)
     
@@ -115,6 +90,17 @@ def check_configuration(verbose=False):
     check_value('convolution mode', isinstance(mod, str) and mod in ['full', 'same', 'valid'], "Convolution mode must be a string picked among \'full\', \'same\' and \'valid\'")
 
     check_value('frame size', isinstance(fsiz, int) and fsiz > 0, "Frame size must be a strictly positive integer")
+    
+
+    neuralnet = 'neuralnet'
+        
+    bsiz = tml.value('batch_size', section=neuralnet)
+    epoc = tml.value('epochs', section=neuralnet)
+    stps = tml.value('save_steps', section=neuralnet)
+    lr = tml.value('learning_rate', section=neuralnet)
+    dec = tml.value('decay', section=neuralnet)
+    dirs = tml.value('dnames', section=neuralnet)
+    dirs = [dirs[key] for key in dirs]
 
     section(neuralnet)
 
@@ -122,15 +108,25 @@ def check_configuration(verbose=False):
 
     check_value('epochs', isinstance(epoc, int) and epoc > 0, "Epochs must be a strictly positive integer")
 
+    check_value('save steps', isinstance(stps, int) and stps > 0, "Save steps must be a strictly positive integer")
+
     check_value('learning rate', isinstance(lr, (int, float)) and lr > 0, "Learning rate must be a strictly positive number")
     
     check_value('decay', isinstance(dec, (int, float)) and dec > 0, "Decay must be a strictly positive number")
 
-    check_value('model dir name', isinstance(mdl, str), "Model dir name must be a string")
+    check_value('neuralnet directory names', all(map(isinstance, dirs, repeat(str))), "All neuralnet directory names must be strings")
 
-    check_value('predictions dir name', isinstance(pred, str), "Predictions dir name must be a string") 
+
+    data = 'data'
+
+    spls = tml.value('n_samples', section=data)
+    json = tml.value('json', section=data, subkey='fname')
+    stps = tml.value('json', section=data, subkey='save_steps')
+    npz = tml.value('numpy', section=data, subkey='fname')
     
     section(data)
+
+    check_value('number of samples', isinstance(spls, int) and spls > 0, "Number of samples must be a strictly positive integer")
 
     check_value('JSON file name', isinstance(json, str) and json.endswith('.json'), "JSON file name must be a string with \'.json\' suffix")
 
@@ -138,15 +134,31 @@ def check_configuration(verbose=False):
 
     check_value('numpy file name', isinstance(npz, str) and npz.endswith('.npz'), "Numpy file name must be a string with \'.npz\' suffix")
 
+
+    logger = 'logger'
+
+    lvl = tml.value('level', section=logger)
+
     section(logger)
 
     check_value('debug level', isinstance(lvl, str) and lvl.lower() in ['debug', 'info', 'warning', 'error', 'critical'], "Debug level must be a string picked among \'debug\', \'info\', \'warning\', \'error\' and \'critical\'")
 
+
+    demo = 'demo'
+
+    fx = tml.value('fx_name', section=demo)
+    urls = tml.value('urls', section=demo)
+    urls = [urls[key] for key in urls]
+    dirs = tml.value('dnames', section=demo)
+    dirs = [dirs[key] for key in dirs]
+
     section(demo)
+
+    check_value('fx file name', isinstance(fx, str), "FX file name must be a string")
 
     check_value('demo urls', all(map(isinstance, urls, repeat(str))), "Demo urls must be strings")
 
-    check_value('demo directory names', all(map(isinstance, dirs, repeat(str))), "All demo directory names must be string")
+    check_value('demo directory names', all(map(isinstance, dirs, repeat(str))), "All demo directory names must be strings")
 
 def check_execution_dir():
     """Check if script is executed from its directory."""

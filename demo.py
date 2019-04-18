@@ -19,28 +19,21 @@ def demo():
     dry_url = tml.value('urls', section='demo', subkey='dry')
     fx_url = tml.value('urls', section='demo', subkey='fx')
 
-    dry_dpath = tml.value('dnames', section='demo', subkey='input_dry')
-    fx_dpath = tml.value('dnames', section='demo', subkey='input_fx')
+    dry_dpath = tml.value('dnames', section='demo', subkey='input')
+    fx_fpath = tml.value('fx_name', section='demo')
 
-    log.info("Downloading and extracting dataset(s)")
+    log.info("Downloading and extracting dataset and fx")
+
+    fx_fpath_down = download(fx_url)
+    pth.__rename_file(fx_fpath_down, fx_fpath)
     
-    if not pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):  
-        dry_fpath, fx_fpath = download(dry_url), download(fx_url)
-        
-        extract(dry_fpath, dry_dpath)
-        extract(fx_fpath, fx_dpath)
-    elif not pth.__exists(dry_dpath) and pth.__exists(fx_dpath):
+    if not pth.__exists(dry_dpath):
         dry_fpath = download(dry_url)
-        
         extract(dry_fpath, dry_dpath)
-    elif pth.__exists(dry_dpath) and not pth.__exists(fx_dpath):
-        fx_fpath = download(fx_url)
-        
-        extract(fx_fpath, fx_dpath)
     else:
-        log.warning("\"{0}\" and \"{1}\" already exist, skipping downloading".format(dry_dpath, fx_dpath))
+        log.warning("\"{0}\" already exist, skipping dataset downloading".format(dry_dpath))
 
-    return dry_dpath, fx_dpath, tml.value('dnames', section='demo', subkey='output')
+    return dry_dpath, fx_fpath, tml.value('dnames', section='demo', subkey='output')
 
 
 if __name__ == '__main__':

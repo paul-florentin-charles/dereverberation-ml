@@ -33,8 +33,6 @@ def runify(func):
         check_all()
         
         import src.utils.logger as log
-        import src.utils.path as pth
-        import src.parser.toml as tml
         from src.run import run
         
         log.init()

@@ -3,8 +3,8 @@
 """Load any sound file, and save numpy arrays as wave files."""
 
 from src.datagen.utils import __list_audio_files, __is_audio_file
-from src.datagen.fx import apply_fxs
-from src.utils.tools import mkrdir, rstr
+from src.datagen.fx import apply_fx
+from src.utils.tools import mkrdir, rfname
 import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml, src.parser.json as jsn
@@ -57,27 +57,42 @@ def _export(npy_arrays, outdpath=None, override=True):
         outdpath = mkrdir()
 
     for idx, npy_array in enumerate(npy_arrays):
-        _save(npy_array, pth.__join_path(outdpath, '{0}_{1}'.format(idx, rstr())), override)
+        _save(npy_array, rfname(path=outdpath, prefix='{0}_'.format(idx)), override)
 
+def _filter(dpath):
+    """Filtering <dpath> by removing a certain amount of files.
+    For now, filtering removes files from the tail.
+    """
+    log.debug("Filtering {0}".format(dpath))
+    n_samples = tml.value('n_samples', section='data')
+    audio_files = __list_audio_files(dpath)
+
+    if len(audio_files) <= n_samples:
+        log.debug("Keeping all files in {0}".format(dpath))
+        return
+
+    for afile in audio_files[n_samples:]:
+        pth.__remove_file(afile)
+    
 ## Generating dataset ##
 
-def generate_dataset(dry_dpath, fx_dpath, output_dpath=None, func=None):
+def generate_dataset(dry_dpath, fx_fpath, output_dpath=None, func=None):
     """Generate dataset of wet samples."""
     if not output_dpath:
         output_dpath = mkrdir()
     elif not pth.__exists(output_dpath):
         pth.__make_dir(output_dpath)
 
-    fxs = _load(fx_dpath)
+    fx = _read(fx_fpath)
 
     jsn.init()
 
-    info, save_steps = dict(), tml.value('save_steps', section='data')
+    info, save_steps = dict(), tml.value('json', section='data', subkey='save_steps')
     
     for idx, dryfpath in enumerate(__list_audio_files(dry_dpath)):
-        wet_signals = apply_fxs(_read(dryfpath), fxs, func)
-        dpath = mkrdir(output_dpath, prefix='{0}_'.format(idx))
-        _export(wet_signals, dpath)
+        wet_signal = apply_fx(_read(dryfpath), fx, func)
+        dpath = '{0}.wav'.format(rfname(path=output_dpath, prefix='{0}_'.format(idx)))
+        _save(wet_signal, dpath)
 
         info[dryfpath] = dpath
         if (idx + 1) % save_steps == 0:

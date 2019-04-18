@@ -10,7 +10,7 @@ conv_mod = 'same'
 f_size = 2000
 
 [neuralnet]
-batch_size = 4
+batch_size = 1
 epochs = 150
 save_steps = 2
 learning_rate = 2e-3
@@ -20,9 +20,10 @@ model = 'model'
 predictions = 'predictions'
 
 [data]
-save_steps = 50
+n_samples = 250
 [data.json]
 fname = 'info.json'
+save_steps = 50
 [data.numpy]
 fname = 'data.npz'
 
@@ -30,10 +31,10 @@ fname = 'data.npz'
 level = 'debug'
 
 [demo]
+fx_name = 'fx'
 [demo.urls]
-dry = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/note_dataset_medium.tar.gz'
-fx = 'https://raw.githubusercontent.com/polochinoc/various-audio-datasets/master/ir_dataset_solo.zip'
+dry = 'http://download.magenta.tensorflow.org/datasets/nsynth/nsynth-test.jsonwav.tar.gz'
+fx = 'https://impulses.prasadt.com/static/impulses/Lecture%20Hall.wav'
 [demo.dnames]
-input_dry = 'dry'
-input_fx = 'fx'
+input = 'dry'
 output = 'wet'

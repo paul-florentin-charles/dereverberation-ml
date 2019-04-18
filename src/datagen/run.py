@@ -3,7 +3,7 @@
 import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml
-from src.datagen.io import generate_dataset
+from src.datagen.io import _filter, generate_dataset
 from src.utils.data import write_data, read_data
 
 
@@ -11,6 +11,10 @@ def run_datagen(dry_dpath, fx_dpath, output_dpath=None):
     """Run tool to generate dataset and write numpy data file.
     Return a couple (data, labels) to be used for training network.
     """
+    log.info("Filtering directory containing dry samples")
+
+    _filter(dry_dpath)
+    
     log.info("Generating dataset of wet samples")
         
     if output_dpath is not None and pth.__is_dir(output_dpath):
