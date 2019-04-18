@@ -84,7 +84,7 @@ def generate_dataset(dry_dpath, fx_fpath, output_dpath=None, func=None):
         pth.__make_dir(output_dpath)
 
     fx = _read(fx_fpath)
-
+    
     jsn.init()
 
     info, save_steps = dict(), tml.value('json', section='data', subkey='save_steps')

@@ -31,7 +31,7 @@ fname = 'data.npz'
 level = 'debug'
 
 [demo]
-fx_name = 'fx'
+fx_name = 'fx.wav'
 [demo.urls]
 dry = 'http://download.magenta.tensorflow.org/datasets/nsynth/nsynth-test.jsonwav.tar.gz'
 fx = 'https://impulses.prasadt.com/static/impulses/Lecture%20Hall.wav'

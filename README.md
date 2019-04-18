@@ -67,7 +67,7 @@ equivalent to
 python3 clean.py
 ```
 
-This will remove all extra files generated while running main script or demo, apart from *model* directory since it contains very time-consuming files to generate.
+This will remove all extra files generated while running main script or demo, apart from *model* directory specified in *neuralnet.dnames* section, since it contains very time-consuming files to generate.
 
 ## Logging
 
@@ -88,14 +88,14 @@ For instance, if set on *warning*, *debug* and *info* messages won't be displaye
 
 ```json
 {
-	"drypath0": "wetdirpath0",
-	"drypath1": "wetdirpath1",
-	"drypath2": "wetdirpath2",
+	"drypath0": "wetpath0",
+	"drypath1": "wetpath1",
+	"drypath2": "wetpath2",
 	...
 }
 ```
 
-Each path to a dry signal is a key to the directory path that contains all of its wet samples.
+Each path to a dry signal is a key to its corresponding wet signal.
 
 ## Model
 

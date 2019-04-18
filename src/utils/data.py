@@ -19,7 +19,7 @@ def write_data():
 
     data = []
     for key in _dict:
-        data.append(list(map(__convert, (_read(_dict[key]), _read(key)), repeat(DTYPE))))
+        data.append(list(map(__convert, map(_read, (_dict[key], key)), repeat(DTYPE))))
     
     log.debug("{0} couples data/label have been retrieved".format(len(data)))
 
