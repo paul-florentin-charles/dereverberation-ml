@@ -13,14 +13,14 @@ f_size = 2000
 batch_size = 4
 epochs = 150
 save_steps = 2
-learning_rate = 2e-3
-decay = 4e-5
+learning_rate = 4e-3
+decay = 5e-5
 [neuralnet.dnames]
 model = 'model'
 predictions = 'predictions'
 
 [data]
-n_samples = 400
+n_samples = 1200
 [data.json]
 fname = 'info.json'
 save_steps = 50
