@@ -91,7 +91,7 @@ def generate_dataset(dry_dpath, fx_fpath, output_dpath=None, func=None):
     
     for idx, dryfpath in enumerate(__list_audio_files(dry_dpath)):
         wet_signal = apply_fx(_read(dryfpath), fx, func)
-        dpath = '{0}.wav'.format(rfname(path=output_dpath, prefix='{0}_'.format(idx)))
+        dpath = pth.__with_extension(rfname(path=output_dpath, prefix='{0}_'.format(idx)), '.wav')
         _save(wet_signal, dpath)
 
         info[dryfpath] = dpath
