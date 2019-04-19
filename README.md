@@ -1,14 +1,4 @@
-# Get started
-
-```bash
-git clone https://gitgud.io/polochinoc/dereverberation-ml.git
-cd dereverberation-ml
-make demo
-```
-
-# Instructions
-
-## Requirements
+# Requirements
 
 Mandatory
 - Python 3 (tested for 3.5 and 3.7)
@@ -16,6 +6,28 @@ Mandatory
 
 Optional
 - GNU Make
+
+# Get started
+
+```bash
+git clone https://gitgud.io/polochinoc/dereverberation-ml.git
+cd dereverberation-ml
+make install
+make demo
+```
+
+if you don't have make
+
+```bash
+git clone https://gitgud.io/polochinoc/dereverberation-ml.git
+cd dereverberation-ml
+sudo pip3 install -r requirements.txt
+python3 demo.py
+```
+
+# Instructions
+
+## Install
 
 ```bash
 make install

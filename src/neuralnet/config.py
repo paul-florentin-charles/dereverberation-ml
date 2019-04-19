@@ -19,7 +19,7 @@ INPUT_SHAPE = (tml.value('s_len', section='audio'), 1)
 
 KERNEL_SIZE = tml.value('f_size', section='audio')
 
-VALIDATION_SPLIT = 0.1
+VALIDATION_SPLIT = 0.15
 
 
 # Classes and functions

@@ -15,7 +15,6 @@ def run_neuralnet(data, labels):
     log.info("Shaping data")
 
     data, labels = map(utls.shape, (data, labels))
-
     
     log.info("Training model")
 
@@ -29,11 +28,9 @@ def run_neuralnet(data, labels):
         NN.compile()
         NN.train(data, labels)
 
-        
     log.info("Predicting with model")
 
     _labels = NN.predict(data)
-
     
     log.info("Exporting data")
 

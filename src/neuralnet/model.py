@@ -2,6 +2,7 @@
 
 import src.utils.logger as log
 import src.neuralnet.config as cfg
+from src.neuralnet.utils import split
 
 from keras.models import Model
 from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
@@ -13,7 +14,6 @@ class NeuralNetwork(object):
         self.epoc = cfg.EPOCHS
         self.ishp = cfg.INPUT_SHAPE
         self.ksiz = cfg.KERNEL_SIZE
-        self.vspl = cfg.VALIDATION_SPLIT
         self.opti = cfg.OPTIMIZER
         self.loss = cfg.LOSS
         self.kini = cfg.KERNEL_INITIALIZER
@@ -59,7 +59,8 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        self.model.fit(data, labels, batch_size=self.bsiz, epochs=self.epoc, callbacks=self.cbac, validation_split=self.vspl)
+        _train, _valid = split(data, labels)
+        self.model.fit(*_train, batch_size=self.bsiz, epochs=self.epoc, callbacks=self.cbac, validation_data=_valid)
 
     def predict(self, data):
         log.debug("Generating predictions")

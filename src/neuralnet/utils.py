@@ -9,6 +9,7 @@ import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml
 from src.datagen.utils import __pcm2float, __float2pcm
+import src.neuralnet.config as cfg
 
 from keras.models import load_model
 
@@ -52,6 +53,15 @@ def unshape(data):
         data[i] = __float2pcm(data[i])
 
     return data.astype('int{0}'.format(tml.value('bit_depth', section='audio')))
+
+def split(data, labels):
+    n_train = cfg.BATCH_SIZE * int((1 - cfg.VALIDATION_SPLIT) * data.shape[0] / cfg.BATCH_SIZE)
+    tdata, tlabels = data[:n_train], labels[:n_train]
+
+    n_valid = cfg.BATCH_SIZE * int(cfg.VALIDATION_SPLIT * data.shape[0] / cfg.BATCH_SIZE)
+    vdata, vlabels = data[-n_valid:], labels[-n_valid:]
+
+    return (tdata, tlabels), (vdata, vlabels)
 
 def load_best_model():
     """Return best model amongst models in predefined directory."""
