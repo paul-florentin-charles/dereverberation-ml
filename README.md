@@ -121,11 +121,9 @@ Each path to a dry signal is a key to its corresponding wet signal.
 
 ## Numpy archive
 
-*.npz* file whose name is precised in **config.toml**.
+*.npz* file whose name is precised in **config.toml** and which easily be loaded with *load* function of **numpy**.
 
-Can be loaded easily with *load* function of **numpy**.
-
-You can browse through the arrays using loaded object as a dictionary. Each array consisting of a couple (data_i, labels_i).
+You can browse through the arrays using loaded object as a dictionary, each array consisting of a couple (data_i, labels_i).
 
 Below is an example of retrieving data.
 
