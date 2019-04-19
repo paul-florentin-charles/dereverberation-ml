@@ -16,13 +16,11 @@ from keras.models import load_model
 from keras.layers import Conv2DTranspose, Lambda
 
 
-def Conv1DTranspose(input_tensor, filters, kernel_size, strides=1, padding='same'):
+def Conv1DTranspose(input_tensor, filters, kernel_size, strides=1, padding='same', activation=None, kernel_initializer='glorot_uniform', bias_initializer='zeros'):
     X = Lambda(lambda x: K.expand_dims(x, axis=2))(input_tensor)
-    X = Conv2DTranspose(filters=filters, kernel_size=(kernel_size, 1), strides=(strides, 1), padding=padding)(X)
+    X = Conv2DTranspose(filters, (kernel_size, 1), strides=(strides, 1), padding=padding, activation=activation, kernel_initializer=kernel_initializer, bias_initializer=bias_initializer)(X)
     X = Lambda(lambda x: K.squeeze(x, axis=2))(X)
     return X
-
-#TODO: Implement 2d-representation for data, to test a model with spectrum
     
 def shape(data):
     """Shape <data> to fit input of neural network."""

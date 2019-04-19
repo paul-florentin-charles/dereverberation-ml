@@ -39,16 +39,17 @@ class NeuralNetwork(object):
         ENC = MaxPooling1D(2, padding='same')(ENC)
         """
         # decoder
-
+        """
         DEC = Conv1D(8, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
         DEC = UpSampling1D(2)(DEC)
         DEC = Conv1D(4, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
         DEC = UpSampling1D(2)(DEC)
-
+        """
         ## output
 
-        Y = Conv1D(1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
-
+        #Y = Conv1D(1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
+        Y = Conv1DTranspose(X, 1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)
+        
         # model
 
         self.model = Model(inputs=X, outputs=Y)
