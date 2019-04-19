@@ -8,7 +8,7 @@ conv_mod = 'same'
 f_size = 4000
 
 [neuralnet]
-batch_size = 5
+batch_size = 3
 epochs = 180
 save_steps = 2
 learning_rate = 6e-3
@@ -18,7 +18,7 @@ model = 'model'
 predictions = 'predictions'
 
 [data]
-n_samples = 800
+n_samples = 700
 [data.json]
 fname = 'info.json'
 save_steps = 50
