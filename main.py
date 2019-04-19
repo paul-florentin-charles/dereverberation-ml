@@ -3,19 +3,20 @@
 
 """Main script to run project."""
 
-from src.utils.decorators import runify
+from src.utils.decorators import logify
+from src.run import run
 
 
-@runify
+@logify
 def main():
     from src.utils.tools import usage
     
     import sys
-    
-    if len(sys.argv) < 3:
-        raise SystemExit(usage(__file__.replace('./', ''), required_args=['path/to/dry/signals/dir', 'path/to/impulse/responses/dir'], optional_args=['path/to/output/dir']))
 
-    return sys.argv[1:]
+    if len(sys.argv) < 3:
+        raise SystemExit(usage(__file__.replace('./', ''), required_args=['path/to/dry/signals/dir', 'path/to/impulse/response'], optional_args=['path/to/output/dir']))
+
+    run(*sys.argv[1:])
 
 
 if __name__ == '__main__':

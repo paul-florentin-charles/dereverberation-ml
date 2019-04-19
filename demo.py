@@ -3,10 +3,11 @@
 
 """Demo script that takes care of everything for you."""
 
-from src.utils.decorators import runify
+from src.utils.decorators import logify
+from src.run import run
 
 
-@runify
+@logify
 def demo():    
     import src.utils.logger as log
     import src.utils.path as pth
@@ -33,7 +34,7 @@ def demo():
     else:
         log.warning("\"{0}\" already exist, skipping dataset downloading".format(dry_dpath))
 
-    return dry_dpath, fx_fpath, tml.value('dnames', section='demo', subkey='output')
+    run(dry_dpath, fx_fpath, tml.value('dnames', section='demo', subkey='output'))
 
 
 if __name__ == '__main__':

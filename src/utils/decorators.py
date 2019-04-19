@@ -23,8 +23,8 @@ def boolify(func):
     
     return wrapper
 
-def runify(func):
-    """Decorator to convert function into runnable function.
+def logify(func):
+    """Decorator to convert function into loggable function.
     Act as a wrapper that does several things.
     """
     def wrapper(*args, **kwargs):
@@ -33,15 +33,10 @@ def runify(func):
         check_all()
         
         import src.utils.logger as log
-        from src.run import run
         
         log.init()
 
-        res = func(*args, **kwargs)
-        if isinstance(res, (tuple, list)) and abs(len(res) - 2.5) == 0.5:
-            run(*res)
-        else:
-            log.critical("{0} is not a valid input for run function".format(res))
+        func(*args, **kwargs)
         
         log.shutdown()
 

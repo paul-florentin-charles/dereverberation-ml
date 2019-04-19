@@ -6,19 +6,16 @@
 Apart from directory containing saved models.
 """
 
+from src.utils.decorators import logify
 
+
+@logify
 def clean():
     import src.utils.path as pth
     import src.utils.logger as log
     import src.parser.toml as tml
 
     from shutil import rmtree
-
-
-    if __file__.replace('./', '') != "clean.py":
-        raise SystemExit("Please execute script from its directory")
-
-    log.init()
 
     log.info("Cleaning project")
 
@@ -35,13 +32,7 @@ def clean():
     dnames = tml.value('dnames', section='neuralnet')
     if pth.__exists(dnames['predictions']):
         rmtree(dnames['predictions'])
-        
-    log.shutdown()
 
     
 if __name__ == '__main__':
-    from src.utils.check import check_all
-
-    check_all()
-    
     clean()

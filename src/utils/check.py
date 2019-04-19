@@ -12,7 +12,6 @@ def check_all(verbose=False):
     check_version()
     #check_requirements(verbose)
     check_configuration(verbose)
-    check_execution_dir()
     
 def check_version():
     """Check if python version used to run project is Python 3."""
@@ -69,7 +68,6 @@ def check_configuration(verbose=False):
 
     def check_value(vname, cond, msg):
         ok(vname) if cond else notok(vname) or sys.exit(msg)
-
         
     audio = 'audio'
         
@@ -159,12 +157,3 @@ def check_configuration(verbose=False):
     check_value('demo urls', all(map(isinstance, urls, repeat(str))), "Demo urls must be strings")
 
     check_value('demo directory names', all(map(isinstance, dirs, repeat(str))), "All demo directory names must be strings")
-
-def check_execution_dir():
-    """Check if script is executed from its directory."""
-    import src.utils.path as pth
-    import src.parser.toml as tml
-
-    #TODO: Find a better way to check if file is executed from its directory  
-    if pth.__file_name(pth.__current_dir()) != tml.value('repository_name'):
-        raise SystemExit("Please execute script from its directory")

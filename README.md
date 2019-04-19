@@ -1,3 +1,11 @@
+# Get started
+
+```bash
+git clone https://gitgud.io/polochinoc/dereverberation-ml.git
+cd dereverberation-ml
+make demo
+```
+
 # Instructions
 
 ## Requirements
@@ -22,13 +30,13 @@ sudo pip3 install -r requirements.txt
 ## Run
 
 ```bash
-make run dry=path/to/dry/signals/dir fx=path/to/impulse/responses/dir [wet=path/to/output/dir]
+make run dry=path/to/dry/signals/dir fx=path/to/impulse/response [wet=path/to/output/dir]
 ```
 
 equivalent to
 
 ```bash
-python3 main.py path/to/dry/signals/dir path/to/impulse/responses/dir [path/to/output/dir]
+python3 main.py path/to/dry/signals/dir path/to/impulse/response [path/to/output/dir]
 ```
 
 Information will be stored in a JSON file whose name is set in **config.toml**.
@@ -47,7 +55,7 @@ equivalent to
 python3 demo.py
 ```
 
-You can change demo urls by modifying fields in *demo.urls* section in **config.toml** ; *dry* field concerns the dataset of dry samples, and *fx* designates the dataset of fxs.
+You can change demo urls by modifying fields in *demo.urls* section in **config.toml** ; *dry* field concerns the dataset of dry samples, and *fx* designates the fx sample.
 
 ## Clean
 

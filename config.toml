@@ -1,20 +1,18 @@
 # Configuration file
 
-repository_name = 'dereverberation-ml'
-
 [audio]
 s_rate = 16000
 s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
-f_size = 2000
+f_size = 4000
 
 [neuralnet]
 batch_size = 4
-epochs = 150
+epochs = 180
 save_steps = 2
-learning_rate = 4e-3
-decay = 5e-5
+learning_rate = 6e-3
+decay = 4e-5
 [neuralnet.dnames]
 model = 'model'
 predictions = 'predictions'
