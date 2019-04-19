@@ -11,8 +11,16 @@ import src.parser.toml as tml
 from src.datagen.utils import __pcm2float, __float2pcm
 import src.neuralnet.config as cfg
 
+import keras.backend as K
 from keras.models import load_model
+from keras.layers import Conv2DTranspose, Lambda
 
+
+def Conv1DTranspose(input_tensor, filters, kernel_size, strides=1, padding='same'):
+    X = Lambda(lambda x: K.expand_dims(x, axis=2))(input_tensor)
+    X = Conv2DTranspose(filters=filters, kernel_size=(kernel_size, 1), strides=(strides, 1), padding=padding)(X)
+    X = Lambda(lambda x: K.squeeze(x, axis=2))(X)
+    return X
 
 #TODO: Implement 2d-representation for data, to test a model with spectrum
     

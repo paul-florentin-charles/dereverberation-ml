@@ -2,7 +2,7 @@
 
 import src.utils.logger as log
 import src.neuralnet.config as cfg
-from src.neuralnet.utils import split
+from src.neuralnet.utils import split, Conv1DTranspose
 
 from keras.models import Model
 from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
@@ -32,17 +32,17 @@ class NeuralNetwork(object):
         X = Input(batch_shape=(self.bsiz, *self.ishp))
 
         # encoder
-
+        """
         ENC = Conv1D(2, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
         ENC = MaxPooling1D(2, padding='same')(ENC)
         ENC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
         ENC = MaxPooling1D(2, padding='same')(ENC)
-        
+        """
         # decoder
 
-        DEC = Conv1D(8, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
+        DEC = Conv1D(8, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
         DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
+        DEC = Conv1D(4, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
         DEC = UpSampling1D(2)(DEC)
 
         ## output
