@@ -18,7 +18,7 @@ model = 'model'
 predictions = 'predictions'
 
 [data]
-n_samples = 1200
+n_samples = 800
 [data.json]
 fname = 'info.json'
 save_steps = 50

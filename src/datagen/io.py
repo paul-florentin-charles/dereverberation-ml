@@ -59,6 +59,7 @@ def _export(npy_arrays, outdpath=None, override=True):
     for idx, npy_array in enumerate(npy_arrays):
         _save(npy_array, rfname(path=outdpath, prefix='{0}_'.format(idx)), override)
 
+#TODO: smart filtering according to metadata
 def _filter(dpath):
     """Filtering <dpath> by removing a certain amount of files.
     For now, filtering removes files from the tail.

@@ -61,6 +61,9 @@ def unshape(data):
     return data.astype('int{0}'.format(tml.value('bit_depth', section='audio')))
 
 def split(data, labels):
+    """Return two tuples of couple (data, labels).
+    First tuple is train data, second is validation data.
+    """
     n_train = cfg.BATCH_SIZE * int((1 - cfg.VALIDATION_SPLIT) * data.shape[0] / cfg.BATCH_SIZE)
     tdata, tlabels = data[:n_train], labels[:n_train]
 

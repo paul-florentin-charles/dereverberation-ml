@@ -2,10 +2,8 @@
 
 import src.utils.logger as log
 import src.neuralnet.config as cfg
-from src.neuralnet.utils import split, Conv1DTranspose
-
-from keras.models import Model
-from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
+from src.neuralnet.utils import split
+from src.neuralnet.network import autoencoder1DTranspose
 
 
 class NeuralNetwork(object):
@@ -20,39 +18,7 @@ class NeuralNetwork(object):
         self.bini = cfg.BIAS_INITIALIZER
         self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
-        if model is None:
-            self.__model__()
-        else:
-            self.model = model
-
-    def __model__(self):
-        log.debug("Building model")
-        ## input
-
-        X = Input(batch_shape=(self.bsiz, *self.ishp))
-
-        # encoder
-        """
-        ENC = Conv1D(2, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
-        ENC = MaxPooling1D(2, padding='same')(ENC)
-        ENC = Conv1D(4, self.ksiz, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(ENC)
-        ENC = MaxPooling1D(2, padding='same')(ENC)
-        """
-        # decoder
-        """
-        DEC = Conv1D(8, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
-        DEC = UpSampling1D(2)(DEC)
-        DEC = Conv1D(4, self.ksiz, strides=2, padding='same', activation='tanh', kernel_initializer=self.kini, bias_initializer=self.bini)(DEC)
-        DEC = UpSampling1D(2)(DEC)
-        """
-        ## output
-
-        #Y = Conv1D(1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)(X)
-        Y = Conv1DTranspose(X, 1, self.ksiz, padding='same', activation='linear', kernel_initializer=self.kini, bias_initializer=self.bini)
-        
-        # model
-
-        self.model = Model(inputs=X, outputs=Y)
+        self.model = autoencoder1DTranspose(self.bsiz, self.ishp, self.ksiz) if model is None else model
         
     def compile(self):
         log.debug("Compiling model")
