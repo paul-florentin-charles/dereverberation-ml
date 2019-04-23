@@ -30,8 +30,10 @@ def clean():
     pth.__remove_file(tml.value('fx_name', section='demo'))
 
     dnames = tml.value('dnames', section='neuralnet')
-    if pth.__exists(dnames['predictions']):
-        rmtree(dnames['predictions'])
+    if pth.__exists(dnames['predicted_labels']):
+        rmtree(dnames['predicted_labels'])
+    if pth.__exists(dnames['expected_labels']):
+        rmtree(dnames['expected_labels'])
 
     
 if __name__ == '__main__':
