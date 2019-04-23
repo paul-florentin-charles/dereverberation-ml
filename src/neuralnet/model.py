@@ -3,7 +3,7 @@
 import src.utils.logger as log
 import src.neuralnet.config as cfg
 from src.neuralnet.utils import split
-from src.neuralnet.network import autoencoder1D
+import src.neuralnet.network as net
 
 
 class NeuralNetwork(object):
@@ -18,7 +18,7 @@ class NeuralNetwork(object):
         self.bini = cfg.BIAS_INITIALIZER
         self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
-        self.model = autoencoder1D(self.bsiz, self.ishp, self.ksiz) if model is None else model
+        self.model = net.onelayer1DConvTranspose(self.bsiz, self.ishp, self.ksiz) if model is None else model
         
     def compile(self):
         log.debug("Compiling model")

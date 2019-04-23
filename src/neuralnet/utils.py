@@ -64,17 +64,28 @@ def split(data, labels):
     """Return two tuples of couple (data, labels).
     First tuple is train data, second is validation data.
     """
-    n_train = cfg.BATCH_SIZE * int((1 - cfg.VALIDATION_SPLIT) * data.shape[0] / cfg.BATCH_SIZE)
-    tdata, tlabels = data[:n_train], labels[:n_train]
-
-    n_valid = cfg.BATCH_SIZE * int(cfg.VALIDATION_SPLIT * data.shape[0] / cfg.BATCH_SIZE)
-    vdata, vlabels = data[-n_valid:], labels[-n_valid:]
-
-    return (tdata, tlabels), (vdata, vlabels)
+    return _split(data, labels, cfg.BATCH_SIZE, cfg.VALIDATION_SPLIT)
 
 def load_best_model():
     """Return best model amongst models in predefined directory."""
     return _load_best_model(path_to_best_model())
+    
+def path_to_best_model():
+    """Return path to best model amongst models in predefined directory."""
+    return _path_to_best_model(tml.value('dnames', section='neuralnet', subkey='model'))
+
+def _split(data, labels, chunk_size, fraction):
+    """Return two tuples of couple (data, labels).
+    Each tuple containing a multiple of <chunk_size> elements.
+    Firts tuple represents an approximative proportion of 1 - <fraction>, while second tuple represents a proportion of <fraction>. 
+    """
+    n_train = chunk_size * int((1 - fraction) * data.shape[0] / chunk_size)
+    tdata, tlabels = data[:n_train], labels[:n_train]
+
+    n_valid = chunk_size * int(fraction * data.shape[0] / chunk_size)
+    vdata, vlabels = data[-n_valid:], labels[-n_valid:]
+
+    return (tdata, tlabels), (vdata, vlabels)
 
 def _load_best_model(dpath):
     """Return best model amongst models in <dpath>."""
@@ -82,11 +93,7 @@ def _load_best_model(dpath):
     if not mdlpath:
         log.critical("No best model fount at \"{0}\"".format(dpath))
         
-    return load_model(mdlpath)    
-
-def path_to_best_model():
-    """Return path to best model amongst models in predefined directory."""
-    return _path_to_best_model(tml.value('dnames', section='neuralnet', subkey='model'))
+    return load_model(mdlpath)
 
 def _path_to_best_model(dpath):
     """Return path to best model amongst models in <dpath>."""
