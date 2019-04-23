@@ -2,7 +2,7 @@
 
 import src.utils.logger as log
 import src.neuralnet.config as cfg
-from src.neuralnet.utils import split
+from src.neuralnet.utils import split_valid
 import src.neuralnet.network as net
 
 
@@ -26,8 +26,8 @@ class NeuralNetwork(object):
 
     def train(self, data, labels):
         log.debug("Training model")
-        _train, _valid = split(data, labels)
-        self.model.fit(*_train, batch_size=self.bsiz, epochs=self.epoc, callbacks=self.cbac, validation_data=_valid)
+        train_data, valid_data = split_valid(data, labels)
+        self.model.fit(*train_data, batch_size=self.bsiz, epochs=self.epoc, callbacks=self.cbac, validation_data=valid_data)
 
     def predict(self, data):
         log.debug("Generating predictions")

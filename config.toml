@@ -15,7 +15,8 @@ learning_rate = 6e-3
 decay = 4e-5
 [neuralnet.dnames]
 model = 'model'
-predictions = 'predictions'
+predicted_labels = 'predicted_labels'
+expected_labels = 'expected_labels'
 
 [data]
 n_samples = 800

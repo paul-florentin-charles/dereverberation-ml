@@ -21,6 +21,8 @@ KERNEL_SIZE = tml.value('f_size', section='audio')
 
 VALIDATION_SPLIT = 0.15
 
+TEST_SPLIT = 0.05
+
 
 # Classes and functions
 

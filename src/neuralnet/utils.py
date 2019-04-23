@@ -60,11 +60,17 @@ def unshape(data):
 
     return data.astype('int{0}'.format(tml.value('bit_depth', section='audio')))
 
-def split(data, labels):
+def split_valid(data, labels):
     """Return two tuples of couple (data, labels).
     First tuple is train data, second is validation data.
     """
     return _split(data, labels, cfg.BATCH_SIZE, cfg.VALIDATION_SPLIT)
+
+def split_test(data, labels):
+    """Return two tuples of couple (data, labels).
+    First tuple is train data, second is test data.
+    """
+    return _split(data, labels, cfg.BATCH_SIZE, cfg.TEST_SPLIT)
 
 def load_best_model():
     """Return best model amongst models in predefined directory."""
@@ -79,13 +85,13 @@ def _split(data, labels, chunk_size, fraction):
     Each tuple containing a multiple of <chunk_size> elements.
     Firts tuple represents an approximative proportion of 1 - <fraction>, while second tuple represents a proportion of <fraction>. 
     """
-    n_train = chunk_size * int((1 - fraction) * data.shape[0] / chunk_size)
-    tdata, tlabels = data[:n_train], labels[:n_train]
+    n_1 = chunk_size * int((1 - fraction) * data.shape[0] / chunk_size)
+    data_1, labels_1 = data[:n_1], labels[:n_1]
 
-    n_valid = chunk_size * int(fraction * data.shape[0] / chunk_size)
-    vdata, vlabels = data[-n_valid:], labels[-n_valid:]
+    n_2 = chunk_size * int(fraction * data.shape[0] / chunk_size)
+    data_2, labels_2 = data[-n_2:], labels[-n_2:]
 
-    return (tdata, tlabels), (vdata, vlabels)
+    return (data_1, labels_1), (data_2, labels_2)
 
 def _load_best_model(dpath):
     """Return best model amongst models in <dpath>."""

@@ -15,6 +15,7 @@ def run_neuralnet(data, labels):
     log.info("Shaping data")
 
     data, labels = map(utls.shape, (data, labels))
+    train_data, test_data = utls.split_test(data, labels)
     
     log.info("Training model")
 
@@ -26,14 +27,17 @@ def run_neuralnet(data, labels):
         pth.__make_dir(mdl_dname)
         NN = NeuralNetwork()
         NN.compile()
-        NN.train(data, labels)
+        NN.train(*train_data)
 
     log.info("Predicting with model")
 
-    _labels = NN.predict(data)
+    predictions = NN.predict(test_data[0])
     
     log.info("Exporting data")
 
-    pred_dname = tml.value('dnames', section='neuralnet', subkey='predictions')
-    pth.__make_dir(pred_dname)
-    _export(utls.unshape(_labels), pred_dname)
+    dnames = tml.value('dnames', section='neuralnet')
+    
+    pth.__make_dir(dnames['predicted_labels'])
+    _export(utls.unshape(predictions), dnames['predicted_labels'])
+    pth.__make_dir(dnames['expected_labels'])
+    _export(utls.unshape(test_data[1]), dnames['expected_labels'])
