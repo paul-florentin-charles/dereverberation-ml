@@ -13,7 +13,7 @@ valid_split = 15e-2
 tst_split = 5e-2
 [neuralnet.model]
 batch_size = 4
-epochs = 180
+epochs = 150
 learning_rate = 6e-3
 decay = 4e-5
 n_layers = 0
@@ -23,7 +23,7 @@ predicted_labels = 'predicted_labels'
 expected_labels = 'expected_labels'
 
 [data]
-n_samples = 800
+n_samples = 700
 [data.json]
 fname = 'info.json'
 save_steps = 50
