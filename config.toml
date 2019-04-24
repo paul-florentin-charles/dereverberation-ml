@@ -8,7 +8,7 @@ conv_mod = 'same'
 f_size = 2000
 
 [neuralnet]
-save_steps = 2
+save_steps = 1
 valid_split = 15e-2
 tst_split = 5e-2
 [neuralnet.model]
