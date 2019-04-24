@@ -5,5 +5,5 @@ from src.datagen.run import run_datagen
 
 #TODO: implement 2d-representation in a specific module
 def run(dry_dpath, fx_fpath, output_dpath=None):
-    data, labels = run_datagen(dry_dpath, fx_fpath, output_dpath)
-    #run_neuralnet(data, labels)
+    data = run_datagen(dry_dpath, fx_fpath, output_dpath)
+    #run_neuralnet(*data)
