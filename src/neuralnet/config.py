@@ -19,6 +19,8 @@ INPUT_SHAPE = (tml.value('s_len', section='audio'), 1)
 
 KERNEL_SIZE = tml.value('f_size', section='audio')
 
+N_LAYERS = tml.value('n_layers', section='neuralnet')
+
 VALIDATION_SPLIT = 0.15
 
 TEST_SPLIT = 0.05

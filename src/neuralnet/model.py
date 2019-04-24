@@ -3,7 +3,7 @@
 import src.utils.logger as log
 import src.neuralnet.config as cfg
 from src.neuralnet.utils import split_valid
-import src.neuralnet.network as net
+from src.neuralnet.network import convAutoencoder1D, deconvAutoencoder1D
 
 
 class NeuralNetwork(object):
@@ -12,13 +12,14 @@ class NeuralNetwork(object):
         self.epoc = cfg.EPOCHS
         self.ishp = cfg.INPUT_SHAPE
         self.ksiz = cfg.KERNEL_SIZE
+        self.lyrs = cfg.N_LAYERS
         self.opti = cfg.OPTIMIZER
         self.loss = cfg.LOSS
         self.kini = cfg.KERNEL_INITIALIZER
         self.bini = cfg.BIAS_INITIALIZER
         self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
-        self.model = net.onelayer1DConvTranspose(self.bsiz, self.ishp, self.ksiz) if model is None else model
+        self.model = deconvAutoencoder1D(self.bsiz, self.ishp, self.ksiz, self.lyrs) if model is None else model
         
     def compile(self):
         log.debug("Compiling model")

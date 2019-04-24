@@ -97,6 +97,7 @@ def check_configuration(verbose=False):
     stps = tml.value('save_steps', section=neuralnet)
     lr = tml.value('learning_rate', section=neuralnet)
     dec = tml.value('decay', section=neuralnet)
+    lyrs = tml.value('n_layers', section=neuralnet)
     dirs = tml.value('dnames', section=neuralnet)
     dirs = [dirs[key] for key in dirs]
 
@@ -111,6 +112,8 @@ def check_configuration(verbose=False):
     check_value('learning rate', isinstance(lr, (int, float)) and lr > 0, "Learning rate must be a strictly positive number")
     
     check_value('decay', isinstance(dec, (int, float)) and dec > 0, "Decay must be a strictly positive number")
+
+    check_value('number of layers', isinstance(lyrs, int) and lyrs >= 0, "Number of layers must be a positive integer")
 
     check_value('neuralnet directory names', all(map(isinstance, dirs, repeat(str))), "All neuralnet directory names must be strings")
 

@@ -13,6 +13,7 @@ epochs = 180
 save_steps = 2
 learning_rate = 6e-3
 decay = 4e-5
+n_layers = 0
 [neuralnet.dnames]
 model = 'model'
 predicted_labels = 'predicted_labels'

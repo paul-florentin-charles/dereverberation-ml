@@ -5,47 +5,68 @@ from src.neuralnet.utils import Conv1DTranspose
 from keras.models import Model
 from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
 
-
-def autoencoder1DTranspose(batch_size, input_shape, frame_size):
+def convAutoencoder1D(batch_size, input_shape, frame_size, n_layers=2):
     X = Input(batch_shape=(batch_size, *input_shape))
 
-    ENC = Conv1D(2, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')(X)
-    ENC = Conv1D(4, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')(ENC)
-    
-    DEC = Conv1DTranspose(ENC, 8, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')
-    DEC = Conv1DTranspose(DEC, 4, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')
-    
-    Y = Conv1DTranspose(DEC, 1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')
-    
-    return Model(inputs=X, outputs=Y)
+    ENC = convEncoder1D(X, frame_size, n_layers=n_layers)
 
-def autoencoder1D(batch_size, input_shape, frame_size):
-    X = Input(batch_shape=(batch_size, *input_shape))
-
-    ENC = Conv1D(2, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(X)
-    ENC = MaxPooling1D(2, padding='same')(ENC)
-    ENC = Conv1D(4, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(ENC)
-    ENC = MaxPooling1D(2, padding='same')(ENC)
-
-    DEC = Conv1D(8, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(ENC)
-    DEC = UpSampling1D(2)(DEC)
-    DEC = Conv1D(4, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(DEC)
-    DEC = UpSampling1D(2)(DEC)
+    DEC = convDecoder1D(ENC, frame_size, n_layers=n_layers)
     
     Y = Conv1D(1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')(DEC)
     
     return Model(inputs=X, outputs=Y)
 
-def onelayer1DConv(batch_size, input_shape, frame_size):
+def deconvAutoencoder1D(batch_size, input_shape, frame_size, n_layers=2):
     X = Input(batch_shape=(batch_size, *input_shape))
+
+    ENC = deconvEncoder1D(X, frame_size, n_layers=n_layers)
     
-    Y = Conv1D(1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')(X)
+    DEC = deconvDecoder1D(ENC, frame_size, n_layers=n_layers)
+    
+    Y = Conv1DTranspose(DEC, 1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')
     
     return Model(inputs=X, outputs=Y)
 
-def onelayer1DConvTranspose(batch_size, input_shape, frame_size):
-    X = Input(batch_shape=(batch_size, *input_shape))
-
-    Y = Conv1DTranspose(X, 1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')
+def convEncoder1D(input_tensor, frame_size, n_layers=2):
+    if n_layers == 0:
+        return input_tensor
     
-    return Model(inputs=X, outputs=Y)
+    encoder = Conv1D(2, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(input_tensor)
+    encoder = MaxPooling1D(2, padding='same')(encoder)
+    for idx in range(1, n_layers):
+        encoder = Conv1D(2**(idx + 1), frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(encoder)
+        encoder = MaxPooling1D(2, padding='same')(encoder)
+
+    return encoder
+
+def convDecoder1D(input_tensor, frame_size, n_layers=2):
+    if n_layers == 0:
+        return input_tensor
+    
+    decoder = Conv1D(2**(n_layers + 1), frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(input_tensor)
+    decoder = UpSampling1D(2)(decoder)
+    for idx in range(n_layers, 1, -1):
+        decoder = Conv1D(2**idx, frame_size, padding='same', activation='tanh', kernel_initializer='truncated_normal')(decoder)
+        decoder = UpSampling1D(2)(decoder)
+
+    return decoder
+
+def deconvEncoder1D(input_tensor, frame_size, n_layers=2):
+    if n_layers == 0:
+        return input_tensor
+    
+    encoder = Conv1D(2, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')(input_tensor)
+    for idx in range(1, n_layers):
+        encoder = Conv1D(2**(idx + 1), frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')(encoder)
+
+    return encoder
+
+def deconvDecoder1D(input_tensor, frame_size, n_layers=2):
+    if n_layers == 0:
+        return input_tensor
+    
+    decoder = Conv1DTranspose(input_tensor, 2**(n_layers + 1), frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')
+    for idx in range(n_layers, 1, -1):
+        decoder = Conv1DTranspose(decoder, 2**idx, frame_size, strides=2, padding='same', activation='tanh', kernel_initializer='truncated_normal')
+
+    return decoder
