@@ -6,11 +6,14 @@ import src.parser.toml as tml
 from src.datagen.io import _filter, generate_dataset
 from src.utils.data import write_data, read_data
 
+import mimetypes
 
 def run_datagen(dry_dpath, fx_fpath, output_dpath=None):
     """Run tool to generate dataset and write numpy data file.
     Return a couple (data, labels) to be used for training network.
     """
+
+    mimetypes.init()
 
     # Filtering samples and generating dataset
 

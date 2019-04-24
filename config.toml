@@ -23,7 +23,7 @@ predicted_labels = 'predicted_labels'
 expected_labels = 'expected_labels'
 
 [data]
-n_samples = 700
+n_samples = 500
 [data.json]
 fname = 'info.json'
 save_steps = 50

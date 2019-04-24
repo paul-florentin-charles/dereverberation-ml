@@ -8,6 +8,7 @@ from src.utils.tools import mkrdir, rfname
 import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml, src.parser.json as jsn
+import src.parser.nsynth as ns
 
 from pydub import AudioSegment
 from scipy.io.wavfile import write
@@ -59,17 +60,19 @@ def _export(npy_arrays, outdpath=None, override=True):
     for idx, npy_array in enumerate(npy_arrays):
         _save(npy_array, rfname(path=outdpath, prefix='{0}_'.format(idx)), override)
 
-#TODO: smart filtering according to metadata
 def _filter(dpath):
     """Filtering <dpath> by removing a certain amount of files.
     For now, filtering removes files from the tail.
     """
     log.debug("Filtering {0}".format(dpath))
+
+    #ns.filter_elements(dpath, [ns.is_guitar, ns.is_acoustic])
+    
     n_samples = tml.value('n_samples', section='data')
     audio_files = __list_audio_files(dpath)
 
     if len(audio_files) <= n_samples:
-        log.debug("Keeping all files in {0}".format(dpath))
+        log.debug("Keeping all remaining files in {0}".format(dpath))
         return
 
     for afile in audio_files[n_samples:]:
