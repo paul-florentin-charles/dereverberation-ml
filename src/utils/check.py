@@ -91,23 +91,29 @@ def check_configuration(verbose=False):
     
 
     neuralnet = 'neuralnet'
-        
-    bsiz = tml.value('batch_size', section=neuralnet)
-    epoc = tml.value('epochs', section=neuralnet)
+
     stps = tml.value('save_steps', section=neuralnet)
-    lr = tml.value('learning_rate', section=neuralnet)
-    dec = tml.value('decay', section=neuralnet)
-    lyrs = tml.value('n_layers', section=neuralnet)
+    vspl = tml.value('valid_split', section=neuralnet)
+    tspl = tml.value('tst_split', section=neuralnet)
+    bsiz = tml.value('model', subkey='batch_size', section=neuralnet)
+    epoc = tml.value('model', subkey='epochs', section=neuralnet)
+    lr = tml.value('model', subkey='learning_rate', section=neuralnet)
+    dec = tml.value('model', subkey='decay', section=neuralnet)
+    lyrs = tml.value('model', subkey='n_layers', section=neuralnet)
     dirs = tml.value('dnames', section=neuralnet)
     dirs = [dirs[key] for key in dirs]
 
     section(neuralnet)
 
+    check_value('save steps', isinstance(stps, int) and stps > 0, "Save steps must be a strictly positive integer")
+
+    check_value('validation split', isinstance(vspl, (int, float)) and vspl < 1 and vspl >=0, "Validation split must be a number in [0, 1[")
+
+    check_value('test split', isinstance(tspl, (int, float)) and tspl < 1 and tspl >=0, "Test split must be a number in [0, 1[")
+
     check_value('batch size', isinstance(bsiz, int) and bsiz > 0, "Batch size must be a strictly positive integer")
 
     check_value('epochs', isinstance(epoc, int) and epoc > 0, "Epochs must be a strictly positive integer")
-
-    check_value('save steps', isinstance(stps, int) and stps > 0, "Save steps must be a strictly positive integer")
 
     check_value('learning rate', isinstance(lr, (int, float)) and lr > 0, "Learning rate must be a strictly positive number")
     

@@ -11,24 +11,24 @@ from keras import callbacks as cal
 
 # Numerical parameters
 
-BATCH_SIZE = tml.value('batch_size', section='neuralnet')
+BATCH_SIZE = tml.value('model', section='neuralnet', subkey='batch_size')
 
-EPOCHS = tml.value('epochs', section='neuralnet')
+EPOCHS = tml.value('model', section='neuralnet', subkey='epochs')
 
 INPUT_SHAPE = (tml.value('s_len', section='audio'), 1)
 
 KERNEL_SIZE = tml.value('f_size', section='audio')
 
-N_LAYERS = tml.value('n_layers', section='neuralnet')
+N_LAYERS = tml.value('model', section='neuralnet', subkey='n_layers')
 
-VALIDATION_SPLIT = 0.15
+VALIDATION_SPLIT = tml.value('valid_split', section='neuralnet')
 
-TEST_SPLIT = 0.05
+TEST_SPLIT = tml.value('tst_split', section='neuralnet')
 
 
 # Classes and functions
 
-OPTIMIZER = opt.Adam(lr=tml.value('learning_rate', section='neuralnet'), decay=tml.value('decay', section='neuralnet'))
+OPTIMIZER = opt.Adam(lr=tml.value('model', section='neuralnet', subkey='learning_rate'), decay=tml.value('model', section='neuralnet', subkey='decay'))
 
 LOSS = los.mean_squared_error
 

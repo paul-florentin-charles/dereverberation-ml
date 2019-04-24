@@ -8,9 +8,12 @@ conv_mod = 'same'
 f_size = 2000
 
 [neuralnet]
+save_steps = 2
+valid_split = 15e-2
+tst_split = 5e-2
+[neuralnet.model]
 batch_size = 4
 epochs = 180
-save_steps = 2
 learning_rate = 6e-3
 decay = 4e-5
 n_layers = 0

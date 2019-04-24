@@ -17,6 +17,7 @@ from keras.layers import Conv2DTranspose, Lambda
 
 
 def Conv1DTranspose(input_tensor, filters, kernel_size, strides=1, padding='same', activation=None, kernel_initializer='glorot_uniform', bias_initializer='zeros'):
+    """Wrapper around Keras Conv2DTranspose to fit for 1D data."""
     X = Lambda(lambda x: K.expand_dims(x, axis=2))(input_tensor)
     X = Conv2DTranspose(filters, (kernel_size, 1), strides=(strides, 1), padding=padding, activation=activation, kernel_initializer=kernel_initializer, bias_initializer=bias_initializer)(X)
     X = Lambda(lambda x: K.squeeze(x, axis=2))(X)
