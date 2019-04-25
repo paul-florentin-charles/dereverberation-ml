@@ -7,11 +7,12 @@ import src.utils.logger as log
 
 import numpy as np
 import fleep
-from mimetypes import guess_type
 
 
 ## Useful to avoid picking non audio files ##
 """
+from mimetypes import guess_type
+
 def __is_audio_file(fpath):
     \"""Return True if <fpath> is an audio file.
     Otherwise return False.

@@ -6,6 +6,7 @@ import src.utils.path as pth
 import src.utils.logger as log
 from src.datagen.utils import __list_audio_files
 
+from itertools import repeat
 from mimetypes import guess_type
 
 """
@@ -18,9 +19,9 @@ def is_bass(note_dict):
     return note_dict['instrument_family_str'] == 'bass'
 """
 
-def filter_elements(dpath, cond_lst):
-    if not isinstance(cond_lst, list):
-        log.critical("Please use a list of conditions to filter samples")
+def filter_elements(dpath, cond_lst_lst):
+    if not isinstance(cond_lst_lst, list) or not all(map(isinstance, cond_lst_lst, repeat(list))):
+        log.critical("Please use a list of list of conditions to filter samples")
 
     jsnpaths = list(filter(__is_json_file, pth.__list_files(dpath)))
     if len(jsnpaths) != 1:
@@ -30,7 +31,7 @@ def filter_elements(dpath, cond_lst):
     audio_fnames = __list_audio_files(dpath)
     
     for afile in audio_fnames:
-        if not all(map(lambda cond: cond(data[pth.__no_extension(afile)]), cond_lst)):
+        if not all(map(lambda cond_lst: any(map(lambda cond: cond(data[pth.__no_extension(afile)]), cond_lst)), cond_lst_lst)):
             pth.__remove_file(afile)
 
 def __is_json_file(fpath):

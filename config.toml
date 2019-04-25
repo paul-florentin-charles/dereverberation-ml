@@ -23,7 +23,9 @@ predicted_labels = 'predicted_labels'
 expected_labels = 'expected_labels'
 
 [data]
-n_samples = 500
+max_samples = 500
+instruments = ['bass', 'guitar']
+sources = ['electronic', 'synthetic']
 [data.json]
 fname = 'info.json'
 save_steps = 50

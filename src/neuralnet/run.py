@@ -24,6 +24,7 @@ def run_neuralnet(data, labels):
     mdl_dname = tml.value('dnames', section='neuralnet', subkey='model')
     if not pth.__is_empty(mdl_dname):
         log.warning("Model has already been trained in a previous session, picking up best model from \'{0}\' directory".format(mdl_dname))
+        
         NN = NeuralNetwork(model=utls.load_best_model())
     else:
         log.info("Training model")
@@ -45,7 +46,5 @@ def run_neuralnet(data, labels):
 
     dnames = tml.value('dnames', section='neuralnet')
     
-    pth.__make_dir(dnames['predicted_labels'])
     _export(utls.unshape(predictions), dnames['predicted_labels'])
-    pth.__make_dir(dnames['expected_labels'])
     _export(utls.unshape(test_data[1]), dnames['expected_labels'])

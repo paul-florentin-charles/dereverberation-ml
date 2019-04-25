@@ -8,7 +8,7 @@ from src.utils.tools import mkrdir, rfname
 import src.utils.logger as log
 import src.utils.path as pth
 import src.parser.toml as tml, src.parser.json as jsn
-import src.parser.nsynth as ns
+import src.datagen.nsynth as ns
 
 from pydub import AudioSegment
 from scipy.io.wavfile import write
@@ -52,10 +52,15 @@ def _save(npy_array, fpath, override=True):
 
 def _export(npy_arrays, outdpath=None, override=True):
     """Save a list of numpy arrays as wave files at <outdpath>.
-    If <outdpath> is None, creates a random directory.
+    If <outdpath> is None, create a random directory.
+    If <oudtpath> doesn't exist, it creates it.
     """
     if outdpath is None:
         outdpath = mkrdir()
+    elif pth.__is_file(outdpath):
+        log.critical("Can't export songs in {0} since it is a file".format(outdpath))
+    elif not pth.__exists(outdpath):
+        pth.__make_dir(outdpath)
 
     for idx, npy_array in enumerate(npy_arrays):
         _save(npy_array, rfname(path=outdpath, prefix='{0}_'.format(idx)), override)
@@ -66,16 +71,22 @@ def _filter(dpath):
     """
     log.debug("Filtering {0}".format(dpath))
 
-    #ns.filter_elements(dpath, [ns.is_guitar, ns.is_acoustic])
+    instruments = tml.value('instruments', section='data')
+    sources = tml.value('sources', section='data')
+
+    instr_conds = list(map(lambda instr: eval('ns.is_{0}'.format(instr)), instruments))
+    src_conds = list(map(lambda src: eval('ns.is_{0}'.format(src)), sources))
+
+    ns.filter_elements(dpath, [instr_conds, src_conds])
     
-    n_samples = tml.value('n_samples', section='data')
+    max_samples = tml.value('max_samples', section='data')
     audio_files = __list_audio_files(dpath)
 
-    if len(audio_files) <= n_samples:
+    if len(audio_files) <= max_samples:
         log.debug("Keeping all remaining files in {0}".format(dpath))
         return
 
-    for afile in audio_files[n_samples:]:
+    for afile in audio_files[max_samples:]:
         pth.__remove_file(afile)
     
 ## Generating dataset ##

@@ -126,14 +126,15 @@ def check_configuration(verbose=False):
 
     data = 'data'
 
-    spls = tml.value('n_samples', section=data)
+    spls = tml.value('max_samples', section=data)
+    #TODO: check values for instruments and sources in data section
     json = tml.value('json', section=data, subkey='fname')
     stps = tml.value('json', section=data, subkey='save_steps')
     npz = tml.value('numpy', section=data, subkey='fname')
     
     section(data)
 
-    check_value('number of samples', isinstance(spls, int) and spls > 0, "Number of samples must be a strictly positive integer")
+    check_value('maximum of samples', isinstance(spls, int) and spls > 0, "Maximum of samples must be a strictly positive integer")
 
     check_value('JSON file name', isinstance(json, str) and json.endswith('.json'), "JSON file name must be a string with \'.json\' suffix")
 
