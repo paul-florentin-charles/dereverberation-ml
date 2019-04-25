@@ -21,7 +21,7 @@ def run_neuralnet(data, labels):
 
     # Building and training model
 
-    mdl_dname = tml.value('dnames', section='neuralnet', subkey='model')
+    mdl_dname = tml.value('dnames', section='neuralnet', subkey='saved_models')
     if not pth.__is_empty(mdl_dname):
         log.warning("Model has already been trained in a previous session, picking up best model from \'{0}\' directory".format(mdl_dname))
         

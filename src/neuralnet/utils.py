@@ -79,7 +79,7 @@ def load_best_model():
     
 def path_to_best_model():
     """Return path to best model amongst models in predefined directory."""
-    return _path_to_best_model(tml.value('dnames', section='neuralnet', subkey='model'))
+    return _path_to_best_model(tml.value('dnames', section='neuralnet', subkey='saved_models'))
 
 def _split(data, labels, chunk_size, fraction):
     """Return two tuples of couple (data, labels).

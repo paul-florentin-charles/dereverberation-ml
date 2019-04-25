@@ -36,7 +36,7 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.VarianceScaling(mode='fan_avg', distribution='uniform')
 
-CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('dnames', section='neuralnet', subkey='model'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('save_steps', section='neuralnet'))]
+CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('dnames', section='neuralnet', subkey='saved_models'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('save_steps', section='neuralnet'))]
 
 
 # Others

@@ -119,7 +119,7 @@ def check_configuration(verbose=False):
     
     check_value('decay', isinstance(dec, (int, float)) and dec > 0, "Decay must be a strictly positive number")
 
-    check_value('number of layers', isinstance(lyrs, int) and lyrs >= 0, "Number of layers must be a positive integer")
+    check_value('number of layers', isinstance(lyrs, int) and lyrs >= 0 and lyrs % 2 == 1, "Number of layers must be a positive odd integer")
 
     check_value('neuralnet directory names', all(map(isinstance, dirs, repeat(str))), "All neuralnet directory names must be strings")
 
