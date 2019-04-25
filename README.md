@@ -113,22 +113,22 @@ There are two keys in **config.toml** that can be modified to control which type
 There are located in *data* section, and consist of arrays.
 
 For key *instruments*
-* `bass`
-* `brass`
-* `flute`
-* `guitar`
-* `keyboard`
-* `mallet`
-* `organ`
-* `reed`
-* `string`
-* `synth_lead`
-* `vocal`
+* bass
+* brass
+* flute
+* guitar
+* keyboard
+* mallet
+* organ
+* reed
+* string
+* synth_lead
+* vocal
 
 For key *sources*
-- `acoustic`
-- `electronic`
-- `synthetic`
+- acoustic
+- electronic
+- synthetic
 
 ## JSON Syntax
 
