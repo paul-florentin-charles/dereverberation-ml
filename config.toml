@@ -21,6 +21,7 @@ n_layers = 0
 model = 'model'
 predicted_labels = 'predicted_labels'
 expected_labels = 'expected_labels'
+original_data = 'original_data'
 
 [data]
 max_samples = 500

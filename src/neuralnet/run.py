@@ -48,3 +48,5 @@ def run_neuralnet(data, labels):
     
     _export(utls.unshape(predictions), dnames['predicted_labels'])
     _export(utls.unshape(test_data[1]), dnames['expected_labels'])
+    _export(utls.unshape(test_data[0]), dnames['original_data'])
+    
