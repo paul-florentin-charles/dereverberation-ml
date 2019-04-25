@@ -127,7 +127,8 @@ def check_configuration(verbose=False):
     data = 'data'
 
     spls = tml.value('max_samples', section=data)
-    #TODO: check values for instruments and sources in data section
+    istr = tml.value('instruments', section=data)
+    srcs = tml.value('sources', section=data) 
     json = tml.value('json', section=data, subkey='fname')
     stps = tml.value('json', section=data, subkey='save_steps')
     npz = tml.value('numpy', section=data, subkey='fname')
@@ -135,6 +136,10 @@ def check_configuration(verbose=False):
     section(data)
 
     check_value('maximum of samples', isinstance(spls, int) and spls > 0, "Maximum of samples must be a strictly positive integer")
+
+    check_value('instruments', isinstance(istr, list) and all(map(lambda instr: instr in ['bass', 'brass', 'flute', 'guitar', 'keyboard', 'mallet', 'organ', 'reed', 'string', 'synth_lead', 'vocal'], istr)), "Instruments must be an array of strings picked among \'bass\', \'brass\', \'flute\', \'guitar\', \'keyboard\', \'mallet\', \'organ\', \'reed\', \'string\', \'synth_lead\' and \'vocal\'")
+
+    check_value('sources', isinstance(srcs, list) and all(map(lambda src: src in ['acoustic', 'electronic', 'synthetic'], srcs)), "Sources must be an array of strings picked among \'acoustic\', \'electronic\' and \'synthetic\'")
 
     check_value('JSON file name', isinstance(json, str) and json.endswith('.json'), "JSON file name must be a string with \'.json\' suffix")
 

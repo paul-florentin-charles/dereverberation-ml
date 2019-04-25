@@ -108,11 +108,11 @@ For instance, if set on *warning*, *debug* and *info* messages won't be displaye
 
 ## NSynth
 
-There are two keys in **config.toml** that can be modified to control which type of instrument and source will be picked in dataset.
+There are two keys in **config.toml** that can be modified to control which types of instrument and sources will be picked in dataset.
 
-There are located in *data* section, and consist of arrays.
+There are located in *data* section, and consist of arrays of strings. Below are the available values for theses strings.
 
-For key *instruments*
+For *instruments*
 * bass
 * brass
 * flute
@@ -125,7 +125,7 @@ For key *instruments*
 * synth_lead
 * vocal
 
-For key *sources*
+For *sources*
 - acoustic
 - electronic
 - synthetic
