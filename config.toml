@@ -1,46 +1,61 @@
 # Configuration file
 
 [audio]
+
 s_rate = 16000
 s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
 f_size = 2000
 
+
 [neuralnet]
+
 save_steps = 1
 valid_split = 10e-2
 tst_split = 5e-2
+
 [neuralnet.model]
 batch_size = 4
 epochs = 150
 learning_rate = 6e-3
 decay = 4e-5
-n_layers = 3
+n_layers = 1
+
 [neuralnet.dnames]
 saved_models = 'model'
 predicted_labels = 'predicted_labels'
 expected_labels = 'expected_labels'
 original_data = 'original_data'
 
+
 [data]
+
 max_samples = 500
 instruments = ['bass', 'guitar']
 sources = ['electronic', 'synthetic']
+
 [data.json]
 fname = 'info.json'
 save_steps = 50
+
 [data.numpy]
 fname = 'data.npz'
 
+
 [logger]
+
 level = 'debug'
 
+
 [demo]
+
 fx_name = 'fx.wav'
+
 [demo.urls]
 dry = 'http://download.magenta.tensorflow.org/datasets/nsynth/nsynth-test.jsonwav.tar.gz'
 fx = 'https://impulses.prasadt.com/static/impulses/Lecture%20Hall.wav'
+
 [demo.dnames]
 input = 'dry'
 output = 'wet'

@@ -8,9 +8,7 @@ from src.datagen.utils import __list_audio_files
 from itertools import repeat
 from mimetypes import guess_type
 
-"""
-
-A condition should be a function that takes a dictionary in input and return a boolean.
+"""A condition should be a function that takes a dictionary in input and return a boolean.
 
 Example:
 
