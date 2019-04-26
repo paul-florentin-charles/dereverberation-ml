@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import src.parser.json as jsn
-import src.parser.toml as tml
 import src.utils.path as pth
 import src.utils.logger as log
 from src.datagen.utils import __list_audio_files
