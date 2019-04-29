@@ -31,7 +31,7 @@ original_data = 'original_data'
 
 [data]
 
-max_samples = 900
+max_samples = 800
 instruments = ['bass', 'guitar', 'keyboard', 'flute', 'reed', 'string']
 sources = ['acoustic', 'electronic', 'synthetic']
 
