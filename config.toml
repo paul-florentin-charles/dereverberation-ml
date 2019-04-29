@@ -20,7 +20,7 @@ batch_size = 4
 epochs = 150
 learning_rate = 6e-3
 decay = 4e-5
-n_layers = 5
+n_layers = 1
 
 [neuralnet.dnames]
 saved_models = 'model'
@@ -31,8 +31,8 @@ original_data = 'original_data'
 
 [data]
 
-max_samples = 800
-instruments = ['bass', 'guitar', 'keyboard', 'flute', 'reed', 'string']
+max_samples = 600
+instruments = ['bass', 'brass', 'guitar', 'keyboard', 'organ', 'flute', 'reed', 'string', 'mallet', 'synth_lead', 'vocal']
 sources = ['acoustic', 'electronic', 'synthetic']
 
 [data.json]

@@ -19,7 +19,7 @@ class NeuralNetwork(object):
         self.bini = cfg.BIAS_INITIALIZER
         self.metr = cfg.METRICS
         self.cbac = cfg.CALLBACKS
-        self.model = convAutoencoder1D(self.bsiz, self.ishp, self.ksiz, self.lyrs) if model is None else model
+        self.model = deconvAutoencoder1D(self.bsiz, self.ishp, self.ksiz, self.lyrs) if model is None else model
         
     def compile(self):
         log.debug("Compiling model")

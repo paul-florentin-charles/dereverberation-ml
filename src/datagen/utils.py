@@ -67,7 +67,7 @@ def __normalize(npy_array):
     """Normalize <npy_array> by its maximum.
     If maximum is null, return the same array.
     """
-    return npy_array / max(npy_array)
+    return npy_array / max(abs(npy_array))
 
 def __float2pcm(npy_array, _type='int16'):
     """Convert <npy_array> from float to pcm.
