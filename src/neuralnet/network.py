@@ -14,7 +14,7 @@ def convAutoencoder1D(batch_size, input_shape, frame_size, n_layers=5):
     
     Y = Conv1D(1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')(DEC)
     
-     return Model(inputs=X, outputs=Y)
+    return Model(inputs=X, outputs=Y)
 
 def deconvAutoencoder1D(batch_size, input_shape, frame_size, n_layers=5):
     X = Input(batch_shape=(batch_size, *input_shape))
