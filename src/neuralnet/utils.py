@@ -22,7 +22,14 @@ def Conv1DTranspose(input_tensor, filters, kernel_size, strides=1, padding='same
     X = Conv2DTranspose(filters, (kernel_size, 1), strides=(strides, 1), padding=padding, activation=activation, kernel_initializer=kernel_initializer, bias_initializer=bias_initializer)(X)
     X = Lambda(lambda x: K.squeeze(x, axis=2))(X)
     return X
-    
+
+def mse(x, y):
+    len_x, len_y = x.shape[0], y.shape[0]
+    if len_x == len_y:
+        return sum((x - y)**2) / len_x
+
+    log.error("Can't compute MSE, arrays have different lengths: {0} and {1}".format(len_x, len_y))
+
 def shape(data):
     """Shape <data> to fit input of neural network."""
     log.debug("Shaping data")

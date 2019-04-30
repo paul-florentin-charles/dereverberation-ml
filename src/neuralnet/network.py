@@ -8,20 +8,20 @@ from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
 def convAutoencoder1D(batch_size, input_shape, frame_size, n_layers=5):
     X = Input(batch_shape=(batch_size, *input_shape))
 
-    ENC = convEncoder1D(X, frame_size, n_layers=int(n_layers/2))
+    ENC = convEncoder1D(X, frame_size, n_layers=n_layers//2)
 
-    DEC = convDecoder1D(ENC, frame_size, n_layers=int(n_layers/2))
+    DEC = convDecoder1D(ENC, frame_size, n_layers=n_layers//2)
     
     Y = Conv1D(1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')(DEC)
     
-    return Model(inputs=X, outputs=Y)
+     return Model(inputs=X, outputs=Y)
 
 def deconvAutoencoder1D(batch_size, input_shape, frame_size, n_layers=5):
     X = Input(batch_shape=(batch_size, *input_shape))
 
-    ENC = deconvEncoder1D(X, frame_size, n_layers=int(n_layers/2))
+    ENC = deconvEncoder1D(X, frame_size, n_layers=n_layers//2)
     
-    DEC = deconvDecoder1D(ENC, frame_size, n_layers=int(n_layers/2))
+    DEC = deconvDecoder1D(ENC, frame_size, n_layers=n_layers//2)
     
     Y = Conv1DTranspose(DEC, 1, frame_size, padding='same', activation='linear', kernel_initializer='truncated_normal')
     

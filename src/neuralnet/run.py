@@ -19,6 +19,16 @@ def run_neuralnet(data, labels):
     data, labels = map(utls.shape, (data, labels))
     train_data, test_data = utls.split_test(data, labels)
 
+    log.debug("Computing initial MSE")
+
+    train_mses, test_mses = utls.mse(*train_data), utls.mse(*test_data)
+    
+    avg_train_mse = sum(train_mses) / train_mses.shape[0]
+    avg_test_mse = sum(test_mses) / test_mses.shape[0]
+
+    log.debug("Average MSE of train dataset: {0}".format(avg_train_mse))
+    log.debug("Average MSE of test dataset: {0}".format(avg_test_mse))
+    
     # Building and training model
 
     mdl_dname = tml.value('dnames', section='neuralnet', subkey='saved_models')

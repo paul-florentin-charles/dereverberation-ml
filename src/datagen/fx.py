@@ -24,7 +24,7 @@ def convolve(dry, fx):
     dry, fx = map(utls.__with_sample_rate, (dry, fx), repeat(sr))
     dry, fx = map(utls.__with_bit_depth, (dry, fx), repeat(bits))
     dry, fx = map(utls.__mono, (dry, fx))
-        
+    
     sigs = map(utls.__convert, (dry, fx), repeat('int{0}'.format(bits)))
 
     return _convolve(*sigs, mode)
