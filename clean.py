@@ -34,6 +34,8 @@ def clean():
         rmtree(dnames['predicted_labels'])
     if pth.__exists(dnames['expected_labels']):
         rmtree(dnames['expected_labels'])
+    if pth.__exists(dnames['original_data']):
+        rmtree(dnames['original_data'])
 
     
 if __name__ == '__main__':
