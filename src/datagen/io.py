@@ -69,7 +69,7 @@ def _filter(dpath):
     """Filtering <dpath> by removing a certain amount of files.
     For now, filtering removes files from the tail.
     """
-    log.debug("Filtering {0}".format(dpath))
+    log.debug("Filtering \"{0}\"".format(dpath))
 
     instruments = tml.value('instruments', section='data')
     sources = tml.value('sources', section='data')

@@ -54,7 +54,7 @@ fx_name = 'fx.wav'
 
 [demo.urls]
 dry = 'http://download.magenta.tensorflow.org/datasets/nsynth/nsynth-test.jsonwav.tar.gz'
-fx = 'https://impulses.prasadt.com/static/impulses/Lecture%20Hall.wav'
+fx = 'https://impulses.prasadt.com/static/impulses/echothief/Underground/CathedralRoom-EchoThief.wav'
 
 [demo.dnames]
 input = 'dry'
