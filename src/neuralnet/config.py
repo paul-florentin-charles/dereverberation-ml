@@ -8,6 +8,23 @@ from keras import losses as los
 from keras import initializers as ini
 from keras import callbacks as cal
 
+# Custom callbacks    
+
+class PlotLossEpoch(Callback):
+    def on_train_begin(self, logs={}):
+        self.train_losses, self.validation_losses, self.epochs = [], [], []
+    
+    def on_epoch_end(self, epoch, logs={}):
+        self.train_losses.append(logs.get('loss'))
+        self.validation_losses.append(logs.get('val_loss'))
+        self.epochs.append(len(self.epochs) + 1)
+        plt.plot(self.epochs, self.train_losses, label='train loss')
+        plt.plot(self.epochs, self.validation_losses, label='validation loss')
+        plt.xlabel('epoch')
+        plt.ylabel('loss')
+        plt.legend()
+        plt.savefig('loss.png')
+        plt.show()
 
 # Numerical parameters
 
@@ -36,7 +53,7 @@ KERNEL_INITIALIZER = ini.TruncatedNormal()
 
 BIAS_INITIALIZER = ini.VarianceScaling(mode='fan_avg', distribution='uniform')
 
-CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('dnames', section='neuralnet', subkey='saved_models'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('save_steps', section='neuralnet'))]
+CALLBACKS = [cal.ModelCheckpoint(pth.__join_path(tml.value('dnames', section='neuralnet', subkey='saved_models'), 'model.{epoch:02d}-{val_loss:.3f}.h5'), period=tml.value('save_steps', section='neuralnet')), PlotLossEpoch()]
 
 
 # Others
