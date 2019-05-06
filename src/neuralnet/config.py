@@ -7,6 +7,7 @@ from keras import optimizers as opt
 from keras import losses as los
 from keras import initializers as ini
 from keras import callbacks as cal
+import matplotlib.pyplot as plt
 
 # Custom callbacks    
 
