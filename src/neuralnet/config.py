@@ -10,7 +10,7 @@ from keras import callbacks as cal
 
 # Custom callbacks    
 
-class PlotLossEpoch(Callback):
+class PlotLossEpoch(cal.Callback):
     def on_train_begin(self, logs={}):
         self.train_losses, self.validation_losses, self.epochs = [], [], []
     
