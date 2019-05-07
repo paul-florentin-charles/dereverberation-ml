@@ -67,6 +67,7 @@ def _export(npy_arrays, outdpath=None, override=True):
 
 def _filter(dpath):
     """Filtering <dpath> by removing a certain amount of files.
+    Keep files corresponding to specific instruments and sources, given in configuration file.
     For now, filtering removes files from the tail.
     """
     log.debug("Filtering \"{0}\"".format(dpath))
@@ -92,7 +93,9 @@ def _filter(dpath):
 ## Generating dataset ##
 
 def generate_dataset(dry_dpath, fx_fpath, output_dpath=None, func=None):
-    """Generate dataset of wet samples."""
+    """Generate dataset of wet samples.
+    Fill a JSON file wich matches dry and wet samples.
+    """
     if not output_dpath:
         output_dpath = mkrdir()
     elif not pth.__exists(output_dpath):

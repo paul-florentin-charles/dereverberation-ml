@@ -55,6 +55,9 @@ def __with_sample_rate(audio_segment, sample_rate):
 
 def __with_bit_depth(audio_segment, bit_depth):
     """Return a version of <audio_segment> with updated bit depth."""
+    if bit_depth % 8 != 0:
+        log.error("Bit depth should be a multiple of 8, used value here is {0}".format(bit_depth))
+        
     return audio_segment.set_sample_width(bit_depth // 8)
 
 def __convert(audio_segment, _type=None):
@@ -64,10 +67,14 @@ def __convert(audio_segment, _type=None):
     return np.array(audio_segment.get_array_of_samples(), dtype=_type)
 
 def __normalize(npy_array):
-    """Normalize <npy_array> by its maximum.
+    """Normalize <npy_array> by its maximum in absolute value.
     If maximum is null, return the same array.
     """
-    return npy_array / max(abs(npy_array))
+    M = max(abs(npy_array))
+    if M:
+        return npy_array / M
+    
+    return npy_array
 
 def __float2pcm(npy_array, _type='int16'):
     """Convert <npy_array> from float to pcm.
@@ -83,9 +90,8 @@ def __float2pcm(npy_array, _type='int16'):
 
 def __pcm2float(npy_array, _type='float64'):
     """Convert <npy_array> from pcm to float.
-    Default conversion type is 'float64'
+    Default conversion type is 'float64'.
     """
-    
     if npy_array.dtype.kind != 'i':
         log.error("\'__pcm2float\' takes an array of integers, forcing conversion to int16")
         npy_array = npy_array.astype('int16')

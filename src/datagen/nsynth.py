@@ -17,6 +17,9 @@ def is_bass(note_dict):
 """
 
 def filter_elements(dpath, cond_lst_lst):
+    """Remove songs at <dpath> that don't fit condition functions in <cond_lst_lst>.
+    <cond_lst_lst> is a list of condition lists, so that global condition is an intersection of unions.
+    """
     if not isinstance(cond_lst_lst, list) or not all(map(isinstance, cond_lst_lst, repeat(list))):
         log.critical("Please use a list of list of conditions to filter samples")
 

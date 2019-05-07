@@ -29,18 +29,6 @@ def convolve(dry, fx):
 
     return _convolve(*sigs, mode)
 
-def _convolve(npy_dry, npy_fx, _mode):
-    """Compute convolution between two arrays.
-    Arrays are supposed numpy arrays of integers.
-    """
-    npy_dry, npy_fx = map(utls.__pcm2float, (npy_dry, npy_fx))
-
-    _conv = sig.convolve(npy_dry, npy_fx, mode=_mode)
-    _conv = utls.__normalize(_conv)
-    _conv = utls.__float2pcm(_conv)
-    
-    return _conv
-
 def apply_fx(dry, fx, func=convolve):
     """Apply an fx to a dry signal.
     Return the resulting signal.
@@ -58,3 +46,15 @@ def apply_fx(dry, fx, func=convolve):
         log.warning("Applying fx to an empty signal")
     
     return func(dry, fx)
+
+def _convolve(npy_dry, npy_fx, _mode):
+    """Compute convolution between two arrays.
+    Arrays are supposed numpy arrays of integers.
+    """
+    npy_dry, npy_fx = map(utls.__pcm2float, (npy_dry, npy_fx))
+
+    _conv = sig.convolve(npy_dry, npy_fx, mode=_mode)
+    _conv = utls.__normalize(_conv)
+    _conv = utls.__float2pcm(_conv)
+    
+    return _conv
