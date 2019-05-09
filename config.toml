@@ -31,9 +31,9 @@ original_data = 'original_data'
 
 [data]
 
-max_samples = 800
-instruments = ['bass', 'brass', 'guitar', 'keyboard']
-sources = ['electronic', 'synthetic']
+max_samples = 1000
+instruments = ['bass', 'guitar', 'keyboard']
+sources = ['acoustic', 'electronic', 'synthetic']
 
 [data.json]
 fname = 'info.json'
