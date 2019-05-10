@@ -17,9 +17,9 @@ tst_split = 5e-2
 
 [neuralnet.model]
 batch_size = 16
-epochs = 150
-learning_rate = 6e-3 * 20
-decay = 4e-5 * 20
+epochs = 200
+learning_rate = 6e-1
+decay = 4e-3
 n_layers = 1
 
 [neuralnet.dnames]
