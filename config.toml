@@ -6,20 +6,20 @@ s_rate = 16000
 s_len = 64000
 bit_depth = 16
 conv_mod = 'same'
-f_size = 2000
+f_size = 15
 
 
 [neuralnet]
 
 save_steps = 1
-valid_split = 10e-2
+valid_split = 20e-2
 tst_split = 5e-2
 
 [neuralnet.model]
-batch_size = 4
+batch_size = 16
 epochs = 150
-learning_rate = 6e-3
-decay = 4e-5
+learning_rate = 6e-3 * 20
+decay = 4e-5 * 20
 n_layers = 1
 
 [neuralnet.dnames]
@@ -31,8 +31,8 @@ original_data = 'original_data'
 
 [data]
 
-max_samples = 1000
-instruments = ['bass', 'guitar', 'keyboard']
+max_samples = 1500
+instruments = ['bass', 'guitar', 'keyboard', 'string']
 sources = ['acoustic', 'electronic', 'synthetic']
 
 [data.json]
