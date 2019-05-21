@@ -92,3 +92,8 @@ def is_electronic(note_dict):
 
 def is_synthetic(note_dict):
     return note_dict['instrument_source_str'] == 'synthetic'
+
+## Pitch
+
+def is_pitch_63(note_dict):
+    return note_dict['pitch'] == 63

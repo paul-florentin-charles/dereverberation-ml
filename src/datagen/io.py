@@ -78,7 +78,7 @@ def _filter(dpath):
     instr_conds = list(map(lambda instr: eval('ns.is_{0}'.format(instr)), instruments))
     src_conds = list(map(lambda src: eval('ns.is_{0}'.format(src)), sources))
 
-    ns.filter_elements(dpath, [instr_conds, src_conds])
+    ns.filter_elements(dpath, [instr_conds, src_conds, [ns.is_pitch_63]])
     
     max_samples = tml.value('max_samples', section='data')
     audio_files = __list_audio_files(dpath)
