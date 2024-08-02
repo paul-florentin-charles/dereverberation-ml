@@ -5,6 +5,6 @@ toml==0.10.0
 pydub==0.23.1
 scipy==1.10.0
 numpy==1.22.0
-keras==2.2.4
+keras==2.13.1
 tensorflow>=1.15.2
 #tensorflow==1.13.1
